@@ -1,4 +1,4 @@
-package cz.cvut.fel.pjv;
+package cz.cvut.fel.pjv.controller;
 
 public class Start {
 	public static void main(String[] args) {
