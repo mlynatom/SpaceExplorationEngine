@@ -7,4 +7,9 @@ public class FuelBarrel extends InteractThing {
 	public FuelBarrel(double iX, double iY) {
 		super(iX, iY);
 	}
+
+	@Override
+	public void update() {
+
+	}
 }
