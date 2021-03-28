@@ -1,4 +1,7 @@
 package cz.cvut.fel.pjv.model;
 
-public class InteractThing {
+public abstract class InteractThing extends Actor{
+	public InteractThing(double iX, double iY) {
+		super(iX, iY);
+	}
 }

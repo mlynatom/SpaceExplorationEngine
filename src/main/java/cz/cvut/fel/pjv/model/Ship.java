@@ -1,4 +1,7 @@
 package cz.cvut.fel.pjv.model;
 
-public class Ship {
+public abstract class Ship extends Actor{
+	public Ship(double iX, double iY) {
+		super(iX, iY);
+	}
 }
