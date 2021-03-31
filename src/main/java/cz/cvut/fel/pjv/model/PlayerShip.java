@@ -9,8 +9,8 @@ public class PlayerShip extends Ship {
 	private int level; // current level of ship
 	private double fuel; // amount of fuel in ship
 
-	public PlayerShip(double iX, double iY, String spriteBound, double life, double damage, boolean isAlive, Projectile projectile, int level, double fuel, Image... spriteImage) {
-		super(iX, iY, spriteBound, life, damage, isAlive, projectile, spriteImage);
+	public PlayerShip(double iX, double iY, double velocityX, double velocityY, String spriteBound, double life, double damage, boolean isAlive, Projectile projectile, int level, double fuel, Image... spriteImage) {
+		super(iX, iY, velocityX, velocityY, spriteBound, life, damage, projectile, spriteImage);
 		this.level = level;
 		this.fuel = fuel;
 	}

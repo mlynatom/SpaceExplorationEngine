@@ -6,8 +6,8 @@ import javafx.scene.image.Image;
  * Enemy Ship object, which can shoot projectile
  */
 public class EnemyShip extends Ship {
-	public EnemyShip(double iX, double iY, String spriteBound, double life, double damage, boolean isAlive, Projectile projectile, Image... spriteImage) {
-		super(iX, iY, spriteBound, life, damage, isAlive, projectile, spriteImage);
+	public EnemyShip(double iX, double iY, double velocityX, double velocityY, String spriteBound, double life, double damage, Projectile projectile, Image... spriteImage) {
+		super(iX, iY, velocityX, velocityY, spriteBound, life, damage, projectile, spriteImage);
 	}
 
 	@Override

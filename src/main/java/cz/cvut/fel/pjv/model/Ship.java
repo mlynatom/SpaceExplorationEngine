@@ -9,13 +9,16 @@ public abstract class Ship extends Actor {
 	protected double life, damage;
 	protected boolean isAlive;
 	protected Projectile projectile;
+	protected double velocityX, velocityY;
 
-	public Ship(double iX, double iY, String spriteBound, double life, double damage, boolean isAlive, Projectile projectile, Image... spriteImage) {
+	public Ship(double iX, double iY, double velocityX, double velocityY, String spriteBound, double life, double damage, Projectile projectile, Image... spriteImage) {
 		super(iX, iY, spriteBound, spriteImage);
 		this.life = life;
 		this.damage = damage;
-		this.isAlive = isAlive;
 		this.projectile = projectile;
+		this.velocityX = velocityX;
+		this.velocityY = velocityY;
+		isAlive = true;
 	}
 
 	@Override
