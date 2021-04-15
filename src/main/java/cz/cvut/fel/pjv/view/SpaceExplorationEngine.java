@@ -1,5 +1,6 @@
 package cz.cvut.fel.pjv.view;
 
+import cz.cvut.fel.pjv.controller.GamePlayLoop;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -7,6 +8,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -19,18 +21,19 @@ import javafx.stage.Stage;
 public class SpaceExplorationEngine extends Application {
 
 	private static final double WIDTH = 1024, HEIGHT = 600;
-	private static final boolean MAXIMIZED = true;
 
 	private Group rootGroup;
 	private double maxWidth;
 	private double maxHeight;
 	private boolean up, left, right, space, escape;
-	private Image background;
+	private Image background, help;
 	private Scene scene;
 	private HBox horizontalButtonBox;
 	private Insets buttonBoxPadding;
-	private Button playButton, helpButton, exitButton, exitSaveButton;
-	private ImageView mainScreenBackground;
+	private Button playButton, exitButton, exitSaveButton;
+	private ToggleButton helpButton;
+	private ImageView mainScreenBackground, mainScreenHelp;
+	private GamePlayLoop gamePlayLoop;
 
 
 	@Override
@@ -49,6 +52,7 @@ public class SpaceExplorationEngine extends Application {
 		loadImages();
 		createMainScreenNodes();
 		addNodesToMainScreen();
+		startGamePlayLoop();
 	}
 
 	public static void main(String[] args) {
@@ -106,17 +110,17 @@ public class SpaceExplorationEngine extends Application {
 
 	private void loadImages() {
 		background = new Image("/background.png", 1024, 600, true, false, true);
+		help = new Image("/help.png", 1024, 600, true, false, true);
 	}
 
 	private void createMainScreenNodes() {
 		horizontalButtonBox = new HBox(30);
 		horizontalButtonBox.setLayoutY(HEIGHT-100);
-		buttonBoxPadding = new Insets(0, 0, 10, 270);
+		buttonBoxPadding = new Insets(0, 0, 10, 290);
 		horizontalButtonBox.setPadding(buttonBoxPadding);
 
 		playButton = new Button("PLAY");
 		playButton.setStyle("-fx-font: 22 impact; -fx-base: #ffffff;");
-		//playButton.setLayoutX(0);
 		playButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
@@ -124,13 +128,17 @@ public class SpaceExplorationEngine extends Application {
 			}
 		});
 
-		helpButton = new Button("HELP");
+		helpButton = new ToggleButton("HELP");
 		helpButton.setStyle("-fx-font: 22 impact; -fx-base: #ffffff;");
 		helpButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
 				System.out.println("help clicked");
-
+				if (helpButton.isSelected()){
+					mainScreenBackground.setImage(help);
+				} else {
+					mainScreenBackground.setImage(background);
+				}
 			}
 		});
 
@@ -140,6 +148,7 @@ public class SpaceExplorationEngine extends Application {
 			@Override
 			public void handle(ActionEvent event) {
 				System.out.println("exit clicked");
+				gamePlayLoop.stop();
 				System.exit(1);
 			}
 		});
@@ -150,6 +159,7 @@ public class SpaceExplorationEngine extends Application {
 			@Override
 			public void handle(ActionEvent event) {
 				System.out.println("exit and save clicked");
+				gamePlayLoop.stop();
 				System.exit(1);
 			}
 		});
@@ -163,5 +173,31 @@ public class SpaceExplorationEngine extends Application {
 	private void addNodesToMainScreen(){
 		rootGroup.getChildren().add(mainScreenBackground);
 		rootGroup.getChildren().add(horizontalButtonBox);
+
+	}
+
+	private void startGamePlayLoop() {
+		gamePlayLoop = new GamePlayLoop();
+		gamePlayLoop.start();
+	}
+
+	public boolean isUp() {
+		return up;
+	}
+
+	public boolean isLeft() {
+		return left;
+	}
+
+	public boolean isRight() {
+		return right;
+	}
+
+	public boolean isSpace() {
+		return space;
+	}
+
+	public boolean isEscape() {
+		return escape;
 	}
 }
