@@ -7,8 +7,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ToggleButton;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -26,13 +25,13 @@ public class SpaceExplorationEngine extends Application {
 	private double maxWidth;
 	private double maxHeight;
 	private boolean up, left, right, space, escape;
-	private Image background, help;
+	private Image background, help, mainBack;
 	private Scene scene;
 	private HBox horizontalButtonBox;
 	private Insets buttonBoxPadding;
 	private Button playButton, exitButton, exitSaveButton;
 	private ToggleButton helpButton;
-	private ImageView mainScreenBackground, mainScreenHelp;
+	private ImageView mainScreenBackground;
 	private GamePlayLoop gamePlayLoop;
 
 
@@ -59,6 +58,9 @@ public class SpaceExplorationEngine extends Application {
 		launch(args);
 	}
 
+	public void update() {
+		handleEscape();
+	}
 
 	private void createKeyHandlers() {
 		scene.setOnKeyPressed(event -> {
@@ -109,13 +111,14 @@ public class SpaceExplorationEngine extends Application {
 	}
 
 	private void loadImages() {
+		mainBack = new Image("/main_back.png", 1024, 600, true, false, true);
 		background = new Image("/background.png", 1024, 600, true, false, true);
 		help = new Image("/help.png", 1024, 600, true, false, true);
 	}
 
 	private void createMainScreenNodes() {
 		horizontalButtonBox = new HBox(30);
-		horizontalButtonBox.setLayoutY(HEIGHT-100);
+		horizontalButtonBox.setLayoutY(HEIGHT - 100);
 		buttonBoxPadding = new Insets(0, 0, 10, 290);
 		horizontalButtonBox.setPadding(buttonBoxPadding);
 
@@ -125,6 +128,9 @@ public class SpaceExplorationEngine extends Application {
 			@Override
 			public void handle(ActionEvent event) {
 				System.out.println("play clicked");
+				mainScreenBackground.setImage(background);
+				mainScreenBackground.toBack();
+				horizontalButtonBox.setVisible(false);
 			}
 		});
 
@@ -134,10 +140,10 @@ public class SpaceExplorationEngine extends Application {
 			@Override
 			public void handle(ActionEvent event) {
 				System.out.println("help clicked");
-				if (helpButton.isSelected()){
+				if (helpButton.isSelected()) {
 					mainScreenBackground.setImage(help);
 				} else {
-					mainScreenBackground.setImage(background);
+					mainScreenBackground.setImage(mainBack);
 				}
 			}
 		});
@@ -167,18 +173,27 @@ public class SpaceExplorationEngine extends Application {
 		horizontalButtonBox.getChildren().addAll(playButton, helpButton, exitButton, exitSaveButton);
 
 		mainScreenBackground = new ImageView();
-		mainScreenBackground.setImage(background);
+		mainScreenBackground.setImage(mainBack);
 	}
 
-	private void addNodesToMainScreen(){
+	private void addNodesToMainScreen() {
 		rootGroup.getChildren().add(mainScreenBackground);
 		rootGroup.getChildren().add(horizontalButtonBox);
 
 	}
 
 	private void startGamePlayLoop() {
-		gamePlayLoop = new GamePlayLoop();
+		gamePlayLoop = new GamePlayLoop(this);
 		gamePlayLoop.start();
+	}
+
+	private void handleEscape() {
+		if (escape) {
+			mainScreenBackground.setImage(mainBack);
+			mainScreenBackground.toFront();
+			horizontalButtonBox.setVisible(true);
+			horizontalButtonBox.toFront();
+		}
 	}
 
 	public boolean isUp() {
