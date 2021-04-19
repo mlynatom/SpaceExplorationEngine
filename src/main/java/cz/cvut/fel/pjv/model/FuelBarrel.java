@@ -8,8 +8,8 @@ import javafx.scene.image.Image;
 public class FuelBarrel extends InteractThing {
 	private double amountOfFuelToAdd;
 
-	public FuelBarrel(double iX, double iY, String spriteBound, double amountOfFuelToAdd, Image... spriteImage) {
-		super(iX, iY, spriteBound, spriteImage);
+	public FuelBarrel(double positionX, double positionY, String spriteBound, double amountOfFuelToAdd, Image... spriteImage) {
+		super(positionX, positionY, spriteBound, spriteImage);
 		this.amountOfFuelToAdd = amountOfFuelToAdd;
 	}
 

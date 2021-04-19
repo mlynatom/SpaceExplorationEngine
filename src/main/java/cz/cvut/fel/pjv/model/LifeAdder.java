@@ -6,8 +6,8 @@ import javafx.scene.image.Image;
  * class for interactive thing which can add life to PlayerShip class
  */
 public class LifeAdder extends InteractThing {
-	public LifeAdder(double iX, double iY, String spriteBound, Image... spriteImage) {
-		super(iX, iY, spriteBound, spriteImage);
+	public LifeAdder(double positionX, double positionY, String spriteBound, Image... spriteImage) {
+		super(positionX, positionY, spriteBound, spriteImage);
 	}
 
 	@Override

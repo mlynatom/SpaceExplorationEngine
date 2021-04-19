@@ -8,8 +8,8 @@ import javafx.scene.image.Image;
 public class Projectile extends Actor {
 	private double lifeSpan;
 
-	public Projectile(double iX, double iY, String spriteBound, double lifeSpan, Image... spriteImage) {
-		super(iX, iY, spriteBound, spriteImage);
+	public Projectile(double positionX, double positionY, String spriteBound, double lifeSpan, Image... spriteImage) {
+		super(positionX, positionY, spriteBound, spriteImage);
 		this.lifeSpan = lifeSpan;
 	}
 

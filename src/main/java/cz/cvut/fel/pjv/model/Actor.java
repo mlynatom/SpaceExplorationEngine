@@ -12,15 +12,15 @@ import java.util.List;
  * "Super class" for all other object on scene.
  */
 public abstract class Actor {
-	protected double iX; //initial x position
-	protected double iY; //initial y position
+	protected double positionX; //initial x position
+	protected double positionY; //initial y position
 	protected List<Image> imageList = new ArrayList<>(); // list for all image states
 	protected ImageView spriteFrame;
 	protected SVGPath spriteBound;
 
-	public Actor(double iX, double iY, String spriteBound, Image... spriteImage) {
-		this.iX = iX;
-		this.iY = iY;
+	public Actor(double positionX, double positionY, String spriteBound, Image... spriteImage) {
+		this.positionX = positionX;
+		this.positionY = positionY;
 		this.spriteBound = new SVGPath();
 		this.spriteBound.setContent(spriteBound);
 		spriteFrame = new ImageView(spriteImage[0]);
@@ -33,12 +33,12 @@ public abstract class Actor {
 	 */
 	public abstract void update();
 
-	public double getiX() {
-		return iX;
+	public double getPositionX() {
+		return positionX;
 	}
 
-	public double getiY() {
-		return iY;
+	public double getPositionY() {
+		return positionY;
 	}
 
 	public List<Image> getImageList() {

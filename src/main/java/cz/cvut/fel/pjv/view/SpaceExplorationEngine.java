@@ -1,6 +1,8 @@
 package cz.cvut.fel.pjv.view;
 
 import cz.cvut.fel.pjv.controller.GamePlayLoop;
+import cz.cvut.fel.pjv.model.PlayerShip;
+import cz.cvut.fel.pjv.model.Projectile;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -26,6 +28,7 @@ public class SpaceExplorationEngine extends Application {
 	private double maxHeight;
 	private boolean up, left, right, space, escape;
 	private Image background, help, mainBack;
+	private Image playerShip0, playerShip1;
 	private Scene scene;
 	private HBox horizontalButtonBox;
 	private Insets buttonBoxPadding;
@@ -33,6 +36,9 @@ public class SpaceExplorationEngine extends Application {
 	private ToggleButton helpButton;
 	private ImageView mainScreenBackground;
 	private GamePlayLoop gamePlayLoop;
+	private PlayerShip playerShip;
+	private Projectile playerProjectile;
+	private final double playerShipImageDimension = 200;
 
 
 	@Override
@@ -49,6 +55,8 @@ public class SpaceExplorationEngine extends Application {
 
 		createKeyHandlers();
 		loadImages();
+		createGameActors();
+		addGameActorsNodes();
 		createMainScreenNodes();
 		addNodesToMainScreen();
 		startGamePlayLoop();
@@ -114,6 +122,18 @@ public class SpaceExplorationEngine extends Application {
 		mainBack = new Image("/main_back.png", 1024, 600, true, false, true);
 		background = new Image("/background.png", 1024, 600, true, false, true);
 		help = new Image("/help.png", 1024, 600, true, false, true);
+		playerShip0 = new Image("/player_ship_0.png", playerShipImageDimension, playerShipImageDimension, true, false, true);
+		playerShip1 = new Image("/player_ship_1.png", playerShipImageDimension, playerShipImageDimension, true, false, true);
+	}
+
+	private void createGameActors() {
+		//Attention!!
+		playerProjectile = new Projectile(-10, -10, "M0 6 L0 52 70 52 70 70 70 93 115 45 115 0 84 0 68 16 Z", 20, playerShip0);
+		playerShip = new PlayerShip(this,20, WIDTH-playerShipImageDimension, "M0 6 L0 52 70 52 70 70 70 93 115 45 115 0 84 0 68 16 Z", 10, 1, true, playerProjectile, 1, 20, playerShip0, playerShip1);
+	}
+
+	private void addGameActorsNodes() {
+		rootGroup.getChildren().add(playerShip.getSpriteFrame());
 	}
 
 	private void createMainScreenNodes() {
@@ -212,7 +232,19 @@ public class SpaceExplorationEngine extends Application {
 		return space;
 	}
 
-	public boolean isEscape() {
-		return escape;
+	public PlayerShip getPlayerShip() {
+		return playerShip;
+	}
+
+	public static double getWIDTH() {
+		return WIDTH;
+	}
+
+	public static double getHEIGHT() {
+		return HEIGHT;
+	}
+
+	public double getPlayerShipImageDimension() {
+		return playerShipImageDimension;
 	}
 }

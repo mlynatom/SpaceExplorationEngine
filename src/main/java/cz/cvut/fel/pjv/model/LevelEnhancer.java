@@ -8,8 +8,8 @@ import javafx.scene.image.Image;
 public class LevelEnhancer extends InteractThing {
 	private int amountOfLevelToAdd;
 
-	public LevelEnhancer(double iX, double iY, String spriteBound, int amountOfLevelToAdd, Image... spriteImage) {
-		super(iX, iY, spriteBound, spriteImage);
+	public LevelEnhancer(double positionX, double positionY, String spriteBound, int amountOfLevelToAdd, Image... spriteImage) {
+		super(positionX, positionY, spriteBound, spriteImage);
 		this.amountOfLevelToAdd = amountOfLevelToAdd;
 	}
 

@@ -16,5 +16,6 @@ public class GamePlayLoop extends AnimationTimer {
 	@Override
 	public void handle(long now) {
 		spaceExplorationEngine.update();
+		spaceExplorationEngine.getPlayerShip().update();
 	}
 }

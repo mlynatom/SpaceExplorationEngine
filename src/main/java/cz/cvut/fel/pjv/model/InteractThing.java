@@ -6,8 +6,9 @@ import javafx.scene.image.Image;
  * abstract class for all interactive things in game
  */
 public abstract class InteractThing extends Actor {
-	public InteractThing(double iX, double iY, String spriteBound, Image... spriteImage) {
-		super(iX, iY, spriteBound, spriteImage);
+
+	public InteractThing(double positionX, double positionY, String spriteBound, Image... spriteImage) {
+		super(positionX, positionY, spriteBound, spriteImage);
 	}
 
 	@Override

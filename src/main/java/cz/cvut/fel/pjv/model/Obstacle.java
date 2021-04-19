@@ -8,8 +8,8 @@ import javafx.scene.image.Image;
 public class Obstacle extends Actor {
 	private double damage;
 
-	public Obstacle(double iX, double iY, String spriteBound, double damage, Image... spriteImage) {
-		super(iX, iY, spriteBound, spriteImage);
+	public Obstacle(double positionX, double positionY, String spriteBound, double damage, Image... spriteImage) {
+		super(positionX, positionY, spriteBound, spriteImage);
 		this.damage = damage;
 	}
 

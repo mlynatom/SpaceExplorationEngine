@@ -1,5 +1,6 @@
 package cz.cvut.fel.pjv.model;
 
+import cz.cvut.fel.pjv.view.SpaceExplorationEngine;
 import javafx.scene.image.Image;
 
 /**
@@ -10,15 +11,17 @@ public abstract class Ship extends Actor {
 	protected boolean isAlive;
 	protected Projectile projectile;
 	protected double velocityX, velocityY;
+	protected SpaceExplorationEngine spaceExplorationEngine;
 
-	public Ship(double iX, double iY, double velocityX, double velocityY, String spriteBound, double life, double damage, Projectile projectile, Image... spriteImage) {
-		super(iX, iY, spriteBound, spriteImage);
+	public Ship(SpaceExplorationEngine spaceExplorationEngine, double positionX, double positionY, double velocityX, double velocityY, String spriteBound, double life, double damage, Projectile projectile, Image... spriteImage) {
+		super(positionX, positionY, spriteBound, spriteImage);
 		this.life = life;
 		this.damage = damage;
 		this.projectile = projectile;
 		this.velocityX = velocityX;
 		this.velocityY = velocityY;
 		isAlive = true;
+		this.spaceExplorationEngine = spaceExplorationEngine;
 	}
 
 	@Override
