@@ -16,7 +16,7 @@ public class PlayerShip extends Ship {
 	private static final double upBorder = 0;
 	private static double bottomBorder;
 
-	public PlayerShip(SpaceExplorationEngine spaceExplorationEngine, double positionX, double positionY, String spriteBound, double life, double damage, boolean isAlive, Projectile projectile, int level, double fuel, Image... spriteImage) {
+	public PlayerShip(SpaceExplorationEngine spaceExplorationEngine, double positionX, double positionY, String spriteBound, int life, double damage, boolean isAlive, Projectile projectile, int level, double fuel, Image... spriteImage) {
 		super(spaceExplorationEngine, positionX, positionY, 2, 3, spriteBound, life, damage, projectile, spriteImage);
 		this.level = level;
 		this.fuel = fuel;

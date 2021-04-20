@@ -1,8 +1,12 @@
 package cz.cvut.fel.pjv.view;
 
 import cz.cvut.fel.pjv.controller.GamePlayLoop;
+import cz.cvut.fel.pjv.fileIO.LevelData;
+import cz.cvut.fel.pjv.fileIO.PlayerData;
+import cz.cvut.fel.pjv.fileIO.YamlIO;
 import cz.cvut.fel.pjv.model.PlayerShip;
 import cz.cvut.fel.pjv.model.Projectile;
+
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -38,7 +42,9 @@ public class SpaceExplorationEngine extends Application {
 	private GamePlayLoop gamePlayLoop;
 	private PlayerShip playerShip;
 	private Projectile playerProjectile;
-	private final double playerShipImageDimension = 200;
+	private final double playerShipImageDimension = HEIGHT / 6;
+	private LevelData levelData;
+	private PlayerData playerData;
 
 
 	@Override
@@ -53,6 +59,7 @@ public class SpaceExplorationEngine extends Application {
 		primaryStage.show();
 		//primaryStage.setMaximized(MAXIMIZED);
 
+		loadFiles();
 		createKeyHandlers();
 		loadImages();
 		createGameActors();
@@ -68,6 +75,11 @@ public class SpaceExplorationEngine extends Application {
 
 	public void update() {
 		handleEscape();
+	}
+
+	private void loadFiles() {
+		playerData = YamlIO.loadPlayerDataYaml();
+		levelData = YamlIO.loadLevelDataYaml();
 	}
 
 	private void createKeyHandlers() {
@@ -129,7 +141,7 @@ public class SpaceExplorationEngine extends Application {
 	private void createGameActors() {
 		//Attention!!
 		playerProjectile = new Projectile(-10, -10, "M0 6 L0 52 70 52 70 70 70 93 115 45 115 0 84 0 68 16 Z", 20, playerShip0);
-		playerShip = new PlayerShip(this,20, WIDTH-playerShipImageDimension, "M0 6 L0 52 70 52 70 70 70 93 115 45 115 0 84 0 68 16 Z", 10, 1, true, playerProjectile, 1, 20, playerShip0, playerShip1);
+		playerShip = new PlayerShip(this, 20, WIDTH - playerShipImageDimension, "M0 6 L0 52 70 52 70 70 70 93 115 45 115 0 84 0 68 16 Z", 10, 1, true, playerProjectile, 1, 20, playerShip0, playerShip1);
 	}
 
 	private void addGameActorsNodes() {
@@ -185,6 +197,7 @@ public class SpaceExplorationEngine extends Application {
 			@Override
 			public void handle(ActionEvent event) {
 				System.out.println("exit and save clicked");
+				savePlayerData();
 				gamePlayLoop.stop();
 				System.exit(1);
 			}
@@ -214,6 +227,14 @@ public class SpaceExplorationEngine extends Application {
 			horizontalButtonBox.setVisible(true);
 			horizontalButtonBox.toFront();
 		}
+	}
+
+	private void savePlayerData() {
+		playerData.setShipFuel(playerShip.getFuel());
+		playerData.setShipLevel(playerShip.getLevel());
+		playerData.setShipLife(playerShip.getLife());
+
+		YamlIO.savePlayerDataYaml(playerData);
 	}
 
 	public boolean isUp() {
