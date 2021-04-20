@@ -2,6 +2,10 @@ package cz.cvut.fel.pjv.fileIO;
 
 import javafx.geometry.Point2D;
 
+/**
+ * This class is used for serializing coordinates (x and y positions) in order to allow use in Jackson
+ * library for yaml files.
+ */
 public class coordinate2D extends Point2D {
 
 	/**
@@ -18,6 +22,6 @@ public class coordinate2D extends Point2D {
 	 * Creates a new instance of {@code Point2D}. This constructor is needed for Jackson.
 	 */
 	public coordinate2D() {
-		super(-1,-1);
+		super(-1, -1);
 	}
 }

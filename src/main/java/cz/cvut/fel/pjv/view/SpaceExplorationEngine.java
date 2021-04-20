@@ -8,8 +8,6 @@ import cz.cvut.fel.pjv.model.PlayerShip;
 import cz.cvut.fel.pjv.model.Projectile;
 
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -156,51 +154,39 @@ public class SpaceExplorationEngine extends Application {
 
 		playButton = new Button("PLAY");
 		playButton.setStyle("-fx-font: 22 impact; -fx-base: #ffffff;");
-		playButton.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-				System.out.println("play clicked");
-				mainScreenBackground.setImage(background);
-				mainScreenBackground.toBack();
-				horizontalButtonBox.setVisible(false);
-			}
+		playButton.setOnAction(event -> {
+			System.out.println("play clicked");
+			mainScreenBackground.setImage(background);
+			mainScreenBackground.toBack();
+			horizontalButtonBox.setVisible(false);
 		});
 
 		helpButton = new ToggleButton("HELP");
 		helpButton.setStyle("-fx-font: 22 impact; -fx-base: #ffffff;");
-		helpButton.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-				System.out.println("help clicked");
-				if (helpButton.isSelected()) {
-					mainScreenBackground.setImage(help);
-				} else {
-					mainScreenBackground.setImage(mainBack);
-				}
+		helpButton.setOnAction(event -> {
+			System.out.println("help clicked");
+			if (helpButton.isSelected()) {
+				mainScreenBackground.setImage(help);
+			} else {
+				mainScreenBackground.setImage(mainBack);
 			}
 		});
 
 		exitButton = new Button("EXIT");
 		exitButton.setStyle("-fx-font: 22 impact; -fx-base: #ffffff;");
-		exitButton.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-				System.out.println("exit clicked");
-				gamePlayLoop.stop();
-				System.exit(1);
-			}
+		exitButton.setOnAction(event -> {
+			System.out.println("exit clicked");
+			gamePlayLoop.stop();
+			System.exit(1);
 		});
 
 		exitSaveButton = new Button("EXIT AND SAVE");
 		exitSaveButton.setStyle("-fx-font: 22 impact; -fx-base: #ffffff;");
-		exitSaveButton.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-				System.out.println("exit and save clicked");
-				savePlayerData();
-				gamePlayLoop.stop();
-				System.exit(1);
-			}
+		exitSaveButton.setOnAction(event -> {
+			System.out.println("exit and save clicked");
+			savePlayerData();
+			gamePlayLoop.stop();
+			System.exit(1);
 		});
 
 		horizontalButtonBox.getChildren().addAll(playButton, helpButton, exitButton, exitSaveButton);

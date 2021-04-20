@@ -2,6 +2,11 @@ package cz.cvut.fel.pjv.fileIO;
 
 import java.util.List;
 
+/**
+ * This class is a data structure for loading level configurations.
+ * It is used for saving and loading from yaml files.
+ * All public getters, setters and constructor are vital for Jackson library.
+ */
 public class LevelData {
 	private double gravity;
 	private String backgroundImagePath;
