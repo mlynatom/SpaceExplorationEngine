@@ -3,7 +3,6 @@ package cz.cvut.fel.pjv.view;
 import cz.cvut.fel.pjv.controller.SpaceExplorationEngine;
 import cz.cvut.fel.pjv.fileIO.LevelData;
 import cz.cvut.fel.pjv.fileIO.PlayerData;
-import cz.cvut.fel.pjv.fileIO.YamlIO;
 import cz.cvut.fel.pjv.model.PlayerShip;
 import cz.cvut.fel.pjv.model.Projectile;
 import javafx.geometry.Insets;
