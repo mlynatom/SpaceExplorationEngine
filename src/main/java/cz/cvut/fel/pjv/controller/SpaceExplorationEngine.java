@@ -1,5 +1,8 @@
 package cz.cvut.fel.pjv.controller;
 
+import cz.cvut.fel.pjv.fileIO.LevelData;
+import cz.cvut.fel.pjv.fileIO.PlayerData;
+import cz.cvut.fel.pjv.fileIO.YamlIO;
 import cz.cvut.fel.pjv.view.ViewEngine;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -11,11 +14,14 @@ public class SpaceExplorationEngine extends Application {
 	private boolean up, left, right, space, escape;
 	private GamePlayLoop gamePlayLoop;
 	protected ViewEngine viewEngine;
+	private LevelData levelData;
+	private PlayerData playerData;
 
 
 	@Override
 	public void start(Stage primaryStage) {
-		viewEngine = new ViewEngine(primaryStage, this);
+		loadFiles();
+		viewEngine = new ViewEngine(primaryStage, this, levelData, playerData);
 		viewEngine.startViewEngine();
 		createKeyHandlers();
 		startGamePlayLoop();
@@ -25,8 +31,9 @@ public class SpaceExplorationEngine extends Application {
 		launch(args);
 	}
 
-	public void update() {
-		viewEngine.handleEscape();
+	private void loadFiles() {
+		playerData = YamlIO.loadPlayerDataYaml();
+		levelData = YamlIO.loadLevelDataYaml();
 	}
 
 	private void createKeyHandlers() {
@@ -78,8 +85,17 @@ public class SpaceExplorationEngine extends Application {
 	}
 
 	private void startGamePlayLoop() {
-		gamePlayLoop = new GamePlayLoop(this);
+		gamePlayLoop = new GamePlayLoop(viewEngine);
 		gamePlayLoop.start();
+	}
+
+	public void stopGamePlayLoop() {
+		gamePlayLoop.stop();
+	}
+
+	public void savePlayerData(PlayerData playerData) {
+		this.playerData = playerData;
+		YamlIO.savePlayerDataYaml(playerData);
 	}
 
 	public boolean isUp() {
@@ -102,7 +118,4 @@ public class SpaceExplorationEngine extends Application {
 		return escape;
 	}
 
-	public GamePlayLoop getGamePlayLoop() {
-		return gamePlayLoop;
-	}
 }

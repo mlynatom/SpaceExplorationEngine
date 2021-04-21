@@ -3,7 +3,6 @@ package cz.cvut.fel.pjv.view;
 import cz.cvut.fel.pjv.controller.SpaceExplorationEngine;
 import cz.cvut.fel.pjv.fileIO.LevelData;
 import cz.cvut.fel.pjv.fileIO.PlayerData;
-import cz.cvut.fel.pjv.fileIO.YamlIO;
 import cz.cvut.fel.pjv.model.PlayerShip;
 import cz.cvut.fel.pjv.model.Projectile;
 import javafx.geometry.Insets;
@@ -32,13 +31,19 @@ public class ViewEngine {
 	private final Stage primaryStage;
 	private Group rootGroup;
 	private Scene scene;
-	private LevelData levelData;
-	private PlayerData playerData;
+	private final LevelData levelData;
+	private final PlayerData playerData;
 	private final SpaceExplorationEngine spaceExplorationEngine;
 
-	public ViewEngine(Stage primaryStage, SpaceExplorationEngine spaceExplorationEngine) {
+	public ViewEngine(Stage primaryStage, SpaceExplorationEngine spaceExplorationEngine, LevelData levelData, PlayerData playerData) {
 		this.primaryStage = primaryStage;
 		this.spaceExplorationEngine = spaceExplorationEngine;
+		this.levelData = levelData;
+		this.playerData = playerData;
+	}
+
+	public void update() {
+		handleEscape();
 	}
 
 	public void startViewEngine() {
@@ -49,7 +54,6 @@ public class ViewEngine {
 		primaryStage.setResizable(false);
 		primaryStage.show();
 
-		loadFiles();
 		loadImages();
 		createGameActors();
 		addGameActorsNodes();
@@ -57,10 +61,6 @@ public class ViewEngine {
 		addNodesToMainScreen();
 	}
 
-	private void loadFiles() {
-		playerData = YamlIO.loadPlayerDataYaml();
-		levelData = YamlIO.loadLevelDataYaml();
-	}
 
 	private void loadImages() {
 		mainBack = new Image("/main_back.png", 1024, 600, true, false, true);
@@ -110,7 +110,7 @@ public class ViewEngine {
 		exitButton.setStyle("-fx-font: 22 impact; -fx-base: #ffffff;");
 		exitButton.setOnAction(event -> {
 			System.out.println("exit clicked");
-			spaceExplorationEngine.getGamePlayLoop().stop();
+			spaceExplorationEngine.stopGamePlayLoop();
 			System.exit(1);
 		});
 
@@ -118,8 +118,9 @@ public class ViewEngine {
 		exitSaveButton.setStyle("-fx-font: 22 impact; -fx-base: #ffffff;");
 		exitSaveButton.setOnAction(event -> {
 			System.out.println("exit and save clicked");
-			savePlayerData();
-			spaceExplorationEngine.getGamePlayLoop().stop();
+			saveDataToPlayerData();
+			spaceExplorationEngine.savePlayerData(playerData);
+			spaceExplorationEngine.stopGamePlayLoop();
 			System.exit(1);
 		});
 
@@ -135,16 +136,10 @@ public class ViewEngine {
 
 	}
 
-	public Scene getScene() {
-		return scene;
-	}
-
-	private void savePlayerData() {
+	private void saveDataToPlayerData() {
 		playerData.setShipFuel(playerShip.getFuel());
 		playerData.setShipLevel(playerShip.getLevel());
 		playerData.setShipLife(playerShip.getLife());
-
-		YamlIO.savePlayerDataYaml(playerData);
 	}
 
 	public void handleEscape() {
@@ -154,6 +149,10 @@ public class ViewEngine {
 			horizontalButtonBox.setVisible(true);
 			horizontalButtonBox.toFront();
 		}
+	}
+
+	public Scene getScene() {
+		return scene;
 	}
 
 	public PlayerShip getPlayerShip() {
