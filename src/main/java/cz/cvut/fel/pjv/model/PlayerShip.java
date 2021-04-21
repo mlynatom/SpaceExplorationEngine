@@ -1,7 +1,9 @@
 package cz.cvut.fel.pjv.model;
 
-import cz.cvut.fel.pjv.view.SpaceExplorationEngine;
+import cz.cvut.fel.pjv.controller.SpaceExplorationEngine;
 import javafx.scene.image.Image;
+
+import static cz.cvut.fel.pjv.controller.Constants.*;
 
 /**
  * This class is for player ship, the main and only playable object in game.
@@ -22,8 +24,8 @@ public class PlayerShip extends Ship {
 		this.fuel = fuel;
 		this.isAlive = isAlive;
 		gravity = 0.3;
-		rightBorder = SpaceExplorationEngine.getWIDTH() - spaceExplorationEngine.getPlayerShipImageDimension();
-		bottomBorder = SpaceExplorationEngine.getHEIGHT() - spaceExplorationEngine.getPlayerShipImageDimension();
+		rightBorder = WIDTH - SHIP_DIMENSIONS;
+		bottomBorder = HEIGHT- SHIP_DIMENSIONS;
 	}
 
 	@Override

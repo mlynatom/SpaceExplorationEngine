@@ -1,6 +1,6 @@
 package cz.cvut.fel.pjv.model;
 
-import cz.cvut.fel.pjv.view.SpaceExplorationEngine;
+import cz.cvut.fel.pjv.controller.SpaceExplorationEngine;
 import javafx.scene.image.Image;
 
 /**

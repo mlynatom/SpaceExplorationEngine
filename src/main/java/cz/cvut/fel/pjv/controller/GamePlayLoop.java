@@ -1,6 +1,5 @@
 package cz.cvut.fel.pjv.controller;
 
-import cz.cvut.fel.pjv.view.SpaceExplorationEngine;
 import javafx.animation.AnimationTimer;
 
 /**
@@ -16,6 +15,6 @@ public class GamePlayLoop extends AnimationTimer {
 	@Override
 	public void handle(long now) {
 		spaceExplorationEngine.update();
-		spaceExplorationEngine.getPlayerShip().update();
+		spaceExplorationEngine.viewEngine.getPlayerShip().update();
 	}
 }

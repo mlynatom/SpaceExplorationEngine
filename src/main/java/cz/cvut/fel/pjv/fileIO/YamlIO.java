@@ -8,6 +8,9 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import static cz.cvut.fel.pjv.controller.Constants.LEVEL_PATH;
+import static cz.cvut.fel.pjv.controller.Constants.PLAYER_PATH;
+
 /**
  * This class contains functions for loading settings of game engine from yaml files and saving player data after
  * completed game. It is using Jackson libraries for operating with yaml files.
@@ -15,11 +18,10 @@ import java.util.logging.Logger;
  */
 public class YamlIO {
 	private static final Logger LOGGER = Logger.getLogger(YamlIO.class.getName());
-	private static final String LEVEL_PATH = "level.yaml";
-	private static final String PLAYER_PATH = "player.yaml";
 
 	/**
 	 * This method loads LevelData from LEVEL_PATH yaml file.
+	 *
 	 * @return LevelData class for later use
 	 */
 	public static LevelData loadLevelDataYaml() {
@@ -34,6 +36,7 @@ public class YamlIO {
 
 	/**
 	 * This method loads PlayerData from PLAYER_PATH yaml file.
+	 *
 	 * @return PlayerData class for later use
 	 */
 	public static PlayerData loadPlayerDataYaml() {
