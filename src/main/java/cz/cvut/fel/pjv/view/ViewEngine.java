@@ -3,6 +3,7 @@ package cz.cvut.fel.pjv.view;
 import cz.cvut.fel.pjv.controller.SpaceExplorationEngine;
 import cz.cvut.fel.pjv.fileIO.LevelData;
 import cz.cvut.fel.pjv.fileIO.PlayerData;
+import cz.cvut.fel.pjv.fileIO.YamlIO;
 import cz.cvut.fel.pjv.model.PlayerShip;
 import cz.cvut.fel.pjv.model.Projectile;
 import javafx.geometry.Insets;
@@ -16,9 +17,14 @@ import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import static cz.cvut.fel.pjv.controller.Constants.*;
 
 public class ViewEngine {
+	private static final Logger LOGGER = Logger.getLogger(ViewEngine.class.getName());
+
 	private Image background, help, mainBack;
 	private Image playerShip0, playerShip1;
 	private HBox horizontalButtonBox;
@@ -34,6 +40,7 @@ public class ViewEngine {
 	private final LevelData levelData;
 	private final PlayerData playerData;
 	private final SpaceExplorationEngine spaceExplorationEngine;
+
 
 	public ViewEngine(Stage primaryStage, SpaceExplorationEngine spaceExplorationEngine, LevelData levelData, PlayerData playerData) {
 		this.primaryStage = primaryStage;
@@ -89,7 +96,7 @@ public class ViewEngine {
 		playButton = new Button("PLAY");
 		playButton.setStyle("-fx-font: 22 impact; -fx-base: #ffffff;");
 		playButton.setOnAction(event -> {
-			System.out.println("play clicked");
+			LOGGER.log(Level.INFO, "Play button was used");
 			mainScreenBackground.setImage(background);
 			mainScreenBackground.toBack();
 			horizontalButtonBox.setVisible(false);
@@ -98,7 +105,7 @@ public class ViewEngine {
 		helpButton = new ToggleButton("HELP");
 		helpButton.setStyle("-fx-font: 22 impact; -fx-base: #ffffff;");
 		helpButton.setOnAction(event -> {
-			System.out.println("help clicked");
+			LOGGER.log(Level.INFO, "Help button used.");
 			if (helpButton.isSelected()) {
 				mainScreenBackground.setImage(help);
 			} else {
@@ -109,7 +116,7 @@ public class ViewEngine {
 		exitButton = new Button("EXIT");
 		exitButton.setStyle("-fx-font: 22 impact; -fx-base: #ffffff;");
 		exitButton.setOnAction(event -> {
-			System.out.println("exit clicked");
+			LOGGER.log(Level.INFO, "Exit button used.");
 			spaceExplorationEngine.stopGamePlayLoop();
 			System.exit(1);
 		});
@@ -117,7 +124,7 @@ public class ViewEngine {
 		exitSaveButton = new Button("EXIT AND SAVE");
 		exitSaveButton.setStyle("-fx-font: 22 impact; -fx-base: #ffffff;");
 		exitSaveButton.setOnAction(event -> {
-			System.out.println("exit and save clicked");
+			LOGGER.log(Level.INFO, "Exit and Save button used.");
 			saveDataToPlayerData();
 			spaceExplorationEngine.savePlayerData(playerData);
 			spaceExplorationEngine.stopGamePlayLoop();
