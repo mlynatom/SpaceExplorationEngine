@@ -11,7 +11,7 @@ public class LevelData {
 	private double gravity;
 	private String backgroundImagePath;
 	private String shipImagePath;
-	private String shipImageRotatedLeftPath;
+	private String shipImageEnginesOnPath;
 	private int numOfFuels;
 	private int numOfLevelEnhancers;
 	private int numOfLifeAdders;
@@ -44,12 +44,12 @@ public class LevelData {
 		this.shipImagePath = shipImagePath;
 	}
 
-	public String getShipImageRotatedLeftPath() {
-		return shipImageRotatedLeftPath;
+	public String getShipImageEnginesOnPath() {
+		return shipImageEnginesOnPath;
 	}
 
-	public void setShipImageRotatedLeftPath(String shipImageRotatedLeftPath) {
-		this.shipImageRotatedLeftPath = shipImageRotatedLeftPath;
+	public void setShipImageEnginesOnPath(String shipImageEnginesOnPath) {
+		this.shipImageEnginesOnPath = shipImageEnginesOnPath;
 	}
 
 	public int getNumOfFuels() {

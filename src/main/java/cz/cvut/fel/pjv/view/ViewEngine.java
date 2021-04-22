@@ -73,7 +73,7 @@ public class ViewEngine {
 		background = new Image(levelData.getBackgroundImagePath(), WIDTH, HEIGHT, true, false, true);
 		help = new Image("/help.png", WIDTH, HEIGHT, true, false, true);
 		shipImage0 = new Image(levelData.getShipImagePath(), SHIP_DIMENSIONS, SHIP_DIMENSIONS, true, false, true);
-		shipImage1 = new Image(levelData.getShipImageRotatedLeftPath(), SHIP_DIMENSIONS, SHIP_DIMENSIONS, true, false, true);
+		shipImage1 = new Image(levelData.getShipImageEnginesOnPath(), SHIP_DIMENSIONS, SHIP_DIMENSIONS, true, false, true);
 	}
 
 	private void createGameActors() {

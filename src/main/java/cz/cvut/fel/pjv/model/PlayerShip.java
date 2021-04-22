@@ -13,7 +13,7 @@ public class PlayerShip extends Ship {
 	private int level; // current level of ship
 	private double fuel; // amount of fuel in ship
 	private boolean isAlive;
-	private double gravity;
+	private final double gravity;
 	private static final double rightBorder = WIDTH - SHIP_DIMENSIONS;
 	private static final double leftBorder = 0;
 	private static final double upBorder = 0;
@@ -34,6 +34,7 @@ public class PlayerShip extends Ship {
 		applyGravity();
 		checkBorders();
 		moveImage();
+		setRightImage();
 	}
 
 	@Override
@@ -74,6 +75,31 @@ public class PlayerShip extends Ship {
 	private void moveImage() {
 		spriteFrame.setTranslateX(positionX);
 		spriteFrame.setTranslateY(positionY);
+	}
+
+	private void setRightImage() {
+		if (spaceExplorationEngine.isUp()) {
+			if (spaceExplorationEngine.isRight()) {
+				spriteFrame.setRotate(30);
+			} else if (spaceExplorationEngine.isLeft()) {
+				spriteFrame.setRotate(-30);
+			} else {
+				spriteFrame.setRotate(0);
+			}
+			spriteFrame.setImage(imageList.get(1));
+		} else {
+			if (spaceExplorationEngine.isLeft()) {
+				spriteFrame.setRotate(-30);
+				spriteFrame.setImage(imageList.get(0));
+			} else if (spaceExplorationEngine.isRight()) {
+				spriteFrame.setRotate(30);
+				spriteFrame.setImage(imageList.get(0));
+			} else {
+				spriteFrame.setRotate(0);
+				spriteFrame.setImage(imageList.get(0));
+			}
+		}
+
 	}
 
 	/**
