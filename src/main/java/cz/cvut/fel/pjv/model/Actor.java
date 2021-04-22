@@ -41,6 +41,14 @@ public abstract class Actor {
 		return positionY;
 	}
 
+	public void setPositionX(double positionX) {
+		this.positionX = positionX;
+	}
+
+	public void setPositionY(double positionY) {
+		this.positionY = positionY;
+	}
+
 	public List<Image> getImageList() {
 		return imageList;
 	}

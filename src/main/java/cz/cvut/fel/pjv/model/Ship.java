@@ -36,4 +36,8 @@ public abstract class Ship extends Actor {
 	public int getLife() {
 		return life;
 	}
+
+	public void setLife(int life) {
+		this.life = life;
+	}
 }

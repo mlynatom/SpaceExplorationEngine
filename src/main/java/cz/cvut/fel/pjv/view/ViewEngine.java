@@ -79,7 +79,7 @@ public class ViewEngine {
 	private void createGameActors() {
 		//Attention to projectile!!
 		playerProjectile = new Projectile(-10, -10, "M0 6 L0 52 70 52 70 70 70 93 115 45 115 0 84 0 68 16 Z", 20, shipImage0);
-		playerShip = new PlayerShip(spaceExplorationEngine, 20, WIDTH - SHIP_DIMENSIONS,
+		playerShip = new PlayerShip(spaceExplorationEngine, DEFAULT_SHIP_X_POSITION, WIDTH - SHIP_DIMENSIONS,
 				"M0 6 L0 52 70 52 70 70 70 93 115 45 115 0 84 0 68 16 Z", playerProjectile, playerData,
 				levelData.getGravity(), shipImage0, shipImage1);
 	}
@@ -101,6 +101,7 @@ public class ViewEngine {
 			mainScreenBackground.setImage(background);
 			mainScreenBackground.toBack();
 			horizontalButtonBox.setVisible(false);
+			restartGame();
 		});
 
 		helpButton = new ToggleButton("HELP");
@@ -157,6 +158,14 @@ public class ViewEngine {
 			horizontalButtonBox.setVisible(true);
 			horizontalButtonBox.toFront();
 		}
+	}
+
+	private void restartGame(){
+		playerShip.setPositionX(DEFAULT_SHIP_X_POSITION);
+		playerShip.setPositionY(WIDTH - SHIP_DIMENSIONS);
+		playerShip.setFuel(playerData.getShipFuel());
+		playerShip.setLevel(playerData.getShipLevel());
+		playerShip.setLife(playerData.getShipLife());
 	}
 
 	public Scene getScene() {

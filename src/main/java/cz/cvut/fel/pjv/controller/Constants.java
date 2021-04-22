@@ -8,4 +8,5 @@ public class Constants {
 	public static final double SHIP_DIMENSIONS = HEIGHT / 6; // dimension of player ship according to window size
 	public static final String LEVEL_PATH = "level.yaml"; // name of level data file
 	public static final String PLAYER_PATH = "player.yaml"; // name of player data file
+	public static final double DEFAULT_SHIP_X_POSITION = 20;
 }
