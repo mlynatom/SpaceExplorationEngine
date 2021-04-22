@@ -10,6 +10,7 @@ import static cz.cvut.fel.pjv.controller.Constants.*;
  * This class is for player ship, the main and only playable object in game.
  */
 public class PlayerShip extends Ship {
+	private static final double FUEL_CONSUMPTION = 0.2;
 	private int level; // current level of ship
 	private double fuel; // amount of fuel in ship
 	private boolean isAlive;
@@ -49,8 +50,10 @@ public class PlayerShip extends Ship {
 		if (spaceExplorationEngine.isRight()) {
 			positionX += velocityX;
 		}
-		if (spaceExplorationEngine.isUp()) {
+		if (spaceExplorationEngine.isUp() && fuel > 0) {
 			positionY -= velocityY;
+			fuel -= FUEL_CONSUMPTION;
+			spaceExplorationEngine.updateFuelOnScreen();
 		}
 	}
 
@@ -78,7 +81,7 @@ public class PlayerShip extends Ship {
 	}
 
 	private void setRightImage() {
-		if (spaceExplorationEngine.isUp()) {
+		if (spaceExplorationEngine.isUp() && fuel > 0) {
 			if (spaceExplorationEngine.isRight()) {
 				spriteFrame.setRotate(30);
 			} else if (spaceExplorationEngine.isLeft()) {

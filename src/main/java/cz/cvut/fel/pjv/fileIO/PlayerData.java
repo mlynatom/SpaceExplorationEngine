@@ -7,7 +7,7 @@ package cz.cvut.fel.pjv.fileIO;
  */
 public class PlayerData {
 	private int shipLevel;
-	private int shipLife;
+	private double shipLife;
 	private double shipFuel;
 
 	public PlayerData() {
@@ -21,11 +21,11 @@ public class PlayerData {
 		this.shipLevel = shipLevel;
 	}
 
-	public int getShipLife() {
+	public double getShipLife() {
 		return shipLife;
 	}
 
-	public void setShipLife(int shipLife) {
+	public void setShipLife(double shipLife) {
 		this.shipLife = shipLife;
 	}
 

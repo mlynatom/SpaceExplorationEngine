@@ -98,6 +98,16 @@ public class SpaceExplorationEngine extends Application {
 		YamlIO.savePlayerDataYaml(playerData);
 	}
 
+	public void updateFuelOnScreen(){
+		viewEngine.updateFuelBar();
+	}
+	public void updateLifeOnScreen(){
+		viewEngine.updateLifeBar();
+	}
+	public void updateLevelOnScreen(){
+		viewEngine.updateLevelText();
+	}
+
 	public boolean isUp() {
 		return up;
 	}

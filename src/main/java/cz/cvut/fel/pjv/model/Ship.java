@@ -8,13 +8,13 @@ import javafx.scene.image.Image;
  */
 public abstract class Ship extends Actor {
 	protected double damage;
-	private int life;
+	private double life;
 	protected boolean isAlive;
 	protected Projectile projectile;
 	protected double velocityX, velocityY;
 	protected SpaceExplorationEngine spaceExplorationEngine;
 
-	public Ship(SpaceExplorationEngine spaceExplorationEngine, double positionX, double positionY, double velocityX, double velocityY, String spriteBound, int life, double damage, Projectile projectile, Image... spriteImage) {
+	public Ship(SpaceExplorationEngine spaceExplorationEngine, double positionX, double positionY, double velocityX, double velocityY, String spriteBound, double life, double damage, Projectile projectile, Image... spriteImage) {
 		super(positionX, positionY, spriteBound, spriteImage);
 		this.life = life;
 		this.damage = damage;
@@ -33,11 +33,11 @@ public abstract class Ship extends Actor {
 	 */
 	public abstract void shootProjectile();
 
-	public int getLife() {
+	public  double getLife() {
 		return life;
 	}
 
-	public void setLife(int life) {
+	public void setLife(double life) {
 		this.life = life;
 	}
 }

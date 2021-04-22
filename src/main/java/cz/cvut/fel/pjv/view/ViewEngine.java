@@ -6,14 +6,18 @@ import cz.cvut.fel.pjv.fileIO.PlayerData;
 import cz.cvut.fel.pjv.model.PlayerShip;
 import cz.cvut.fel.pjv.model.Projectile;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.util.logging.Level;
@@ -26,7 +30,7 @@ public class ViewEngine {
 
 	private Image background, help, mainBack;
 	private Image shipImage0, shipImage1;
-	private HBox horizontalButtonBox;
+	private HBox horizontalButtonBox, horizontalUpperBox, fuelBox, lifeBox, levelBox;
 	private Insets buttonBoxPadding;
 	private Button playButton, exitButton, exitSaveButton;
 	private ToggleButton helpButton;
@@ -39,6 +43,9 @@ public class ViewEngine {
 	private final LevelData levelData;
 	private final PlayerData playerData;
 	private final SpaceExplorationEngine spaceExplorationEngine;
+	private ProgressBar fuelProgressBar, lifeProgressBar;
+	private Text fuelLabel, lifeLabel, levelLabel, levelText;
+	private Font upperBarFont;
 
 
 	public ViewEngine(Stage primaryStage, SpaceExplorationEngine spaceExplorationEngine, LevelData levelData, PlayerData playerData) {
@@ -137,12 +144,58 @@ public class ViewEngine {
 
 		mainScreenBackground = new ImageView();
 		mainScreenBackground.setImage(mainBack);
+
+		createUpperBox();
+
+	}
+
+	private void createUpperBox() {
+		upperBarFont = new Font("impact", 17);
+
+		lifeBox = new HBox(5);
+		lifeLabel = new Text();
+		lifeLabel.setText("LIFE:");
+		lifeLabel.setFill(Color.WHITE);
+		lifeLabel.setFont(upperBarFont);
+
+		lifeProgressBar = new ProgressBar(playerShip.getLife()/100);
+		lifeProgressBar.setStyle("-fx-accent: #fc0808");
+
+		lifeBox.getChildren().addAll(lifeLabel, lifeProgressBar);
+
+		fuelLabel = new Text();
+		fuelLabel.setText("FUEL:");
+		fuelLabel.setFill(Color.WHITE);
+		fuelLabel.setFont(upperBarFont);
+
+		fuelProgressBar = new ProgressBar(playerShip.getFuel()/100);
+		fuelProgressBar.setStyle("-fx-accent: #e0a80d");
+
+		fuelBox = new HBox(5);
+		fuelBox.getChildren().addAll(fuelLabel, fuelProgressBar);
+
+		levelLabel = new Text();
+		levelLabel.setText("LEVEL:");
+		levelLabel.setFill(Color.WHITE);
+		levelLabel.setFont(upperBarFont);
+
+		levelText = new Text();
+		levelText.setText(String.valueOf(playerShip.getLevel()));
+		levelText.setFill(Color.WHITE);
+		levelText.setFont(upperBarFont);
+
+		levelBox = new HBox(5);
+		levelBox.getChildren().addAll(levelLabel, levelText);
+
+		horizontalUpperBox = new HBox(20);
+		horizontalUpperBox.setAlignment(Pos.TOP_LEFT);
+		horizontalUpperBox.getChildren().addAll(lifeBox, fuelBox, levelBox);
 	}
 
 	private void addNodesToMainScreen() {
+		rootGroup.getChildren().add(horizontalUpperBox);
 		rootGroup.getChildren().add(mainScreenBackground);
 		rootGroup.getChildren().add(horizontalButtonBox);
-
 	}
 
 	private void saveDataToPlayerData() {
@@ -160,12 +213,24 @@ public class ViewEngine {
 		}
 	}
 
-	private void restartGame(){
+	private void restartGame() {
 		playerShip.setPositionX(DEFAULT_SHIP_X_POSITION);
 		playerShip.setPositionY(WIDTH - SHIP_DIMENSIONS);
 		playerShip.setFuel(playerData.getShipFuel());
 		playerShip.setLevel(playerData.getShipLevel());
 		playerShip.setLife(playerData.getShipLife());
+	}
+
+	public void updateFuelBar() {
+		fuelProgressBar.setProgress(playerShip.getFuel()/100);
+	}
+
+	public void updateLifeBar() {
+		lifeProgressBar.setProgress(playerShip.getLife()/100);
+	}
+
+	public void updateLevelText() {
+		levelText.setText(String.valueOf(playerShip.getLevel()));
 	}
 
 	public Scene getScene() {

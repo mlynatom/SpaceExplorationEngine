@@ -1,4 +1,4 @@
 ---
 shipLevel: 1
-shipLife: 10
-shipFuel: 20.0
+shipLife: 100.0
+shipFuel: 100.0
