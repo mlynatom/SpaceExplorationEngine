@@ -1,6 +1,7 @@
 package cz.cvut.fel.pjv.model;
 
 import cz.cvut.fel.pjv.controller.SpaceExplorationEngine;
+import cz.cvut.fel.pjv.fileIO.PlayerData;
 import javafx.scene.image.Image;
 
 import static cz.cvut.fel.pjv.controller.Constants.*;
@@ -13,19 +14,18 @@ public class PlayerShip extends Ship {
 	private double fuel; // amount of fuel in ship
 	private boolean isAlive;
 	private double gravity;
-	private static double rightBorder;
+	private static final double rightBorder = WIDTH - SHIP_DIMENSIONS;
 	private static final double leftBorder = 0;
 	private static final double upBorder = 0;
-	private static double bottomBorder;
+	private static final double bottomBorder = HEIGHT - SHIP_DIMENSIONS;
 
-	public PlayerShip(SpaceExplorationEngine spaceExplorationEngine, double positionX, double positionY, String spriteBound, int life, double damage, boolean isAlive, Projectile projectile, int level, double fuel, Image... spriteImage) {
-		super(spaceExplorationEngine, positionX, positionY, 2, 3, spriteBound, life, damage, projectile, spriteImage);
-		this.level = level;
-		this.fuel = fuel;
-		this.isAlive = isAlive;
-		gravity = 0.3;
-		rightBorder = WIDTH - SHIP_DIMENSIONS;
-		bottomBorder = HEIGHT- SHIP_DIMENSIONS;
+	public PlayerShip(SpaceExplorationEngine spaceExplorationEngine, double positionX, double positionY, String spriteBound,
+					  Projectile projectile, PlayerData playerData, double gravity, Image... spriteImage) {
+		super(spaceExplorationEngine, positionX, positionY, 2, 3, spriteBound, playerData.getShipLife(), 10, projectile, spriteImage);
+		this.level = playerData.getShipLevel();
+		this.fuel = playerData.getShipFuel();
+		this.isAlive = true;
+		this.gravity = gravity;
 	}
 
 	@Override

@@ -25,7 +25,7 @@ public class ViewEngine {
 	private static final Logger LOGGER = Logger.getLogger(ViewEngine.class.getName());
 
 	private Image background, help, mainBack;
-	private Image playerShip0, playerShip1;
+	private Image shipImage0, shipImage1;
 	private HBox horizontalButtonBox;
 	private Insets buttonBoxPadding;
 	private Button playButton, exitButton, exitSaveButton;
@@ -69,17 +69,19 @@ public class ViewEngine {
 
 
 	private void loadImages() {
-		mainBack = new Image("/main_back.png", 1024, 600, true, false, true);
-		background = new Image("/background.png", 1024, 600, true, false, true);
-		help = new Image("/help.png", 1024, 600, true, false, true);
-		playerShip0 = new Image("/player_ship_0.png", SHIP_DIMENSIONS, SHIP_DIMENSIONS, true, false, true);
-		playerShip1 = new Image("/player_ship_1.png", SHIP_DIMENSIONS, SHIP_DIMENSIONS, true, false, true);
+		mainBack = new Image("/main_back.png", WIDTH, HEIGHT, true, false, true);
+		background = new Image(levelData.getBackgroundImagePath(), WIDTH, HEIGHT, true, false, true);
+		help = new Image("/help.png", WIDTH, HEIGHT, true, false, true);
+		shipImage0 = new Image(levelData.getShipImagePath(), SHIP_DIMENSIONS, SHIP_DIMENSIONS, true, false, true);
+		shipImage1 = new Image(levelData.getShipImageRotatedLeftPath(), SHIP_DIMENSIONS, SHIP_DIMENSIONS, true, false, true);
 	}
 
 	private void createGameActors() {
-		//Attention!!
-		playerProjectile = new Projectile(-10, -10, "M0 6 L0 52 70 52 70 70 70 93 115 45 115 0 84 0 68 16 Z", 20, playerShip0);
-		playerShip = new PlayerShip(spaceExplorationEngine, 20, WIDTH - SHIP_DIMENSIONS, "M0 6 L0 52 70 52 70 70 70 93 115 45 115 0 84 0 68 16 Z", 10, 1, true, playerProjectile, 1, 20, playerShip0, playerShip1);
+		//Attention to projectile!!
+		playerProjectile = new Projectile(-10, -10, "M0 6 L0 52 70 52 70 70 70 93 115 45 115 0 84 0 68 16 Z", 20, shipImage0);
+		playerShip = new PlayerShip(spaceExplorationEngine, 20, WIDTH - SHIP_DIMENSIONS,
+				"M0 6 L0 52 70 52 70 70 70 93 115 45 115 0 84 0 68 16 Z", playerProjectile, playerData,
+				levelData.getGravity(), shipImage0, shipImage1);
 	}
 
 	private void addGameActorsNodes() {

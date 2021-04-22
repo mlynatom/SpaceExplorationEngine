@@ -1,5 +1,5 @@
 ---
-gravity: 0.1
+gravity: 0.3
 backgroundImagePath: "background.png"
 shipImagePath: "player_ship_0.png"
 shipImageRotatedLeftPath: "player_ship_1.png"
