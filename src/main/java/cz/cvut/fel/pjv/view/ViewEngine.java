@@ -219,6 +219,9 @@ public class ViewEngine {
 		playerShip.setFuel(playerData.getShipFuel());
 		playerShip.setLevel(playerData.getShipLevel());
 		playerShip.setLife(playerData.getShipLife());
+		updateFuelBar();
+		updateLifeBar();
+		updateLevelText();
 	}
 
 	public void updateFuelBar() {
