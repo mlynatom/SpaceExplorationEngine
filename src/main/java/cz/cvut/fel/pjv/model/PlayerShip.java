@@ -53,6 +53,9 @@ public class PlayerShip extends Ship {
 		if (spaceExplorationEngine.isUp() && fuel > 0) {
 			positionY -= velocityY;
 			fuel -= FUEL_CONSUMPTION;
+			if (fuel <= 0) {
+				fuel = 0; //crop fuel to never be less than zero
+			}
 			spaceExplorationEngine.updateFuelOnScreen();
 		}
 	}
