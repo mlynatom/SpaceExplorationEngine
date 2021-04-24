@@ -128,4 +128,15 @@ public class SpaceExplorationEngine extends Application {
 		return escape;
 	}
 
+	public void setUp(boolean up) {
+		this.up = up;
+	}
+
+	public void setLeft(boolean left) {
+		this.left = left;
+	}
+
+	public void setRight(boolean right) {
+		this.right = right;
+	}
 }

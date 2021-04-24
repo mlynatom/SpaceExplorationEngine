@@ -22,7 +22,7 @@ public class PlayerShip extends Ship {
 
 	public PlayerShip(SpaceExplorationEngine spaceExplorationEngine, double positionX, double positionY, String spriteBound,
 					  Projectile projectile, PlayerData playerData, double gravity, Image... spriteImage) {
-		super(spaceExplorationEngine, positionX, positionY, 2, 3, spriteBound, playerData.getShipLife(), 10, projectile, spriteImage);
+		super(spaceExplorationEngine, positionX, positionY, SHIP_VELOCITY_X, SHIP_VELOCITY_Y, spriteBound, playerData.getShipLife(), 10, projectile, spriteImage);
 		this.level = playerData.getShipLevel();
 		this.fuel = playerData.getShipFuel();
 		this.isAlive = true;
@@ -132,5 +132,25 @@ public class PlayerShip extends Ship {
 
 	public void setFuel(double fuel) {
 		this.fuel = fuel;
+	}
+
+	public static double getFuelConsumption() {
+		return FUEL_CONSUMPTION;
+	}
+
+	public static double getRightBorder() {
+		return rightBorder;
+	}
+
+	public static double getLeftBorder() {
+		return leftBorder;
+	}
+
+	public static double getUpBorder() {
+		return upBorder;
+	}
+
+	public static double getBottomBorder() {
+		return bottomBorder;
 	}
 }
