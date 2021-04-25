@@ -76,11 +76,18 @@ public class ViewEngine {
 
 
 	private void loadImages() {
-		mainBack = new Image("/main_back.png", WIDTH, HEIGHT, true, false, true);
-		background = new Image(levelData.getBackgroundImagePath(), WIDTH, HEIGHT, true, false, true);
-		help = new Image("/help.png", WIDTH, HEIGHT, true, false, true);
-		shipImage0 = new Image(levelData.getShipImagePath(), SHIP_DIMENSIONS, SHIP_DIMENSIONS, true, false, true);
-		shipImage1 = new Image(levelData.getShipImageEnginesOnPath(), SHIP_DIMENSIONS, SHIP_DIMENSIONS, true, false, true);
+		try {
+			mainBack = new Image("/main_back.png", WIDTH, HEIGHT, true, false, true);
+			background = new Image(levelData.getBackgroundImagePath(), WIDTH, HEIGHT, true, false, true);
+			help = new Image("/help.png", WIDTH, HEIGHT, true, false, true);
+			shipImage0 = new Image(levelData.getShipImagePath(), SHIP_DIMENSIONS, SHIP_DIMENSIONS, true, false, true);
+			shipImage1 = new Image(levelData.getShipImageEnginesOnPath(), SHIP_DIMENSIONS, SHIP_DIMENSIONS, true, false, true);
+		} catch (IllegalArgumentException e) {
+			LOGGER.log(Level.SEVERE, "Loading of one of images failed. Error: " + e);
+			System.err.println("Please check entered image names. Exiting application...");
+			System.exit(100);
+		}
+
 	}
 
 	private void createGameActors() {
@@ -158,7 +165,7 @@ public class ViewEngine {
 		lifeLabel.setFill(Color.WHITE);
 		lifeLabel.setFont(upperBarFont);
 
-		lifeProgressBar = new ProgressBar(playerShip.getLife()/100);
+		lifeProgressBar = new ProgressBar(playerShip.getLife() / 100);
 		lifeProgressBar.setStyle("-fx-accent: #fc0808");
 
 		lifeBox.getChildren().addAll(lifeLabel, lifeProgressBar);
@@ -168,7 +175,7 @@ public class ViewEngine {
 		fuelLabel.setFill(Color.WHITE);
 		fuelLabel.setFont(upperBarFont);
 
-		fuelProgressBar = new ProgressBar(playerShip.getFuel()/100);
+		fuelProgressBar = new ProgressBar(playerShip.getFuel() / 100);
 		fuelProgressBar.setStyle("-fx-accent: #e0a80d");
 
 		fuelBox = new HBox(5);
@@ -225,11 +232,11 @@ public class ViewEngine {
 	}
 
 	public void updateFuelBar() {
-		fuelProgressBar.setProgress(playerShip.getFuel()/100);
+		fuelProgressBar.setProgress(playerShip.getFuel() / 100);
 	}
 
 	public void updateLifeBar() {
-		lifeProgressBar.setProgress(playerShip.getLife()/100);
+		lifeProgressBar.setProgress(playerShip.getLife() / 100);
 	}
 
 	public void updateLevelText() {
