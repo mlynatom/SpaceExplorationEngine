@@ -29,7 +29,7 @@ public class ViewEngine {
 	private static final Logger LOGGER = Logger.getLogger(ViewEngine.class.getName());
 
 	private Image background, help, mainBack;
-	private Image shipImage0, shipImage1;
+	private Image shipImage0, shipImage1, projectileImage, obstacleImage, enemyImage;
 	private HBox horizontalButtonBox, horizontalUpperBox, fuelBox, lifeBox, levelBox;
 	private Insets buttonBoxPadding;
 	private Button playButton, exitButton, exitSaveButton;
@@ -82,6 +82,9 @@ public class ViewEngine {
 			help = new Image("/help.png", WIDTH, HEIGHT, true, false, true);
 			shipImage0 = new Image(levelData.getShipImagePath(), SHIP_DIMENSIONS, SHIP_DIMENSIONS, true, false, true);
 			shipImage1 = new Image(levelData.getShipImageEnginesOnPath(), SHIP_DIMENSIONS, SHIP_DIMENSIONS, true, false, true);
+			projectileImage = new Image("projectile.png", 100, 10, true, false, true);
+			obstacleImage = new Image("obstacle.png", 100, 50, true, false, true);
+			enemyImage = new Image("enemy.png", SHIP_DIMENSIONS, SHIP_DIMENSIONS, true, false, true);
 		} catch (IllegalArgumentException e) {
 			LOGGER.log(Level.SEVERE, "Loading of one of images failed. Error: " + e);
 			System.err.println("Please check entered image names. Exiting application...");
@@ -92,10 +95,11 @@ public class ViewEngine {
 
 	private void createGameActors() {
 		//Attention to projectile!!
-		playerProjectile = new Projectile(-10, -10, "M0 6 L0 52 70 52 70 70 70 93 115 45 115 0 84 0 68 16 Z", 20, shipImage0);
+		playerProjectile = new Projectile(-10, -10,
+				"M 6,246 L 76,213 287,214 462,148 489,216 491,283 460,348 289,283 74,286 Z", 20, projectileImage);
 		playerShip = new PlayerShip(spaceExplorationEngine, DEFAULT_SHIP_X_POSITION, WIDTH - SHIP_DIMENSIONS,
-				"M0 6 L0 52 70 52 70 70 70 93 115 45 115 0 84 0 68 16 Z", playerProjectile, playerData,
-				levelData.getGravity(), shipImage0, shipImage1);
+				"M 192,4 L 153,67 140,106 141,249 110,290 132,299 133,352 253,352 254,300 275,289 250,250 250,101 231,67 Z",
+				playerProjectile, playerData, levelData.getGravity(), shipImage0, shipImage1);
 	}
 
 	private void addGameActorsNodes() {
