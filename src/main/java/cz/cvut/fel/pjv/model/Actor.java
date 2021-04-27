@@ -1,6 +1,5 @@
 package cz.cvut.fel.pjv.model;
 
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.SVGPath;
 
@@ -14,18 +13,16 @@ import java.util.List;
 public abstract class Actor {
 	protected double positionX; //initial x position
 	protected double positionY; //initial y position
-	protected List<Image> imageList = new ArrayList<>(); // list for all image states
-	protected ImageView spriteFrame;
 	protected SVGPath spriteBound;
+	protected List<String> imageNameList = new ArrayList<>();
+	protected ImageView spriteFrame = new ImageView();
 
-	public Actor(double positionX, double positionY, String spriteBound, Image... spriteImage) {
+	public Actor(double positionX, double positionY, String spriteBound, String... imageName) {
 		this.positionX = positionX;
 		this.positionY = positionY;
 		this.spriteBound = new SVGPath();
 		this.spriteBound.setContent(spriteBound);
-		spriteFrame = new ImageView(spriteImage[0]);
-		imageList.addAll(Arrays.asList(spriteImage));
-
+		imageNameList.addAll(Arrays.asList(imageName));
 	}
 
 	/**
@@ -49,20 +46,8 @@ public abstract class Actor {
 		this.positionY = positionY;
 	}
 
-	public List<Image> getImageList() {
-		return imageList;
-	}
-
-	public void setImageList(List<Image> imageList) {
-		this.imageList = imageList;
-	}
-
 	public ImageView getSpriteFrame() {
 		return spriteFrame;
-	}
-
-	public void setSpriteFrame(ImageView spriteFrame) {
-		this.spriteFrame = spriteFrame;
 	}
 
 	public SVGPath getSpriteBound() {

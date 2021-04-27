@@ -46,13 +46,15 @@ public class ViewEngine {
 	private ProgressBar fuelProgressBar, lifeProgressBar;
 	private Text fuelLabel, lifeLabel, levelLabel, levelText;
 	private Font upperBarFont;
+	private ImageDirector imageDirector;
 
 
-	public ViewEngine(Stage primaryStage, SpaceExplorationEngine spaceExplorationEngine, LevelData levelData, PlayerData playerData) {
+	public ViewEngine(Stage primaryStage, SpaceExplorationEngine spaceExplorationEngine, LevelData levelData, PlayerData playerData, ImageDirector imageDirector) {
 		this.primaryStage = primaryStage;
 		this.spaceExplorationEngine = spaceExplorationEngine;
 		this.levelData = levelData;
 		this.playerData = playerData;
+		this.imageDirector = imageDirector;
 	}
 
 	public void update() {
@@ -68,6 +70,7 @@ public class ViewEngine {
 		primaryStage.show();
 
 		loadImages();
+		initializeImageDirector();
 		createGameActors();
 		addGameActorsNodes();
 		createMainScreenNodes();
@@ -93,13 +96,21 @@ public class ViewEngine {
 
 	}
 
+	private void initializeImageDirector(){
+		imageDirector.addImage("shipImage0", shipImage0);
+		imageDirector.addImage("shipImage1", shipImage1);
+		imageDirector.addImage("projectileImage", projectileImage);
+		imageDirector.addImage("obstacleImage", obstacleImage);
+		imageDirector.addImage("enemyImage", enemyImage);
+	}
+
 	private void createGameActors() {
-		//Attention to projectile!!
+		//Pay attention to projectile!!
 		playerProjectile = new Projectile(-10, -10,
-				"M 6,246 L 76,213 287,214 462,148 489,216 491,283 460,348 289,283 74,286 Z", 20, projectileImage);
+				"M 6,246 L 76,213 287,214 462,148 489,216 491,283 460,348 289,283 74,286 Z", 20, "projectileImage");
 		playerShip = new PlayerShip(spaceExplorationEngine, DEFAULT_SHIP_X_POSITION, WIDTH - SHIP_DIMENSIONS,
 				"M 192,4 L 153,67 140,106 141,249 110,290 132,299 133,352 253,352 254,300 275,289 250,250 250,101 231,67 Z",
-				playerProjectile, playerData, levelData.getGravity(), shipImage0, shipImage1);
+				playerProjectile, playerData, levelData.getGravity(), "shipImage0", "shipImage1");
 	}
 
 	private void addGameActorsNodes() {

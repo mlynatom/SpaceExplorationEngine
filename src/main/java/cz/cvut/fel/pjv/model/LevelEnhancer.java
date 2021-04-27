@@ -1,15 +1,13 @@
 package cz.cvut.fel.pjv.model;
 
-import javafx.scene.image.Image;
-
 /**
  * class for interactive thing which can increase level of PlayerShip class
  */
 public class LevelEnhancer extends InteractThing {
 	private int amountOfLevelToAdd;
 
-	public LevelEnhancer(double positionX, double positionY, String spriteBound, int amountOfLevelToAdd, Image... spriteImage) {
-		super(positionX, positionY, spriteBound, spriteImage);
+	public LevelEnhancer(double positionX, double positionY, String spriteBound, int amountOfLevelToAdd, String... imageName) {
+		super(positionX, positionY, spriteBound, imageName);
 		this.amountOfLevelToAdd = amountOfLevelToAdd;
 	}
 

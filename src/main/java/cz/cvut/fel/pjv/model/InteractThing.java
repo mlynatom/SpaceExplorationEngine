@@ -1,14 +1,12 @@
 package cz.cvut.fel.pjv.model;
 
-import javafx.scene.image.Image;
-
 /**
  * abstract class for all interactive things in game
  */
 public abstract class InteractThing extends Actor {
 
-	public InteractThing(double positionX, double positionY, String spriteBound, Image... spriteImage) {
-		super(positionX, positionY, spriteBound, spriteImage);
+	public InteractThing(double positionX, double positionY, String spriteBound, String... imageName) {
+		super(positionX, positionY, spriteBound, imageName);
 	}
 
 	@Override

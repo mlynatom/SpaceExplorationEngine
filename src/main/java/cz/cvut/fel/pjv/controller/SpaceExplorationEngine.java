@@ -3,6 +3,7 @@ package cz.cvut.fel.pjv.controller;
 import cz.cvut.fel.pjv.fileIO.LevelData;
 import cz.cvut.fel.pjv.fileIO.PlayerData;
 import cz.cvut.fel.pjv.fileIO.YamlIO;
+import cz.cvut.fel.pjv.view.ImageDirector;
 import cz.cvut.fel.pjv.view.ViewEngine;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -16,12 +17,14 @@ public class SpaceExplorationEngine extends Application {
 	protected ViewEngine viewEngine;
 	private LevelData levelData;
 	private PlayerData playerData;
+	private ImageDirector imageDirector;
 
 
 	@Override
 	public void start(Stage primaryStage) {
 		loadFiles();
-		viewEngine = new ViewEngine(primaryStage, this, levelData, playerData);
+		imageDirector = new ImageDirector();
+		viewEngine = new ViewEngine(primaryStage, this, levelData, playerData, imageDirector);
 		viewEngine.startViewEngine();
 		createKeyHandlers();
 		startGamePlayLoop();
@@ -138,5 +141,9 @@ public class SpaceExplorationEngine extends Application {
 
 	public void setRight(boolean right) {
 		this.right = right;
+	}
+
+	public ImageDirector getImageDirector() {
+		return imageDirector;
 	}
 }

@@ -1,7 +1,6 @@
 package cz.cvut.fel.pjv.model;
 
 import cz.cvut.fel.pjv.controller.SpaceExplorationEngine;
-import javafx.scene.image.Image;
 
 /**
  * Abstract class for implementing player and enemy ships
@@ -14,8 +13,8 @@ public abstract class Ship extends Actor {
 	protected double velocityX, velocityY;
 	protected SpaceExplorationEngine spaceExplorationEngine;
 
-	public Ship(SpaceExplorationEngine spaceExplorationEngine, double positionX, double positionY, double velocityX, double velocityY, String spriteBound, double life, double damage, Projectile projectile, Image... spriteImage) {
-		super(positionX, positionY, spriteBound, spriteImage);
+	public Ship(SpaceExplorationEngine spaceExplorationEngine, double positionX, double positionY, double velocityX, double velocityY, String spriteBound, double life, double damage, Projectile projectile, String... imageName) {
+		super(positionX, positionY, spriteBound,imageName);
 		this.life = life;
 		this.damage = damage;
 		this.projectile = projectile;
