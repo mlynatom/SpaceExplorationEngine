@@ -16,10 +16,6 @@ public class CastingDirector {
 		removedActors = new HashSet<>();
 	}
 
-	public List<Actor> getCurrentActors() {
-		return currentActors;
-	}
-
 	/**
 	 * This method adds all entered actors to the list of current actors.
 	 * @param actors one or more actors to be added.
@@ -43,5 +39,13 @@ public class CastingDirector {
 	public void resetRemovedActors(){
 		currentActors.removeAll(removedActors);
 		removedActors.clear();
+	}
+
+	public List<Actor> getCurrentActors() {
+		return currentActors;
+	}
+
+	public Set<Actor> getRemovedActors() {
+		return removedActors;
 	}
 }
