@@ -31,6 +31,7 @@ public class PlayerShip extends Ship {
 	@Override
 	public void update() {
 		getNewCoordinates();
+		spaceExplorationEngine.updateFuelOnScreen();
 		applyGravity();
 		checkBorders();
 		moveImage();
@@ -42,7 +43,7 @@ public class PlayerShip extends Ship {
 
 	}
 
-	private void getNewCoordinates() {
+	protected void getNewCoordinates() {
 		if (spaceExplorationEngine.isLeft()) {
 			positionX -= velocityX;
 		}
@@ -55,11 +56,10 @@ public class PlayerShip extends Ship {
 			if (fuel <= 0) {
 				fuel = 0; //crop fuel to never be less than zero
 			}
-			spaceExplorationEngine.updateFuelOnScreen();
 		}
 	}
 
-	private void checkBorders() {
+	protected void checkBorders() {
 		if (positionX > rightBorder) {
 			positionX = rightBorder;
 		} else if (positionX < leftBorder) {
@@ -73,16 +73,16 @@ public class PlayerShip extends Ship {
 		}
 	}
 
-	private void applyGravity() {
+	protected void  applyGravity() {
 		positionY += gravity;
 	}
 
-	private void moveImage() {
+	protected void moveImage() {
 		spriteFrame.setTranslateX(positionX);
 		spriteFrame.setTranslateY(positionY);
 	}
 
-	private void setRightImage() {
+	protected void setRightImage() {
 		if (spaceExplorationEngine.isUp() && fuel > 0) {
 			if (spaceExplorationEngine.isRight()) {
 				spriteFrame.setRotate(30);
@@ -145,5 +145,9 @@ public class PlayerShip extends Ship {
 
 	public static double getBottomBorder() {
 		return bottomBorder;
+	}
+
+	public static double getFuelConsumption() {
+		return FUEL_CONSUMPTION;
 	}
 }
