@@ -4,7 +4,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * This class as data structure for holding level, life and fuel information about PlayerShip.
+ * This class serves as a data structure for holding level, life and fuel information about PlayerShip.
  * It is used for saving and loading from yaml files.
  * All public getters, setters and constructor are vital for Jackson library.
  */
