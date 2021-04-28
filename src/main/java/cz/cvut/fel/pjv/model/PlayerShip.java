@@ -9,21 +9,22 @@ import static cz.cvut.fel.pjv.controller.Constants.*;
  * This class is for player ship, the main and only playable object in game.
  */
 public class PlayerShip extends Ship {
-	private static final double FUEL_CONSUMPTION = 0.2;
-	private int level; // current level of ship
-	private double fuel; // amount of fuel in ship
-	private boolean isAlive;
-	private final double gravity;
-	private static final double rightBorder = WIDTH - SHIP_DIMENSIONS;
-	private static final double leftBorder = 0;
-	private static final double upBorder = 0;
-	private static final double bottomBorder = HEIGHT - SHIP_DIMENSIONS;
+	protected final double fuelConsumption;
+	protected int level; // current level of ship
+	protected double fuel; // amount of fuel in ship
+	protected boolean isAlive;
+	protected final double gravity;
+	protected static final double rightBorder = WIDTH - SHIP_DIMENSIONS;
+	protected static final double leftBorder = 0;
+	protected static final double upBorder = 0;
+	protected static final double bottomBorder = HEIGHT - SHIP_DIMENSIONS;
 
 	public PlayerShip(SpaceExplorationEngine spaceExplorationEngine, double positionX, double positionY, String spriteBound,
 					  Projectile projectile, PlayerData playerData, double gravity, String... imageName) {
 		super(spaceExplorationEngine, positionX, positionY, SHIP_VELOCITY_X, SHIP_VELOCITY_Y, spriteBound, playerData.getShipLife(), 10, projectile, imageName);
 		this.level = playerData.getShipLevel();
 		this.fuel = playerData.getShipFuel();
+		this.fuelConsumption = playerData.getFuelConsumption();
 		this.isAlive = true;
 		this.gravity = gravity;
 	}
@@ -52,7 +53,7 @@ public class PlayerShip extends Ship {
 		}
 		if (spaceExplorationEngine.isUp() && fuel > 0) {
 			positionY -= velocityY;
-			fuel -= FUEL_CONSUMPTION;
+			fuel -= fuelConsumption;
 			if (fuel <= 0) {
 				fuel = 0; //crop fuel to never be less than zero
 			}
@@ -129,25 +130,5 @@ public class PlayerShip extends Ship {
 
 	public void setFuel(double fuel) {
 		this.fuel = fuel;
-	}
-
-	public static double getRightBorder() {
-		return rightBorder;
-	}
-
-	public static double getLeftBorder() {
-		return leftBorder;
-	}
-
-	public static double getUpBorder() {
-		return upBorder;
-	}
-
-	public static double getBottomBorder() {
-		return bottomBorder;
-	}
-
-	public static double getFuelConsumption() {
-		return FUEL_CONSUMPTION;
 	}
 }

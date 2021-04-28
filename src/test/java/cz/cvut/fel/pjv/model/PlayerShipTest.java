@@ -27,6 +27,7 @@ public class PlayerShipTest {
 		mockPlayerData.setShipFuel(mockFuel);
 		mockPlayerData.setShipLevel(1);
 		mockPlayerData.setShipLife(100);
+		mockPlayerData.setFuelConsumption(0.1);
 	}
 
 	@Test
@@ -60,7 +61,7 @@ public class PlayerShipTest {
 
 		playerShip.getNewCoordinates();
 		assertEquals(mockPositionY - playerShip.velocityY, playerShip.positionY);
-		assertEquals(mockFuel - PlayerShip.getFuelConsumption(), playerShip.getFuel());
+		assertEquals(mockFuel - playerShip.fuelConsumption, playerShip.getFuel());
 	}
 
 	@Test
@@ -92,37 +93,37 @@ public class PlayerShipTest {
 	@Test
 	public void testCheckBordersRight() {
 		PlayerShip playerShip = new PlayerShip(mockSpaceExplorationEngine, mockPositionX, mockPositionY, mockSpriteBound, mockProjectile, mockPlayerData, mockGravity, mockImageName);
-		playerShip.setPositionX(PlayerShip.getRightBorder() + 1);
+		playerShip.setPositionX(PlayerShip.rightBorder + 1);
 
 		playerShip.checkBorders();
-		assertEquals(PlayerShip.getRightBorder(), playerShip.positionX);
+		assertEquals(PlayerShip.rightBorder, playerShip.positionX);
 	}
 
 	@Test
 	public void testCheckBordersLeft() {
 		PlayerShip playerShip = new PlayerShip(mockSpaceExplorationEngine, mockPositionX, mockPositionY, mockSpriteBound, mockProjectile, mockPlayerData, mockGravity, mockImageName);
-		playerShip.setPositionX(PlayerShip.getLeftBorder() - 1);
+		playerShip.setPositionX(PlayerShip.leftBorder - 1);
 		playerShip.checkBorders();
-		assertEquals(PlayerShip.getLeftBorder(), playerShip.positionX);
+		assertEquals(PlayerShip.leftBorder, playerShip.positionX);
 
 	}
 
 	@Test
 	public void testCheckBordersUp() {
 		PlayerShip playerShip = new PlayerShip(mockSpaceExplorationEngine, mockPositionX, mockPositionY, mockSpriteBound, mockProjectile, mockPlayerData, mockGravity, mockImageName);
-		playerShip.setPositionY(PlayerShip.getUpBorder() - 1);
+		playerShip.setPositionY(PlayerShip.upBorder - 1);
 
 		playerShip.checkBorders();
-		assertEquals(PlayerShip.getUpBorder(), playerShip.positionY);
+		assertEquals(PlayerShip.upBorder, playerShip.positionY);
 	}
 
 	@Test
 	public void testCheckBordersBottom() {
 		PlayerShip playerShip = new PlayerShip(mockSpaceExplorationEngine, mockPositionX, mockPositionY, mockSpriteBound, mockProjectile, mockPlayerData, mockGravity, mockImageName);
-		playerShip.setPositionY(PlayerShip.getBottomBorder() + 1);
+		playerShip.setPositionY(PlayerShip.bottomBorder + 1);
 
 		playerShip.checkBorders();
-		assertEquals(PlayerShip.getBottomBorder(), playerShip.positionY);
+		assertEquals(PlayerShip.bottomBorder, playerShip.positionY);
 
 	}
 

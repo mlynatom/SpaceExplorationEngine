@@ -13,6 +13,7 @@ public class PlayerData {
 	private int shipLevel;
 	private double shipLife;
 	private double shipFuel;
+	private double fuelConsumption;
 
 	public PlayerData() {
 	}
@@ -63,6 +64,22 @@ public class PlayerData {
 			LOGGER.log(Level.WARNING, "Loaded value of fuel was lower than allowed. Value was set to min value.");
 		} else {
 			this.shipFuel = shipFuel;
+		}
+	}
+
+	public double getFuelConsumption() {
+		return fuelConsumption;
+	}
+
+	public void setFuelConsumption(double fuelConsumption) {
+		if (fuelConsumption > 10) {
+			this.fuelConsumption = 10;
+			LOGGER.log(Level.WARNING, "Loaded value of fuel consumption was higher than allowed. Value was set to max value.");
+		} else if (fuelConsumption < 0) {
+			this.fuelConsumption = 0;
+			LOGGER.log(Level.WARNING, "Loaded value of fuel consumption was lower than allowed. Value was set to min value.");
+		} else {
+			this.fuelConsumption = fuelConsumption;
 		}
 	}
 }

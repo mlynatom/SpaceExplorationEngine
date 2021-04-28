@@ -2,3 +2,4 @@
 shipLevel: 1
 shipLife: 100.0
 shipFuel: 100.0
+fuelConsumption: 0.1

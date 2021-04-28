@@ -23,6 +23,8 @@ public abstract class Actor {
 		this.spriteBound = new SVGPath();
 		this.spriteBound.setContent(spriteBound);
 		imageNameList.addAll(Arrays.asList(imageName));
+		spriteFrame.setTranslateX(positionX);
+		spriteFrame.setTranslateY(positionY);
 	}
 
 	/**

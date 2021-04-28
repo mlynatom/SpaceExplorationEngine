@@ -4,6 +4,7 @@ import cz.cvut.fel.pjv.controller.CastingDirector;
 import cz.cvut.fel.pjv.controller.SpaceExplorationEngine;
 import cz.cvut.fel.pjv.fileIO.LevelData;
 import cz.cvut.fel.pjv.fileIO.PlayerData;
+import cz.cvut.fel.pjv.model.Obstacle;
 import cz.cvut.fel.pjv.model.PlayerShip;
 import cz.cvut.fel.pjv.model.Projectile;
 import javafx.geometry.Insets;
@@ -49,6 +50,7 @@ public class ViewEngine {
 	private Font upperBarFont;
 	private ImageDirector imageDirector;
 	private CastingDirector castingDirector;
+	private Obstacle obstacle;
 
 
 	public ViewEngine(Stage primaryStage, SpaceExplorationEngine spaceExplorationEngine, LevelData levelData, PlayerData playerData, ImageDirector imageDirector, CastingDirector castingDirector) {
@@ -77,6 +79,7 @@ public class ViewEngine {
 		createGameActors();
 		initializeCastingDirector();
 		addGameActorsNodes();
+		initializeImages();
 		createMainScreenNodes();
 		addNodesToMainScreen();
 	}
@@ -115,14 +118,22 @@ public class ViewEngine {
 		playerShip = new PlayerShip(spaceExplorationEngine, DEFAULT_SHIP_X_POSITION, WIDTH - SHIP_DIMENSIONS,
 				"M 192,4 L 153,67 140,106 141,249 110,290 132,299 133,352 253,352 254,300 275,289 250,250 250,101 231,67 Z",
 				playerProjectile, playerData, levelData.getGravity(), "shipImage0", "shipImage1");
+		obstacle = new Obstacle(100, 100, "M 0,0 L 498,0 498,353 0,353 Z",10,"obstacleImage");
+
 	}
 
 	private void initializeCastingDirector() {
-		castingDirector.addActorsToCurrentActors(playerShip);
+		castingDirector.addActorsToCurrentActors(playerShip, obstacle);
 	}
 
 	private void addGameActorsNodes() {
 		rootGroup.getChildren().add(playerShip.getSpriteFrame());
+		rootGroup.getChildren().add(obstacle.getSpriteFrame());
+
+	}
+	private void initializeImages() {
+		playerShip.getSpriteFrame().setImage(shipImage0);
+		obstacle.getSpriteFrame().setImage(obstacleImage);
 	}
 
 	private void createMainScreenNodes() {
