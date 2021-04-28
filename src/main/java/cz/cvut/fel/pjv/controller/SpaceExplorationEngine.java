@@ -18,13 +18,15 @@ public class SpaceExplorationEngine extends Application {
 	private LevelData levelData;
 	private PlayerData playerData;
 	private ImageDirector imageDirector;
+	private CastingDirector castingDirector;
 
 
 	@Override
 	public void start(Stage primaryStage) {
 		loadFiles();
 		imageDirector = new ImageDirector();
-		viewEngine = new ViewEngine(primaryStage, this, levelData, playerData, imageDirector);
+		castingDirector = new CastingDirector();
+		viewEngine = new ViewEngine(primaryStage, this, levelData, playerData, imageDirector, castingDirector);
 		viewEngine.startViewEngine();
 		createKeyHandlers();
 		startGamePlayLoop();
