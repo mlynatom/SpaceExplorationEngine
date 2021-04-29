@@ -19,6 +19,7 @@ public class LevelData {
 	private int numOfLevelEnhancers;
 	private int numOfLifeAdders;
 	private double enemyStrength;
+	private double enemyProjectileDamage;
 	private double enemyLife;
 	private List<coordinate2D> obstaclesPositions;
 	private List<coordinate2D> enemiesPositions;
@@ -116,16 +117,32 @@ public class LevelData {
 	}
 
 	public void setEnemyStrength(double enemyStrength) {
-		if (enemyStrength > 100) {
-			this.enemyStrength = 100;
+		if (enemyStrength > 10) {
+			this.enemyStrength = 10;
 			LOGGER.log(Level.WARNING, "Loaded value of enemy strength was higher than allowed. Value was set to max value.");
-		} else if (enemyStrength < 1) {
-			this.enemyStrength = 1;
+		} else if (enemyStrength < 0) {
+			this.enemyStrength = 0;
 			LOGGER.log(Level.WARNING, "Loaded value of enemy strength was lower than allowed. Value was set to min value.");
 		} else {
 			this.enemyStrength = enemyStrength;
 		}
 
+	}
+
+	public double getEnemyProjectileDamage() {
+		return enemyProjectileDamage;
+	}
+
+	public void setEnemyProjectileDamage(double enemyProjectileDamage) {
+		if (enemyProjectileDamage > 100) {
+			this.enemyProjectileDamage = 100;
+			LOGGER.log(Level.WARNING, "Loaded value of enemy projectile damage was higher than allowed. Value was set to max value.");
+		} else if (enemyProjectileDamage < 1) {
+			this.enemyProjectileDamage = 1;
+			LOGGER.log(Level.WARNING, "Loaded value of enemy projectile damage was lower than allowed. Value was set to min value.");
+		} else {
+			this.enemyProjectileDamage = enemyProjectileDamage;
+		}
 	}
 
 	public double getEnemyLife() {

@@ -6,7 +6,8 @@ shipImageEnginesOnPath: "player_ship_1.png"
 numOfFuels: 1
 numOfLevelEnhancers: 1
 numOfLifeAdders: 1
-enemyStrength: 10.0
+enemyStrength: 0.1
+enemyProjectileDamage: 50
 enemyLife: 10.0
 obstaclesPositions:
   - x: 10.0

@@ -4,7 +4,7 @@ import cz.cvut.fel.pjv.controller.SpaceExplorationEngine;
 import cz.cvut.fel.pjv.fileIO.PlayerData;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 
 public class PlayerShipTest {
@@ -22,7 +22,8 @@ public class PlayerShipTest {
 	public PlayerShipTest() {
 		mockSpaceExplorationEngine = new SpaceExplorationEngine();
 		double mockLifeSpan = 10;
-		mockProjectile = new Projectile(mockPositionX, mockPositionY, "M0 6 L0 52 70 52 70 70 70 93 115 45 115 0 84 0 68 16 Z", mockLifeSpan, mockImageName);
+		double mockDamage = 50;
+		mockProjectile = new Projectile(mockPositionX, mockPositionY, "M0 6 L0 52 70 52 70 70 70 93 115 45 115 0 84 0 68 16 Z", mockLifeSpan, mockDamage, mockImageName);
 		mockPlayerData = new PlayerData();
 		mockPlayerData.setShipFuel(mockFuel);
 		mockPlayerData.setShipLevel(1);
@@ -133,6 +134,150 @@ public class PlayerShipTest {
 		playerShip.applyGravity();
 		assertEquals(mockPositionY + mockGravity, playerShip.positionY);
 
+	}
+
+	@Test
+	public void addFuelNormal() {
+		PlayerShip playerShip = new PlayerShip(mockSpaceExplorationEngine, mockPositionX, mockPositionY, mockSpriteBound, mockProjectile, mockPlayerData, mockGravity, mockImageName);
+		playerShip.fuel = 50;
+		playerShip.addFuel(20);
+		assertEquals(70, playerShip.fuel);
+	}
+
+	@Test
+	public void addFuelExceed() {
+		PlayerShip playerShip = new PlayerShip(mockSpaceExplorationEngine, mockPositionX, mockPositionY, mockSpriteBound, mockProjectile, mockPlayerData, mockGravity, mockImageName);
+		playerShip.fuel = 50;
+		playerShip.addFuel(70);
+		assertEquals(100, playerShip.fuel);
+	}
+
+	@Test
+	public void addLevelNormal() {
+		PlayerShip playerShip = new PlayerShip(mockSpaceExplorationEngine, mockPositionX, mockPositionY, mockSpriteBound, mockProjectile, mockPlayerData, mockGravity, mockImageName);
+		playerShip.level = 1;
+		playerShip.addLevel(2);
+		assertEquals(3, playerShip.level);
+	}
+
+	@Test
+	public void addLevelExceed() {
+		PlayerShip playerShip = new PlayerShip(mockSpaceExplorationEngine, mockPositionX, mockPositionY, mockSpriteBound, mockProjectile, mockPlayerData, mockGravity, mockImageName);
+		playerShip.level = 1;
+		playerShip.addLevel(100);
+		assertEquals(10, playerShip.level);
+	}
+
+	@Test
+	public void testAddLifeNormal() {
+		PlayerShip playerShip = new PlayerShip(mockSpaceExplorationEngine, mockPositionX, mockPositionY, mockSpriteBound, mockProjectile, mockPlayerData, mockGravity, mockImageName);
+		playerShip.life = 10;
+		playerShip.addLife(2);
+		assertEquals(12, playerShip.life);
+	}
+
+	@Test
+	public void testAddLifeExceed() {
+		PlayerShip playerShip = new PlayerShip(mockSpaceExplorationEngine, mockPositionX, mockPositionY, mockSpriteBound, mockProjectile, mockPlayerData, mockGravity, mockImageName);
+		playerShip.life = 10;
+		playerShip.addLife(100);
+		assertEquals(100, playerShip.life);
+	}
+
+	@Test
+	public void testDecreaseLife() {
+		PlayerShip playerShip = new PlayerShip(mockSpaceExplorationEngine, mockPositionX, mockPositionY, mockSpriteBound, mockProjectile, mockPlayerData, mockGravity, mockImageName);
+		playerShip.life = 10;
+		playerShip.decreaseLife(2);
+		assertEquals(8, playerShip.life);
+	}
+
+	@Test
+	public void testRecoverPositionRight() {
+		PlayerShip playerShip = new PlayerShip(mockSpaceExplorationEngine, mockPositionX, mockPositionY, mockSpriteBound, mockProjectile, mockPlayerData, mockGravity, mockImageName);
+		Actor mockObject = new Actor(mockPositionX, mockPositionY, mockSpriteBound, mockImageName) {
+			@Override
+			public void update() {
+
+			}
+		};
+		mockObject.positionX -= 1;
+		playerShip.lastXPosition = mockPositionX;
+		playerShip.recoverPosition(mockObject);
+		assertEquals(mockPositionX + 0.1, playerShip.positionX);
+
+	}
+
+	@Test
+	public void testRecoverPositionDown() {
+		PlayerShip playerShip = new PlayerShip(mockSpaceExplorationEngine, mockPositionX, mockPositionY, mockSpriteBound, mockProjectile, mockPlayerData, mockGravity, mockImageName);
+		Actor mockObject = new Actor(mockPositionX, mockPositionY, mockSpriteBound, mockImageName) {
+			@Override
+			public void update() {
+
+			}
+		};
+		mockObject.positionY -= 1;
+		playerShip.lastYPosition = mockPositionY;
+		playerShip.recoverPosition(mockObject);
+		assertEquals(mockPositionY + 0.1, playerShip.positionY);
+
+	}
+
+	@Test
+	public void testRecoverPositionLeft() {
+		PlayerShip playerShip = new PlayerShip(mockSpaceExplorationEngine, mockPositionX, mockPositionY, mockSpriteBound, mockProjectile, mockPlayerData, mockGravity, mockImageName);
+		Actor mockObject = new Actor(mockPositionX, mockPositionY, mockSpriteBound, mockImageName) {
+			@Override
+			public void update() {
+
+			}
+		};
+		mockObject.positionX += 1;
+		playerShip.lastXPosition = mockPositionX;
+		playerShip.recoverPosition(mockObject);
+		assertEquals(mockPositionX - 0.1, playerShip.positionX);
+
+	}
+
+	@Test
+	public void testRecoverPositionUp() {
+		PlayerShip playerShip = new PlayerShip(mockSpaceExplorationEngine, mockPositionX, mockPositionY, mockSpriteBound, mockProjectile, mockPlayerData, mockGravity, mockImageName);
+		Actor mockObject = new Actor(mockPositionX, mockPositionY, mockSpriteBound, mockImageName) {
+			@Override
+			public void update() {
+
+			}
+		};
+		mockObject.positionY += 1;
+		playerShip.lastYPosition = mockPositionY;
+		playerShip.recoverPosition(mockObject);
+		assertEquals(mockPositionY - 0.1, playerShip.positionY);
+
+	}
+
+	@Test
+	public void testCollideTrue() {
+		PlayerShip playerShip = new PlayerShip(mockSpaceExplorationEngine, mockPositionX, mockPositionY, mockSpriteBound, mockProjectile, mockPlayerData, mockGravity, mockImageName);
+		Actor mockObject = new Actor(mockPositionX, mockPositionY, mockSpriteBound, mockImageName) {
+			@Override
+			public void update() {
+
+			}
+		};
+		assertTrue(playerShip.collide(mockObject));
+	}
+
+	@Test
+	public void testCollideFalse() {
+		PlayerShip playerShip = new PlayerShip(mockSpaceExplorationEngine, mockPositionX, mockPositionY, mockSpriteBound, mockProjectile, mockPlayerData, mockGravity, mockImageName);
+		Actor mockObject = new Actor(mockPositionX+100, mockPositionY+100, mockSpriteBound, mockImageName) {
+			@Override
+			public void update() {
+
+			}
+		};
+		assertFalse(playerShip.collide(mockObject));
 	}
 
 }

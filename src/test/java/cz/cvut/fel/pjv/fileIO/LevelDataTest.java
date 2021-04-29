@@ -94,21 +94,42 @@ class LevelDataTest {
 	void testSetEnemyStrengthMore() {
 		LevelData mockLevelData = new LevelData();
 		mockLevelData.setEnemyStrength(102);
-		assertEquals(100, mockLevelData.getEnemyStrength());
+		assertEquals(10, mockLevelData.getEnemyStrength());
 	}
 
 	@Test
 	void testSetEnemyStrengthLess() {
 		LevelData mockLevelData = new LevelData();
-		mockLevelData.setEnemyStrength(0.5);
-		assertEquals(1, mockLevelData.getEnemyStrength());
+		mockLevelData.setEnemyStrength(-1);
+		assertEquals(0, mockLevelData.getEnemyStrength());
 	}
 
 	@Test
 	void testSetEnemyStrengthNormal() {
 		LevelData mockLevelData = new LevelData();
-		mockLevelData.setEnemyStrength(20.5);
-		assertEquals(20.5, mockLevelData.getEnemyStrength());
+		mockLevelData.setEnemyStrength(5);
+		assertEquals(5, mockLevelData.getEnemyStrength());
+	}
+
+	@Test
+	void testSetEnemyProjectileDamageMore() {
+		LevelData mockLevelData = new LevelData();
+		mockLevelData.setEnemyProjectileDamage(101);
+		assertEquals(100, mockLevelData.getEnemyProjectileDamage());
+	}
+
+	@Test
+	void testSetEnemyProjectileDamageLess() {
+		LevelData mockLevelData = new LevelData();
+		mockLevelData.setEnemyProjectileDamage(0.1);
+		assertEquals(1, mockLevelData.getEnemyProjectileDamage());
+	}
+
+	@Test
+	void testSetEnemyProjectileDamageNormal() {
+		LevelData mockLevelData = new LevelData();
+		mockLevelData.setEnemyProjectileDamage(50);
+		assertEquals(50, mockLevelData.getEnemyProjectileDamage());
 	}
 
 	@Test

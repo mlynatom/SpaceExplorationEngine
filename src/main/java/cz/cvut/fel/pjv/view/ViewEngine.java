@@ -46,8 +46,8 @@ public class ViewEngine {
 	private ProgressBar fuelProgressBar, lifeProgressBar;
 	private Text fuelLabel, lifeLabel, levelLabel, levelText;
 	private Font upperBarFont;
-	private ImageDirector imageDirector;
-	private CastingDirector castingDirector;
+	private final ImageDirector imageDirector;
+	private final CastingDirector castingDirector;
 	private Obstacle obstacle;
 	private EnemyShip enemyShip;
 	private FuelBarrel fuelBarrel;
@@ -122,14 +122,14 @@ public class ViewEngine {
 	private void createGameActors() {
 		//Pay attention to projectile!!
 		playerProjectile = new Projectile(200, 110,
-				"M 6,246 L 76,213 287,214 462,148 489,216 491,283 460,348 289,283 74,286 Z", 20, "projectileImage");
+				"M 6,246 L 76,213 287,214 462,148 489,216 491,283 460,348 289,283 74,286 Z", 20, 50,"projectileImage");
 		playerShip = new PlayerShip(spaceExplorationEngine, DEFAULT_SHIP_X_POSITION, WIDTH - SHIP_DIMENSIONS,
 				"M 192,4 L 153,67 140,106 141,249 110,290 132,299 133,352 253,352 254,300 275,289 250,250 250,101 231,67 Z",
 				playerProjectile, playerData, levelData.getGravity(), "shipImage0", "shipImage1");
 		obstacle = new Obstacle(150, 300, "M 5,5 L 493,5 493,348 5,348 Z", 0.1, "obstacleImage");
 		enemyShip = new EnemyShip(spaceExplorationEngine, 50, 30, 10, 10,
 				"M 6,231 L 80,298 184,341 147,433 351,426 318,344 414,302 495,231 492,195 239,51 7,197 Z",
-				100, 10, playerProjectile, "enemyImage");
+				100, 0.1, playerProjectile, "enemyImage");
 		lifeAdder = new LifeAdder(300, 300, "M 247,65 L 72,26 11,149 29,248 243,469 444,279 499,147 410,22 Z", 30,"lifeAdderImage");
 		fuelBarrel = new FuelBarrel(400, 400, "M 160,74 L 110,122 106,341 73,443 368,388 373,157 302,101 Z", 30, "fuelBarrelImage");
 		levelEnhancer = new LevelEnhancer(800, 30, "M 250,21 L 171,177 14,196 120,321 100,479 248,413 398,477 376,325 486,197 326,177 Z",
@@ -276,6 +276,8 @@ public class ViewEngine {
 	}
 
 	public void endGame() {
+		playerShip.setPositionX(DEFAULT_SHIP_X_POSITION);
+		playerShip.setPositionY(WIDTH - SHIP_DIMENSIONS);
 		mainScreenBackground.setImage(mainBack);
 		mainScreenBackground.toFront();
 		horizontalButtonBox.setVisible(true);
@@ -283,8 +285,6 @@ public class ViewEngine {
 	}
 
 	private void restartGame() {
-		playerShip.setPositionX(DEFAULT_SHIP_X_POSITION);
-		playerShip.setPositionY(WIDTH - SHIP_DIMENSIONS);
 		playerShip.setFuel(playerData.getShipFuel());
 		playerShip.setLevel(playerData.getShipLevel());
 		playerShip.setLife(playerData.getShipLife());

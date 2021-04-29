@@ -25,7 +25,7 @@ public class PlayerShip extends Ship {
 	protected static final double leftBorder = 0;
 	protected static final double upBorder = 0;
 	protected static final double bottomBorder = HEIGHT - SHIP_DIMENSIONS;
-	private double lastXPosition, lastYPosition;
+	protected double lastXPosition, lastYPosition;
 
 	public PlayerShip(SpaceExplorationEngine spaceExplorationEngine, double positionX, double positionY, String spriteBound,
 					  Projectile projectile, PlayerData playerData, double gravity, String... imageName) {
@@ -126,43 +126,50 @@ public class PlayerShip extends Ship {
 		for (int i = 0; i < spaceExplorationEngine.getCastingDirector().getCurrentActors().size(); i++) {
 			Actor object = spaceExplorationEngine.getCastingDirector().getCurrentActors().get(i);
 			if (collide(object)) {
-				LOGGER.log(Level.INFO, PlayerShip.class.getName() + "collided with " + object.getClass().getName());
-				maintainCollision(object);
+				LOGGER.log(Level.FINE, PlayerShip.class.getName() + "collided with " + object.getClass().getName());
+				handleCollision(object);
 				spaceExplorationEngine.getCastingDirector().resetRemovedActors();
 			}
 		}
 	}
 
-	protected void maintainCollision(Actor object) {
+	protected void handleCollision(Actor object) {
 		if (object instanceof FuelBarrel) {
 			spaceExplorationEngine.getCastingDirector().addToRemovedActors(object);
 			spaceExplorationEngine.removeActorFromRoot(object);
 			addFuel(((FuelBarrel) object).amountOfFuelToAdd);
+			LOGGER.log(Level.INFO, "Fuel added");
 		} else if (object instanceof LevelEnhancer) {
 			spaceExplorationEngine.getCastingDirector().addToRemovedActors(object);
 			spaceExplorationEngine.removeActorFromRoot(object);
+			LOGGER.log(Level.INFO, "Level added");
 			addLevel(((LevelEnhancer) object).amountOfLevelToAdd);
 		} else if (object instanceof LifeAdder) {
 			spaceExplorationEngine.getCastingDirector().addToRemovedActors(object);
 			spaceExplorationEngine.removeActorFromRoot(object);
+			LOGGER.log(Level.INFO, "Life added");
 			addLife(((LifeAdder) object).lifeToAdd);
 		} else if (object instanceof Obstacle) {
 			decreaseLife(((Obstacle) object).damage);
 			recoverPosition(object);
 		} else if (object instanceof EnemyShip) {
-
+			decreaseLife(((EnemyShip) object).damage);
+			recoverPosition(object);
+		} else if (object instanceof Projectile) {
+			decreaseLife(((Projectile) object).damage);
+			((Projectile) object).putOffScreen();
 		}
 	}
 
-	private void addFuel(double fuelToAdd) {
+	protected void addFuel(double fuelToAdd) {
 		if (fuel + fuelToAdd > 100) {
 			fuel = 100;
 		} else {
-			fuel = fuelToAdd;
+			fuel += fuelToAdd;
 		}
 	}
 
-	private void addLevel(int levelToAdd) {
+	protected void addLevel(int levelToAdd) {
 		if (level + levelToAdd > 10) {
 			level = 10;
 		} else {
@@ -170,7 +177,7 @@ public class PlayerShip extends Ship {
 		}
 	}
 
-	private void addLife(double lifeToAdd) {
+	protected void addLife(double lifeToAdd) {
 		if (life + lifeToAdd > 100) {
 			life = 100;
 		} else {
@@ -178,7 +185,7 @@ public class PlayerShip extends Ship {
 		}
 	}
 
-	private void decreaseLife(double lifeToSubtract) {
+	protected void decreaseLife(double lifeToSubtract) {
 		if (life - lifeToSubtract <= 0) {
 			spaceExplorationEngine.callEndGame();
 		} else {
@@ -186,7 +193,7 @@ public class PlayerShip extends Ship {
 		}
 	}
 
-	private void recoverPosition (Actor object) {
+	protected void recoverPosition(Actor object) {
 		if (positionY > object.positionY) {
 			positionY = lastYPosition + 0.1;
 		} else if (positionY < object.positionY) {
@@ -206,7 +213,7 @@ public class PlayerShip extends Ship {
 	 * @param object any object of Actor class
 	 * @return true if collision happened
 	 */
-	public boolean collide(Actor object) {
+	protected boolean collide(Actor object) {
 		if (spriteFrame.getBoundsInParent().intersects(object.getSpriteFrame().getBoundsInParent())) {
 			Shape intersection = SVGPath.intersect(spriteBound, object.spriteBound);
 			return intersection.getBoundsInLocal().getWidth() != -1;
