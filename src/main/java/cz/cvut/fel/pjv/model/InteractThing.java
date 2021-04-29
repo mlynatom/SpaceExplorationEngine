@@ -11,9 +11,4 @@ public abstract class InteractThing extends Actor {
 
 	@Override
 	public abstract void update();
-
-	/**
-	 * this method provides interaction with PlayerShip
-	 */
-	public abstract void interact(PlayerShip playerShip);
 }

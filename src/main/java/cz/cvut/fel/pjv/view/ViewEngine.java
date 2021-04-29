@@ -97,9 +97,9 @@ public class ViewEngine {
 			projectileImage = new Image("/projectile.png", 200, 200, true, false, true);
 			obstacleImage = new Image("/obstacle.png", 100, 50, true, false, true);
 			enemyImage = new Image("/enemy.png", SHIP_DIMENSIONS, SHIP_DIMENSIONS, true, false, true);
-			fuelBarrelImage = new Image("/fuel_barrel.png", 200, 200, true, false, true);
-			levelEnhancerImage = new Image("/level_enhancer.png", 200, 200, true, false, true);
-			lifeAdderImage = new Image("/life_adder.png", 200, 200, true, false, true);
+			fuelBarrelImage = new Image("/fuel_barrel.png", 100, 100, true, false, true);
+			levelEnhancerImage = new Image("/level_enhancer.png", 100, 100, true, false, true);
+			lifeAdderImage = new Image("/life_adder.png", 100, 100, true, false, true);
 		} catch (IllegalArgumentException e) {
 			LOGGER.log(Level.SEVERE, "Loading of one of images failed. Error: " + e);
 			System.err.println("Please check entered image names. Exiting application...");
@@ -130,14 +130,14 @@ public class ViewEngine {
 		enemyShip = new EnemyShip(spaceExplorationEngine, 50, 30, 10, 10,
 				"M 6,231 L 80,298 184,341 147,433 351,426 318,344 414,302 495,231 492,195 239,51 7,197 Z",
 				100, 10, playerProjectile, "enemyImage");
-		lifeAdder = new LifeAdder(500, 420, "M 247,65 L 72,26 11,149 29,248 243,469 444,279 499,147 410,22 Z", "lifeAdderImage");
-		fuelBarrel = new FuelBarrel(400, 400, "M 160,74 L 110,122 106,341 73,443 368,388 373,157 302,101 Z", 10, "fuelBarrelImage");
-		levelEnhancer = new LevelEnhancer(800, 30, "M 250,21 L 171,177 14,196 120,321 100,479 248,413 398,477 376,325 486,197 326,177 Z", 1, "levelEnhancerImage");
-
+		lifeAdder = new LifeAdder(300, 300, "M 247,65 L 72,26 11,149 29,248 243,469 444,279 499,147 410,22 Z", 30,"lifeAdderImage");
+		fuelBarrel = new FuelBarrel(400, 400, "M 160,74 L 110,122 106,341 73,443 368,388 373,157 302,101 Z", 30, "fuelBarrelImage");
+		levelEnhancer = new LevelEnhancer(800, 30, "M 250,21 L 171,177 14,196 120,321 100,479 248,413 398,477 376,325 486,197 326,177 Z",
+				1, "levelEnhancerImage");
 	}
 
 	private void initializeCastingDirector() {
-		castingDirector.addActorsToCurrentActors(playerShip, obstacle, playerProjectile, enemyShip, lifeAdder, fuelBarrel, levelEnhancer);
+		castingDirector.addActorsToCurrentActors(obstacle, playerProjectile, enemyShip, lifeAdder, fuelBarrel, levelEnhancer);
 	}
 
 	private void addGameActorsNodes() {
@@ -147,6 +147,7 @@ public class ViewEngine {
 		rootGroup.getChildren().add(enemyShip.getSpriteFrame());
 		rootGroup.getChildren().add(fuelBarrel.getSpriteFrame());
 		rootGroup.getChildren().add(levelEnhancer.getSpriteFrame());
+		rootGroup.getChildren().add(lifeAdder.getSpriteFrame());
 	}
 
 	private void initializeImages() {
@@ -156,6 +157,7 @@ public class ViewEngine {
 		enemyShip.getSpriteFrame().setImage(enemyImage);
 		fuelBarrel.getSpriteFrame().setImage(fuelBarrelImage);
 		levelEnhancer.getSpriteFrame().setImage(levelEnhancerImage);
+		lifeAdder.getSpriteFrame().setImage(lifeAdderImage);
 	}
 
 	private void createMainScreenNodes() {
@@ -305,5 +307,9 @@ public class ViewEngine {
 
 	public PlayerShip getPlayerShip() {
 		return playerShip;
+	}
+
+	public Group getRootGroup() {
+		return rootGroup;
 	}
 }

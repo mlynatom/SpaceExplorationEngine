@@ -3,6 +3,7 @@ package cz.cvut.fel.pjv.controller;
 import cz.cvut.fel.pjv.fileIO.LevelData;
 import cz.cvut.fel.pjv.fileIO.PlayerData;
 import cz.cvut.fel.pjv.fileIO.YamlIO;
+import cz.cvut.fel.pjv.model.Actor;
 import cz.cvut.fel.pjv.view.ImageDirector;
 import cz.cvut.fel.pjv.view.ViewEngine;
 import javafx.application.Application;
@@ -113,6 +114,10 @@ public class SpaceExplorationEngine extends Application {
 		viewEngine.updateLevelText();
 	}
 
+	public void removeActorFromRoot(Actor object) {
+		viewEngine.getRootGroup().getChildren().remove(object.getSpriteFrame());
+	}
+
 	public boolean isUp() {
 		return up;
 	}
@@ -147,5 +152,9 @@ public class SpaceExplorationEngine extends Application {
 
 	public ImageDirector getImageDirector() {
 		return imageDirector;
+	}
+
+	public CastingDirector getCastingDirector() {
+		return castingDirector;
 	}
 }

@@ -7,7 +7,7 @@ import cz.cvut.fel.pjv.controller.SpaceExplorationEngine;
  */
 public abstract class Ship extends Actor {
 	protected double damage;
-	private double life;
+	protected double life;
 	protected boolean isAlive;
 	protected Projectile projectile;
 	protected double velocityX, velocityY;

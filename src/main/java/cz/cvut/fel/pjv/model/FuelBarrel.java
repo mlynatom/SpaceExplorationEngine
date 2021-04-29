@@ -7,18 +7,11 @@ public class FuelBarrel extends InteractThing {
 	protected double amountOfFuelToAdd;
 
 	public FuelBarrel(double positionX, double positionY, String spriteBound, double amountOfFuelToAdd, String... imageName) {
-		super(positionX, positionY, spriteBound,imageName);
+		super(positionX, positionY, spriteBound, imageName);
 		this.amountOfFuelToAdd = amountOfFuelToAdd;
 	}
 
 	@Override
 	public void update() {
-
 	}
-
-	@Override
-	public void interact(PlayerShip playerShip) {
-
-	}
-
 }

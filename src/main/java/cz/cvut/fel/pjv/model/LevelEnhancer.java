@@ -15,9 +15,4 @@ public class LevelEnhancer extends InteractThing {
 	public void update() {
 
 	}
-
-	@Override
-	public void interact(PlayerShip playerShip) {
-
-	}
 }
