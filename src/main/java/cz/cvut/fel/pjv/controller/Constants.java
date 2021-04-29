@@ -10,5 +10,5 @@ public class Constants {
 	public static final String PLAYER_PATH = "player.yaml"; // name of player data file
 	public static final double DEFAULT_SHIP_X_POSITION = 20;
 	public static final double SHIP_VELOCITY_X = 2;
-	public static final double SHIP_VELOCITY_Y = 1;
+	public static final double SHIP_VELOCITY_Y = 4;
 }

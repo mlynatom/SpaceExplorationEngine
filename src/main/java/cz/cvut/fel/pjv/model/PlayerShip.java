@@ -25,6 +25,7 @@ public class PlayerShip extends Ship {
 	protected static final double leftBorder = 0;
 	protected static final double upBorder = 0;
 	protected static final double bottomBorder = HEIGHT - SHIP_DIMENSIONS;
+	private double lastXPosition, lastYPosition;
 
 	public PlayerShip(SpaceExplorationEngine spaceExplorationEngine, double positionX, double positionY, String spriteBound,
 					  Projectile projectile, PlayerData playerData, double gravity, String... imageName) {
@@ -42,9 +43,9 @@ public class PlayerShip extends Ship {
 		spaceExplorationEngine.updateFuelOnScreen();
 		applyGravity();
 		checkBorders();
-		moveImage();
 		setRightImage();
 		checkCollision();
+		moveImage();
 		spaceExplorationEngine.updateLifeOnScreen();
 		spaceExplorationEngine.updateLevelOnScreen();
 	}
@@ -55,6 +56,9 @@ public class PlayerShip extends Ship {
 	}
 
 	protected void getNewCoordinates() {
+		lastXPosition = positionX;
+		lastYPosition = positionY;
+
 		if (spaceExplorationEngine.isLeft()) {
 			positionX -= velocityX;
 		}
@@ -89,8 +93,10 @@ public class PlayerShip extends Ship {
 	}
 
 	protected void moveImage() {
+
 		spriteFrame.setTranslateX(positionX);
 		spriteFrame.setTranslateY(positionY);
+
 	}
 
 	protected void setRightImage() {
@@ -141,7 +147,8 @@ public class PlayerShip extends Ship {
 			spaceExplorationEngine.removeActorFromRoot(object);
 			addLife(((LifeAdder) object).lifeToAdd);
 		} else if (object instanceof Obstacle) {
-
+			decreaseLife(((Obstacle) object).damage);
+			recoverPosition(object);
 		} else if (object instanceof EnemyShip) {
 
 		}
@@ -168,6 +175,28 @@ public class PlayerShip extends Ship {
 			life = 100;
 		} else {
 			life += lifeToAdd;
+		}
+	}
+
+	private void decreaseLife(double lifeToSubtract) {
+		if (life - lifeToSubtract <= 0) {
+			spaceExplorationEngine.callEndGame();
+		} else {
+			life -= lifeToSubtract;
+		}
+	}
+
+	private void recoverPosition (Actor object) {
+		if (positionY > object.positionY) {
+			positionY = lastYPosition + 0.1;
+		} else if (positionY < object.positionY) {
+			positionY = lastYPosition - 0.1;
+		}
+
+		if (positionX < object.positionX) {
+			positionX = lastXPosition - 0.1;
+		} else if (positionX > object.positionX) {
+			positionX = lastXPosition + 0.1;
 		}
 	}
 

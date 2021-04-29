@@ -13,6 +13,5 @@ public class Obstacle extends Actor {
 
 	@Override
 	public void update() {
-
 	}
 }

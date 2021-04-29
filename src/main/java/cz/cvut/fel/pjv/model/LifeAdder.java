@@ -8,6 +8,7 @@ public class LifeAdder extends InteractThing {
 
 	public LifeAdder(double positionX, double positionY, String spriteBound, double lifeToAdd, String... imageName) {
 		super(positionX, positionY, spriteBound, imageName);
+		this.lifeToAdd = lifeToAdd;
 	}
 
 	@Override

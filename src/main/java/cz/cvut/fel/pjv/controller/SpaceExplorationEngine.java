@@ -104,18 +104,24 @@ public class SpaceExplorationEngine extends Application {
 		YamlIO.savePlayerDataYaml(playerData);
 	}
 
-	public void updateFuelOnScreen(){
+	public void updateFuelOnScreen() {
 		viewEngine.updateFuelBar();
 	}
-	public void updateLifeOnScreen(){
+
+	public void updateLifeOnScreen() {
 		viewEngine.updateLifeBar();
 	}
-	public void updateLevelOnScreen(){
+
+	public void updateLevelOnScreen() {
 		viewEngine.updateLevelText();
 	}
 
 	public void removeActorFromRoot(Actor object) {
 		viewEngine.getRootGroup().getChildren().remove(object.getSpriteFrame());
+	}
+
+	public void callEndGame() {
+		viewEngine.endGame();
 	}
 
 	public boolean isUp() {
