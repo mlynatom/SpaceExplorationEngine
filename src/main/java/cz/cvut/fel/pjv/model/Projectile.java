@@ -3,6 +3,8 @@ package cz.cvut.fel.pjv.model;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import static cz.cvut.fel.pjv.controller.Constants.POS_OFF_SCREEN;
+
 /**
  * Projectile class for objects which can be shot from ship with entered damage and lifespan. It is based on Actor class.
  */
@@ -26,11 +28,11 @@ public class Projectile extends Actor {
 	 * This method puts Projectile off the screen to make it ready for next reuse.
 	 */
 	public void putOffScreen() {
-		LOGGER.log(Level.INFO, "Projectile put off the screen");
-		positionX = -1000;
-		positionY = -1000;
-		spriteFrame.setTranslateY(-1000);
-		spriteFrame.setTranslateX(-1000);
+		LOGGER.log(Level.FINE, "Projectile put off the screen");
+		positionX = POS_OFF_SCREEN;
+		positionY = POS_OFF_SCREEN;
+		spriteFrame.setTranslateY(positionX);
+		spriteFrame.setTranslateX(positionY);
 	}
 
 	protected void prepareForShoot(boolean right, double posX, double posY) {

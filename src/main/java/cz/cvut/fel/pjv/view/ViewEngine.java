@@ -36,7 +36,7 @@ public class ViewEngine {
 	private ToggleButton helpButton;
 	private ImageView mainScreenBackground;
 	private PlayerShip playerShip;
-	private Projectile playerProjectile;
+	private Projectile playerProjectile, enemyProjectile;
 	private final Stage primaryStage;
 	private Group rootGroup;
 	private Scene scene;
@@ -121,24 +121,28 @@ public class ViewEngine {
 
 	private void createGameActors() {
 		//Pay attention to projectile!!
-		playerProjectile = new Projectile(200, 110,
-				"M 6,246 L 76,213 287,214 462,148 489,216 491,283 460,348 289,283 74,286 Z", 200, 50,"projectileImage");
+		playerProjectile = new Projectile(POS_OFF_SCREEN, POS_OFF_SCREEN,
+				"M 6,246 L 76,213 287,214 462,148 489,216 491,283 460,348 289,283 74,286 Z", 200, 10, "projectileImage");
+		enemyProjectile = new Projectile(POS_OFF_SCREEN, POS_OFF_SCREEN, "M 6,246 L 76,213 287,214 462,148 489,216 491,283 460,348 289,283 74,286 Z",
+				200, levelData.getEnemyProjectileDamage(), "projectileImage");
 		playerShip = new PlayerShip(spaceExplorationEngine, DEFAULT_SHIP_X_POSITION, WIDTH - SHIP_DIMENSIONS,
 				"M 192,4 L 153,67 140,106 141,249 110,290 132,299 133,352 253,352 254,300 275,289 250,250 250,101 231,67 Z",
 				playerProjectile, playerData, levelData.getGravity(), "shipImage0", "shipImage1");
 		obstacle = new Obstacle(150, 300, "M 5,5 L 493,5 493,348 5,348 Z", 0.1, "obstacleImage");
-		enemyShip = new EnemyShip(spaceExplorationEngine, 50, 30, 10, 10,
+		enemyShip = new EnemyShip(spaceExplorationEngine, 700, 200, 10, 10,
 				"M 6,231 L 80,298 184,341 147,433 351,426 318,344 414,302 495,231 492,195 239,51 7,197 Z",
-				100, 0.1, playerProjectile, "enemyImage");
-		lifeAdder = new LifeAdder(300, 300, "M 247,65 L 72,26 11,149 29,248 243,469 444,279 499,147 410,22 Z", 30,"lifeAdderImage");
+				100, levelData.getEnemyStrength(), enemyProjectile, "enemyImage");
+		lifeAdder = new LifeAdder(300, 300, "M 247,65 L 72,26 11,149 29,248 243,469 444,279 499,147 410,22 Z", 30, "lifeAdderImage");
 		fuelBarrel = new FuelBarrel(400, 400, "M 160,74 L 110,122 106,341 73,443 368,388 373,157 302,101 Z", 30, "fuelBarrelImage");
 		levelEnhancer = new LevelEnhancer(800, 30, "M 250,21 L 171,177 14,196 120,321 100,479 248,413 398,477 376,325 486,197 326,177 Z",
 				1, "levelEnhancerImage");
+
+
 	}
 
 	private void initializeCastingDirector() {
-		castingDirector.addActorsToCollisionPlayerActors(obstacle, enemyShip, lifeAdder, fuelBarrel, levelEnhancer);
-		castingDirector.addActorsToCollisionEnemyActors(obstacle, playerShip, playerProjectile);
+		castingDirector.addActorsToCollisionPlayerActors(obstacle, enemyShip, lifeAdder, fuelBarrel, levelEnhancer, enemyProjectile);
+		castingDirector.addActorsToCollisionEnemyActors(playerShip, playerProjectile);
 	}
 
 	private void addGameActorsNodes() {
@@ -149,6 +153,7 @@ public class ViewEngine {
 		rootGroup.getChildren().add(fuelBarrel.getSpriteFrame());
 		rootGroup.getChildren().add(levelEnhancer.getSpriteFrame());
 		rootGroup.getChildren().add(lifeAdder.getSpriteFrame());
+		rootGroup.getChildren().add(enemyProjectile.getSpriteFrame());
 	}
 
 	private void initializeImages() {
@@ -159,6 +164,7 @@ public class ViewEngine {
 		fuelBarrel.getSpriteFrame().setImage(fuelBarrelImage);
 		levelEnhancer.getSpriteFrame().setImage(levelEnhancerImage);
 		lifeAdder.getSpriteFrame().setImage(lifeAdderImage);
+		enemyProjectile.getSpriteFrame().setImage(projectileImage);
 	}
 
 	private void createMainScreenNodes() {
@@ -171,6 +177,7 @@ public class ViewEngine {
 		playButton.setStyle("-fx-font: 22 impact; -fx-base: #ffffff;");
 		playButton.setOnAction(event -> {
 			LOGGER.log(Level.INFO, "Play button was used");
+			spaceExplorationEngine.startGamePlayLoop();
 			mainScreenBackground.setImage(background);
 			mainScreenBackground.toBack();
 			horizontalButtonBox.setVisible(false);
@@ -192,7 +199,6 @@ public class ViewEngine {
 		exitButton.setStyle("-fx-font: 22 impact; -fx-base: #ffffff;");
 		exitButton.setOnAction(event -> {
 			LOGGER.log(Level.INFO, "Exit button used.");
-			spaceExplorationEngine.stopGamePlayLoop();
 			System.exit(1);
 		});
 
@@ -202,7 +208,6 @@ public class ViewEngine {
 			LOGGER.log(Level.INFO, "Exit and Save button used.");
 			saveDataToPlayerData();
 			spaceExplorationEngine.savePlayerData(playerData);
-			spaceExplorationEngine.stopGamePlayLoop();
 			System.exit(1);
 		});
 
@@ -283,6 +288,7 @@ public class ViewEngine {
 		mainScreenBackground.toFront();
 		horizontalButtonBox.setVisible(true);
 		horizontalButtonBox.toFront();
+		spaceExplorationEngine.stopGamePlayLoop();
 	}
 
 	private void restartGame() {
@@ -312,6 +318,10 @@ public class ViewEngine {
 
 	public PlayerShip getPlayerShip() {
 		return playerShip;
+	}
+
+	public EnemyShip getEnemyShip() {
+		return enemyShip;
 	}
 
 	public Group getRootGroup() {

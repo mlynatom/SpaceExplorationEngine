@@ -11,4 +11,5 @@ public class Constants {
 	public static final double DEFAULT_SHIP_X_POSITION = 20;
 	public static final double SHIP_VELOCITY_X = 2;
 	public static final double SHIP_VELOCITY_Y = 4;
+	public static final double POS_OFF_SCREEN = -500;
 }

@@ -2,8 +2,6 @@ package cz.cvut.fel.pjv.model;
 
 import cz.cvut.fel.pjv.controller.SpaceExplorationEngine;
 import cz.cvut.fel.pjv.fileIO.PlayerData;
-import javafx.scene.shape.SVGPath;
-import javafx.scene.shape.Shape;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,17 +19,13 @@ public class PlayerShip extends Ship {
 	protected double fuel; // amount of fuel in ship
 	protected boolean isAlive;
 	protected final double gravity;
-	protected static final double rightBorder = WIDTH - SHIP_DIMENSIONS;
-	protected static final double leftBorder = 0;
-	protected static final double upBorder = 0;
-	protected static final double bottomBorder = HEIGHT - SHIP_DIMENSIONS;
 	protected double lastXPosition, lastYPosition;
 	protected boolean projectileShot = false;
 	protected int counterProjectile = 0;
 
 	public PlayerShip(SpaceExplorationEngine spaceExplorationEngine, double positionX, double positionY, String spriteBound,
 					  Projectile projectile, PlayerData playerData, double gravity, String... imageName) {
-		super(spaceExplorationEngine, positionX, positionY, SHIP_VELOCITY_X, SHIP_VELOCITY_Y, spriteBound, playerData.getShipLife(), 10, projectile, imageName);
+		super(spaceExplorationEngine, positionX, positionY, SHIP_VELOCITY_X, SHIP_VELOCITY_Y, spriteBound, playerData.getShipLife(), 0.1, projectile, imageName);
 		this.level = playerData.getShipLevel();
 		this.fuel = playerData.getShipFuel();
 		this.fuelConsumption = playerData.getFuelConsumption();
@@ -136,6 +130,7 @@ public class PlayerShip extends Ship {
 
 	}
 
+	@Override
 	protected void checkCollision() {
 		for (int i = 0; i < spaceExplorationEngine.getCastingDirector().getCollisionPlayerActors().size(); i++) {
 			Actor object = spaceExplorationEngine.getCastingDirector().getCollisionPlayerActors().get(i);
@@ -147,6 +142,7 @@ public class PlayerShip extends Ship {
 		}
 	}
 
+	@Override
 	protected void handleCollision(Actor object) {
 		if (object instanceof FuelBarrel) {
 			spaceExplorationEngine.getCastingDirector().addToPlayerRemovedActors(object);
@@ -188,6 +184,8 @@ public class PlayerShip extends Ship {
 			level = 10;
 		} else {
 			level += levelToAdd;
+			damage += 0.1;
+			projectile.damage += 10;
 		}
 	}
 
@@ -219,20 +217,6 @@ public class PlayerShip extends Ship {
 		} else if (positionX > object.positionX) {
 			positionX = lastXPosition + 0.1;
 		}
-	}
-
-	/**
-	 * This method controls collision with another object in game (Actor class)
-	 *
-	 * @param object any object of Actor class
-	 * @return true if collision happened
-	 */
-	protected boolean collide(Actor object) {
-		if (spriteFrame.getBoundsInParent().intersects(object.getSpriteFrame().getBoundsInParent())) {
-			Shape intersection = SVGPath.intersect(spriteBound, object.spriteBound);
-			return intersection.getBoundsInLocal().getWidth() != -1;
-		}
-		return false;
 	}
 
 	public int getLevel() {

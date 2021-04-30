@@ -30,7 +30,6 @@ public class SpaceExplorationEngine extends Application {
 		viewEngine = new ViewEngine(primaryStage, this, levelData, playerData, imageDirector, castingDirector);
 		viewEngine.startViewEngine();
 		createKeyHandlers();
-		startGamePlayLoop();
 	}
 
 	public static void main(String[] args) {
@@ -90,7 +89,7 @@ public class SpaceExplorationEngine extends Application {
 		});
 	}
 
-	private void startGamePlayLoop() {
+	public void startGamePlayLoop() {
 		gamePlayLoop = new GamePlayLoop(viewEngine);
 		gamePlayLoop.start();
 	}

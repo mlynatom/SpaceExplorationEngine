@@ -17,5 +17,6 @@ public class GamePlayLoop extends AnimationTimer {
 	public void handle(long now) {
 		viewEngine.update();
 		viewEngine.getPlayerShip().update();
+		viewEngine.getEnemyShip().update();
 	}
 }
