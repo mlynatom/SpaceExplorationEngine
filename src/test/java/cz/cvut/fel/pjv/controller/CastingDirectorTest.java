@@ -32,43 +32,43 @@ class CastingDirectorTest {
 	@Test
 	public void testAddActorToCurrentActors() {
 		CastingDirector castingDirector = new CastingDirector();
-		castingDirector.addActorsToCurrentActors(mockActor1);
+		castingDirector.addActorsToCollisionPlayerActors(mockActor1);
 		Actor[] rightArray = {mockActor1};
-		assertArrayEquals(rightArray, castingDirector.getCurrentActors().toArray());
+		assertArrayEquals(rightArray, castingDirector.getCollisionPlayerActors().toArray());
 	}
 
 	@Test
 	public void testAddActorsToCurrentActors() {
 		CastingDirector castingDirector = new CastingDirector();
-		castingDirector.addActorsToCurrentActors(mockActor1, mockActor2);
+		castingDirector.addActorsToCollisionPlayerActors(mockActor1, mockActor2);
 		Actor[] rightArray = {mockActor1, mockActor2};
-		assertArrayEquals(rightArray, castingDirector.getCurrentActors().toArray());
+		assertArrayEquals(rightArray, castingDirector.getCollisionPlayerActors().toArray());
 	}
 
 	@Test
 	public void testAddActorToRemovedActors() {
 		CastingDirector castingDirector = new CastingDirector();
-		castingDirector.addToRemovedActors(mockActor1);
+		castingDirector.addToPlayerRemovedActors(mockActor1);
 		Actor[] rightArray = {mockActor1};
-		assertArrayEquals(rightArray, castingDirector.getRemovedActors().toArray());
+		assertArrayEquals(rightArray, castingDirector.getRemovedActorsPlayer().toArray());
 	}
 
 	@Test
 	public void testAddActorsToRemovedActors() {
 		CastingDirector castingDirector = new CastingDirector();
-		castingDirector.addToRemovedActors(mockActor1, mockActor2);
+		castingDirector.addToPlayerRemovedActors(mockActor1, mockActor2);
 		Actor[] rightArray = {mockActor1, mockActor2};
-		assertEquals(2, castingDirector.getRemovedActors().size());
+		assertEquals(2, castingDirector.getRemovedActorsPlayer().size());
 	}
 
 	@Test
 	public void testResetRemovedActors() {
 		CastingDirector castingDirector = new CastingDirector();
-		castingDirector.addActorsToCurrentActors(mockActor1, mockActor2);
-		castingDirector.addToRemovedActors(mockActor1);
-		castingDirector.resetRemovedActors();
+		castingDirector.addActorsToCollisionPlayerActors(mockActor1, mockActor2);
+		castingDirector.addToPlayerRemovedActors(mockActor1);
+		castingDirector.resetPlayerRemovedActors();
 		Actor[] rightCurrentArray = {mockActor2};
-		assertArrayEquals(rightCurrentArray, castingDirector.getCurrentActors().toArray());
-		assertEquals(0, castingDirector.getRemovedActors().size());
+		assertArrayEquals(rightCurrentArray, castingDirector.getCollisionPlayerActors().toArray());
+		assertEquals(0, castingDirector.getRemovedActorsPlayer().size());
 	}
 }

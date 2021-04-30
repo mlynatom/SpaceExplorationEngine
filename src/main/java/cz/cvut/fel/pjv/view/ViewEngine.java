@@ -137,7 +137,8 @@ public class ViewEngine {
 	}
 
 	private void initializeCastingDirector() {
-		castingDirector.addActorsToCurrentActors(obstacle, enemyShip, lifeAdder, fuelBarrel, levelEnhancer);
+		castingDirector.addActorsToCollisionPlayerActors(obstacle, enemyShip, lifeAdder, fuelBarrel, levelEnhancer);
+		castingDirector.addActorsToCollisionEnemyActors(obstacle, playerShip, playerProjectile);
 	}
 
 	private void addGameActorsNodes() {

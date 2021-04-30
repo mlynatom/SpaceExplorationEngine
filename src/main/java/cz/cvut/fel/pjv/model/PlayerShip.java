@@ -137,29 +137,29 @@ public class PlayerShip extends Ship {
 	}
 
 	protected void checkCollision() {
-		for (int i = 0; i < spaceExplorationEngine.getCastingDirector().getCurrentActors().size(); i++) {
-			Actor object = spaceExplorationEngine.getCastingDirector().getCurrentActors().get(i);
+		for (int i = 0; i < spaceExplorationEngine.getCastingDirector().getCollisionPlayerActors().size(); i++) {
+			Actor object = spaceExplorationEngine.getCastingDirector().getCollisionPlayerActors().get(i);
 			if (collide(object)) {
 				LOGGER.log(Level.FINE, PlayerShip.class.getName() + "collided with " + object.getClass().getName());
 				handleCollision(object);
-				spaceExplorationEngine.getCastingDirector().resetRemovedActors();
+				spaceExplorationEngine.getCastingDirector().resetPlayerRemovedActors();
 			}
 		}
 	}
 
 	protected void handleCollision(Actor object) {
 		if (object instanceof FuelBarrel) {
-			spaceExplorationEngine.getCastingDirector().addToRemovedActors(object);
+			spaceExplorationEngine.getCastingDirector().addToPlayerRemovedActors(object);
 			spaceExplorationEngine.removeActorFromRoot(object);
 			addFuel(((FuelBarrel) object).amountOfFuelToAdd);
 			LOGGER.log(Level.INFO, "Fuel added");
 		} else if (object instanceof LevelEnhancer) {
-			spaceExplorationEngine.getCastingDirector().addToRemovedActors(object);
+			spaceExplorationEngine.getCastingDirector().addToPlayerRemovedActors(object);
 			spaceExplorationEngine.removeActorFromRoot(object);
 			LOGGER.log(Level.INFO, "Level added");
 			addLevel(((LevelEnhancer) object).amountOfLevelToAdd);
 		} else if (object instanceof LifeAdder) {
-			spaceExplorationEngine.getCastingDirector().addToRemovedActors(object);
+			spaceExplorationEngine.getCastingDirector().addToPlayerRemovedActors(object);
 			spaceExplorationEngine.removeActorFromRoot(object);
 			LOGGER.log(Level.INFO, "Life added");
 			addLife(((LifeAdder) object).lifeToAdd);
