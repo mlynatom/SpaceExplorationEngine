@@ -32,4 +32,21 @@ public class Projectile extends Actor {
 		spriteFrame.setTranslateY(-1000);
 		spriteFrame.setTranslateX(-1000);
 	}
+
+	protected void prepareForShoot(boolean right, double posX, double posY) {
+		if (right) {
+			spriteFrame.setScaleX(-1);
+		} else {
+			spriteFrame.setScaleX(1);
+		}
+		positionX = posX + 40;
+		positionY = posY + 20;
+		spriteFrame.setTranslateX(positionX);
+		spriteFrame.setTranslateY(positionY);
+	}
+
+	protected void changeXPosition(double speed){
+		positionX += speed;
+		spriteFrame.setTranslateX(positionX);
+	}
 }

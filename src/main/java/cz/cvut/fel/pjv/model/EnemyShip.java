@@ -17,7 +17,7 @@ public class EnemyShip extends Ship {
 	}
 
 	@Override
-	public void shootProjectile() {
+	protected void shootProjectile() {
 
 	}
 }

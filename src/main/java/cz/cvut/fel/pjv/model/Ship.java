@@ -30,7 +30,7 @@ public abstract class Ship extends Actor {
 	/**
 	 * This method shoots projectile with entered damage
 	 */
-	public abstract void shootProjectile();
+	protected abstract void shootProjectile();
 
 	public  double getLife() {
 		return life;

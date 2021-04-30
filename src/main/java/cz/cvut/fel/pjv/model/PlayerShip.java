@@ -26,6 +26,8 @@ public class PlayerShip extends Ship {
 	protected static final double upBorder = 0;
 	protected static final double bottomBorder = HEIGHT - SHIP_DIMENSIONS;
 	protected double lastXPosition, lastYPosition;
+	protected boolean projectileShot = false;
+	protected int counterProjectile = 0;
 
 	public PlayerShip(SpaceExplorationEngine spaceExplorationEngine, double positionX, double positionY, String spriteBound,
 					  Projectile projectile, PlayerData playerData, double gravity, String... imageName) {
@@ -46,13 +48,27 @@ public class PlayerShip extends Ship {
 		setRightImage();
 		checkCollision();
 		moveImage();
+		shootProjectile();
 		spaceExplorationEngine.updateLifeOnScreen();
 		spaceExplorationEngine.updateLevelOnScreen();
 	}
 
 	@Override
-	public void shootProjectile() {
-
+	protected void shootProjectile() {
+		if (spaceExplorationEngine.isSpace() && !projectileShot) {
+			projectileShot = true;
+			projectile.prepareForShoot(true, positionX, positionY);
+		}
+		if (projectileShot) {
+			if (counterProjectile < projectile.lifeSpan && projectile.positionX < WIDTH + 10) {
+				projectile.changeXPosition(2);
+				counterProjectile++;
+			} else {
+				projectile.putOffScreen();
+				counterProjectile = 0;
+				projectileShot = false;
+			}
+		}
 	}
 
 	protected void getNewCoordinates() {
@@ -93,10 +109,8 @@ public class PlayerShip extends Ship {
 	}
 
 	protected void moveImage() {
-
 		spriteFrame.setTranslateX(positionX);
 		spriteFrame.setTranslateY(positionY);
-
 	}
 
 	protected void setRightImage() {

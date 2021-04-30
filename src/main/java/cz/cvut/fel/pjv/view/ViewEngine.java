@@ -94,7 +94,7 @@ public class ViewEngine {
 			help = new Image("/help.png", WIDTH, HEIGHT, true, false, true);
 			shipImage0 = new Image(levelData.getShipImagePath(), SHIP_DIMENSIONS, SHIP_DIMENSIONS, true, false, true);
 			shipImage1 = new Image(levelData.getShipImageEnginesOnPath(), SHIP_DIMENSIONS, SHIP_DIMENSIONS, true, false, true);
-			projectileImage = new Image("/projectile.png", 200, 200, true, false, true);
+			projectileImage = new Image("/projectile.png", 20, 20, true, false, true);
 			obstacleImage = new Image("/obstacle.png", 100, 50, true, false, true);
 			enemyImage = new Image("/enemy.png", SHIP_DIMENSIONS, SHIP_DIMENSIONS, true, false, true);
 			fuelBarrelImage = new Image("/fuel_barrel.png", 100, 100, true, false, true);
@@ -122,7 +122,7 @@ public class ViewEngine {
 	private void createGameActors() {
 		//Pay attention to projectile!!
 		playerProjectile = new Projectile(200, 110,
-				"M 6,246 L 76,213 287,214 462,148 489,216 491,283 460,348 289,283 74,286 Z", 20, 50,"projectileImage");
+				"M 6,246 L 76,213 287,214 462,148 489,216 491,283 460,348 289,283 74,286 Z", 200, 50,"projectileImage");
 		playerShip = new PlayerShip(spaceExplorationEngine, DEFAULT_SHIP_X_POSITION, WIDTH - SHIP_DIMENSIONS,
 				"M 192,4 L 153,67 140,106 141,249 110,290 132,299 133,352 253,352 254,300 275,289 250,250 250,101 231,67 Z",
 				playerProjectile, playerData, levelData.getGravity(), "shipImage0", "shipImage1");
@@ -137,7 +137,7 @@ public class ViewEngine {
 	}
 
 	private void initializeCastingDirector() {
-		castingDirector.addActorsToCurrentActors(obstacle, playerProjectile, enemyShip, lifeAdder, fuelBarrel, levelEnhancer);
+		castingDirector.addActorsToCurrentActors(obstacle, enemyShip, lifeAdder, fuelBarrel, levelEnhancer);
 	}
 
 	private void addGameActorsNodes() {

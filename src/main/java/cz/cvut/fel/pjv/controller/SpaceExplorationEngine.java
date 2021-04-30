@@ -13,7 +13,7 @@ import javafx.stage.Stage;
  * Main game class.
  */
 public class SpaceExplorationEngine extends Application {
-	private boolean up, left, right, space, escape;
+	private boolean up = false, left = false, right = false, space = false, escape = false;
 	private GamePlayLoop gamePlayLoop;
 	protected ViewEngine viewEngine;
 	private LevelData levelData;
