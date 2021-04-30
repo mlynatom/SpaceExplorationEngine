@@ -35,16 +35,18 @@ public class PlayerShip extends Ship {
 
 	@Override
 	public void update() {
-		getNewCoordinates();
-		spaceExplorationEngine.updateFuelOnScreen();
-		applyGravity();
-		checkBorders();
-		setRightImage();
-		checkCollision();
-		moveImage();
-		shootProjectile();
-		spaceExplorationEngine.updateLifeOnScreen();
-		spaceExplorationEngine.updateLevelOnScreen();
+		if (isAlive) {
+			getNewCoordinates();
+			spaceExplorationEngine.updateFuelOnScreen();
+			applyGravity();
+			checkBorders();
+			setRightImage();
+			checkCollision();
+			moveSpriteFrame();
+			shootProjectile();
+			spaceExplorationEngine.updateLifeOnScreen();
+			spaceExplorationEngine.updateLevelOnScreen();
+		}
 	}
 
 	@Override
@@ -84,27 +86,8 @@ public class PlayerShip extends Ship {
 		}
 	}
 
-	protected void checkBorders() {
-		if (positionX > rightBorder) {
-			positionX = rightBorder;
-		} else if (positionX < leftBorder) {
-			positionX = leftBorder;
-		}
-
-		if (positionY < upBorder) {
-			positionY = upBorder;
-		} else if (positionY > bottomBorder) {
-			positionY = bottomBorder;
-		}
-	}
-
 	protected void applyGravity() {
 		positionY += gravity;
-	}
-
-	protected void moveImage() {
-		spriteFrame.setTranslateX(positionX);
-		spriteFrame.setTranslateY(positionY);
 	}
 
 	protected void setRightImage() {
@@ -199,6 +182,7 @@ public class PlayerShip extends Ship {
 
 	protected void decreaseLife(double lifeToSubtract) {
 		if (life - lifeToSubtract <= 0) {
+			isAlive = false;
 			spaceExplorationEngine.callEndGame();
 		} else {
 			life -= lifeToSubtract;

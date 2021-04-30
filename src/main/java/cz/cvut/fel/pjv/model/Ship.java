@@ -37,17 +37,9 @@ public abstract class Ship extends Actor {
 	public abstract void update();
 
 	/**
-	 * This method shoots projectile with entered damage
+	 * This method shoots projectile.
 	 */
 	protected abstract void shootProjectile();
-
-	public double getLife() {
-		return life;
-	}
-
-	public void setLife(double life) {
-		this.life = life;
-	}
 
 	/**
 	 * This method controls collision with another object in game (Actor class)
@@ -63,7 +55,50 @@ public abstract class Ship extends Actor {
 		return false;
 	}
 
+	/**
+	 * This method handles collision based on type of collided object
+	 *
+	 * @param object with which was collided
+	 */
 	protected abstract void handleCollision(Actor object);
 
+	/**
+	 * This method goes through list of possible actors and cals collide method on them
+	 */
 	protected abstract void checkCollision();
+
+	/**
+	 * This method check Borders to not being crossed.
+	 */
+	protected void checkBorders() {
+		if (positionX > rightBorder) {
+			positionX = rightBorder;
+		} else if (positionX < leftBorder) {
+			positionX = leftBorder;
+		}
+
+		if (positionY < upBorder) {
+			positionY = upBorder;
+		} else if (positionY > bottomBorder) {
+			positionY = bottomBorder;
+		}
+	}
+
+	/**
+	 * This method moves ImageView node on screen.
+	 */
+	protected void moveSpriteFrame() {
+		spriteFrame.setTranslateY(positionY);
+		spriteFrame.setTranslateX(positionX);
+	}
+
+	public double getLife() {
+		return life;
+	}
+
+	public void setLife(double life) {
+		this.life = life;
+	}
+
+
 }

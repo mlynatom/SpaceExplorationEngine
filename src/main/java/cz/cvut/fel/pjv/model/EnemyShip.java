@@ -13,9 +13,9 @@ public class EnemyShip extends Ship {
 	protected int projectileCounter = 0;
 	protected int timeCounter = 10;
 	protected int moveCounter = 10;
-	private boolean projectileShot = false;
-	private boolean isAlive = true;
-	private boolean moveUp = true;
+	protected boolean projectileShot = false;
+	protected boolean isAlive = true;
+	protected boolean moveUp = true;
 
 	public EnemyShip(SpaceExplorationEngine spaceExplorationEngine, double positionX, double positionY, double velocityX,
 					 double velocityY, String spriteBound, double life, double damage, Projectile projectile, String... imageName) {
@@ -31,7 +31,6 @@ public class EnemyShip extends Ship {
 			checkBorders();
 			moveSpriteFrame();
 		}
-
 	}
 
 	@Override
@@ -76,6 +75,11 @@ public class EnemyShip extends Ship {
 		}
 	}
 
+	/**
+	 * This method decrease damage if possible. If life drops to/below zero it removes this actor and his projectile.
+	 *
+	 * @param damage damage which decreases life.
+	 */
 	protected void decreaseLife(double damage) {
 		if (life - damage <= 0) {
 			spaceExplorationEngine.getCastingDirector().addToPlayerRemovedActors(this);
@@ -89,35 +93,23 @@ public class EnemyShip extends Ship {
 		}
 	}
 
+	/**
+	 * This method provides basic movement periodically up and down.
+	 */
 	protected void move() {
 		if (moveUp) {
-			positionY -= 1;
+			positionY -= velocityY;
 		} else {
-			positionY += 1;
+			positionY += velocityY;
 		}
+		checkChangeDirection();
+	}
+
+	private void checkChangeDirection() {
 		moveCounter--;
 		if (moveCounter == 0) {
 			moveUp = !moveUp;
 			moveCounter = 100;
 		}
 	}
-
-	protected void checkBorders() {
-		if (positionX > rightBorder) {
-			positionX = rightBorder;
-		} else if (positionX < leftBorder) {
-			positionX = leftBorder;
-		}
-
-		if (positionY < upBorder) {
-			positionY = upBorder;
-		} else if (positionY > bottomBorder) {
-			positionY = bottomBorder;
-		}
-	}
-
-	protected void moveSpriteFrame() {
-		spriteFrame.setTranslateY(positionY);
-	}
-
 }

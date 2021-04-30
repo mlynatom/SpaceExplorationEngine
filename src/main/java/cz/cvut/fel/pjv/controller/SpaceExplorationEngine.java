@@ -155,6 +155,10 @@ public class SpaceExplorationEngine extends Application {
 		this.right = right;
 	}
 
+	public void setSpace(boolean space) {
+		this.space = space;
+	}
+
 	public ImageDirector getImageDirector() {
 		return imageDirector;
 	}

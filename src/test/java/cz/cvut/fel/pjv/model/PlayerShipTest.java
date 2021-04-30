@@ -32,6 +32,24 @@ public class PlayerShipTest {
 	}
 
 	@Test
+	public void testShootProjectileDo() {
+		PlayerShip playerShip = new PlayerShip(mockSpaceExplorationEngine, mockPositionX, mockPositionY, mockSpriteBound, mockProjectile, mockPlayerData, mockGravity, mockImageName);
+		mockSpaceExplorationEngine.setSpace(true);
+		playerShip.shootProjectile();
+		assertTrue(playerShip.projectileShot);
+		assertEquals(1,playerShip.counterProjectile);
+	}
+
+	@Test
+	public void testShootProjectileNot() {
+		PlayerShip playerShip = new PlayerShip(mockSpaceExplorationEngine, mockPositionX, mockPositionY, mockSpriteBound, mockProjectile, mockPlayerData, mockGravity, mockImageName);
+		mockSpaceExplorationEngine.setSpace(false);
+		playerShip.shootProjectile();
+		assertFalse(playerShip.projectileShot);
+		assertEquals(0,playerShip.counterProjectile);
+	}
+
+	@Test
 	public void testGetNewCoordinatesLeft() {
 		PlayerShip playerShip = new PlayerShip(mockSpaceExplorationEngine, mockPositionX, mockPositionY, mockSpriteBound, mockProjectile, mockPlayerData, mockGravity, mockImageName);
 		mockSpaceExplorationEngine.setLeft(true);
@@ -89,43 +107,6 @@ public class PlayerShipTest {
 		playerShip.getNewCoordinates();
 		assertEquals(mockPositionY - playerShip.velocityY, playerShip.positionY);
 		assertEquals(0, playerShip.getFuel());
-	}
-
-	@Test
-	public void testCheckBordersRight() {
-		PlayerShip playerShip = new PlayerShip(mockSpaceExplorationEngine, mockPositionX, mockPositionY, mockSpriteBound, mockProjectile, mockPlayerData, mockGravity, mockImageName);
-		playerShip.setPositionX(PlayerShip.rightBorder + 1);
-
-		playerShip.checkBorders();
-		assertEquals(PlayerShip.rightBorder, playerShip.positionX);
-	}
-
-	@Test
-	public void testCheckBordersLeft() {
-		PlayerShip playerShip = new PlayerShip(mockSpaceExplorationEngine, mockPositionX, mockPositionY, mockSpriteBound, mockProjectile, mockPlayerData, mockGravity, mockImageName);
-		playerShip.setPositionX(PlayerShip.leftBorder - 1);
-		playerShip.checkBorders();
-		assertEquals(PlayerShip.leftBorder, playerShip.positionX);
-
-	}
-
-	@Test
-	public void testCheckBordersUp() {
-		PlayerShip playerShip = new PlayerShip(mockSpaceExplorationEngine, mockPositionX, mockPositionY, mockSpriteBound, mockProjectile, mockPlayerData, mockGravity, mockImageName);
-		playerShip.setPositionY(PlayerShip.upBorder - 1);
-
-		playerShip.checkBorders();
-		assertEquals(PlayerShip.upBorder, playerShip.positionY);
-	}
-
-	@Test
-	public void testCheckBordersBottom() {
-		PlayerShip playerShip = new PlayerShip(mockSpaceExplorationEngine, mockPositionX, mockPositionY, mockSpriteBound, mockProjectile, mockPlayerData, mockGravity, mockImageName);
-		playerShip.setPositionY(PlayerShip.bottomBorder + 1);
-
-		playerShip.checkBorders();
-		assertEquals(PlayerShip.bottomBorder, playerShip.positionY);
-
 	}
 
 	@Test
@@ -254,30 +235,6 @@ public class PlayerShipTest {
 		playerShip.recoverPosition(mockObject);
 		assertEquals(mockPositionY - 0.1, playerShip.positionY);
 
-	}
-
-	@Test
-	public void testCollideTrue() {
-		PlayerShip playerShip = new PlayerShip(mockSpaceExplorationEngine, mockPositionX, mockPositionY, mockSpriteBound, mockProjectile, mockPlayerData, mockGravity, mockImageName);
-		Actor mockObject = new Actor(mockPositionX, mockPositionY, mockSpriteBound, mockImageName) {
-			@Override
-			public void update() {
-
-			}
-		};
-		assertTrue(playerShip.collide(mockObject));
-	}
-
-	@Test
-	public void testCollideFalse() {
-		PlayerShip playerShip = new PlayerShip(mockSpaceExplorationEngine, mockPositionX, mockPositionY, mockSpriteBound, mockProjectile, mockPlayerData, mockGravity, mockImageName);
-		Actor mockObject = new Actor(mockPositionX+100, mockPositionY+100, mockSpriteBound, mockImageName) {
-			@Override
-			public void update() {
-
-			}
-		};
-		assertFalse(playerShip.collide(mockObject));
 	}
 
 }

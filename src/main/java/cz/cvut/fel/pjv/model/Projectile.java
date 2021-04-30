@@ -35,6 +35,13 @@ public class Projectile extends Actor {
 		spriteFrame.setTranslateX(positionY);
 	}
 
+	/**
+	 * This method change position of projectile to the shoot location and choose direction of image
+	 *
+	 * @param right if true direction of image is to right, else to left
+	 * @param posX  position to change
+	 * @param posY  position to change
+	 */
 	protected void prepareForShoot(boolean right, double posX, double posY) {
 		if (right) {
 			spriteFrame.setScaleX(-1);
@@ -47,7 +54,11 @@ public class Projectile extends Actor {
 		spriteFrame.setTranslateY(positionY);
 	}
 
-	protected void changeXPosition(double speed){
+	/**
+	 * This method changes X position according to "speed"
+	 * @param speed if > 0 goes to the right, if < 0 goes to the left
+	 */
+	protected void changeXPosition(double speed) {
 		positionX += speed;
 		spriteFrame.setTranslateX(positionX);
 	}

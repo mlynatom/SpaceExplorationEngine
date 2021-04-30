@@ -129,7 +129,7 @@ public class ViewEngine {
 				"M 192,4 L 153,67 140,106 141,249 110,290 132,299 133,352 253,352 254,300 275,289 250,250 250,101 231,67 Z",
 				playerProjectile, playerData, levelData.getGravity(), "shipImage0", "shipImage1");
 		obstacle = new Obstacle(150, 300, "M 5,5 L 493,5 493,348 5,348 Z", 0.1, "obstacleImage");
-		enemyShip = new EnemyShip(spaceExplorationEngine, 700, 200, 10, 10,
+		enemyShip = new EnemyShip(spaceExplorationEngine, 700, 200, 1, 1,
 				"M 6,231 L 80,298 184,341 147,433 351,426 318,344 414,302 495,231 492,195 239,51 7,197 Z",
 				100, levelData.getEnemyStrength(), enemyProjectile, "enemyImage");
 		lifeAdder = new LifeAdder(300, 300, "M 247,65 L 72,26 11,149 29,248 243,469 444,279 499,147 410,22 Z", 30, "lifeAdderImage");
