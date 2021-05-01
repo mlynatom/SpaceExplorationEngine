@@ -3,21 +3,53 @@ gravity: 0.6
 backgroundImagePath: "background.png"
 shipImagePath: "player_ship_0.png"
 shipImageEnginesOnPath: "player_ship_1.png"
-numOfFuels: 2
-numOfLevelEnhancers: 2
-numOfLifeAdders: 2
 enemyStrength: 0.1
-enemyProjectileDamage: 50
+enemyProjectileDamage: 10.0
 enemyLife: 10.0
 obstaclesPositions:
-  - x: 150.0
-    y: 200.0
-  - x: 175.0
-    y: 200.0
-  - x: 150.0
-    y: 225.0
+- x: 420.0
+  y: 168.0
+- x: 439.0
+  y: 221.0
+- x: 449.0
+  y: 265.0
+- x: 414.0
+  y: 260.0
+- x: 408.0
+  y: 210.0
+- x: 403.0
+  y: 174.0
+- x: 410.0
+  y: 142.0
 enemiesPositions:
-  - x: 700.0
-    y: 200.0
-  - x: 300.0
-    y: 100.0
+- x: 217.0
+  y: 196.0
+- x: 263.0
+  y: 386.0
+fuelBarrelsPositions: []
+levelEnhancersPositions:
+- x: 623.0
+  y: 105.0
+- x: 229.0
+  y: 75.0
+- x: 97.0
+  y: 237.0
+- x: 669.0
+  y: 366.0
+- x: 544.0
+  y: 488.0
+- x: 512.0
+  y: 446.0
+- x: 356.0
+  y: 343.0
+- x: 431.0
+  y: 56.0
+- x: 580.0
+  y: 88.0
+lifeAddersPositions:
+- x: 826.0
+  y: 138.0
+- x: 818.0
+  y: 300.0
+- x: 698.0
+  y: 174.0

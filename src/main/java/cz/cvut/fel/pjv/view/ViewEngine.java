@@ -23,7 +23,6 @@ import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -125,7 +124,7 @@ public class ViewEngine {
 
 	private void createGameActors() {
 		playerProjectile = new Projectile(POS_OFF_SCREEN, POS_OFF_SCREEN,
-				"M 6,246 L 76,213 287,214 462,148 489,216 491,283 460,348 289,283 74,286 Z", 200, 10, "projectileImage");
+				"M 6,246 L 76,213 287,214 462,148 489,216 491,283 460,348 289,283 74,286 Z", 200, 50, "projectileImage");
 		playerShip = new PlayerShip(spaceExplorationEngine, DEFAULT_SHIP_X_POSITION, DEFAULT_SHIP_Y_POSITION,
 				"M 192,4 L 153,67 140,106 141,249 110,290 132,299 133,352 253,352 254,300 275,289 250,250 250,101 231,67 Z",
 				playerProjectile, playerData, levelData.getGravity(), "shipImage0", "shipImage1");
@@ -165,24 +164,24 @@ public class ViewEngine {
 	}
 
 	private void createLifeAdders() {
-		for (int i = 0; i < levelData.getNumOfLifeAdders(); i++) {
-			lifeAdders.add(new LifeAdder(ThreadLocalRandom.current().nextDouble(0, WIDTH - 1), ThreadLocalRandom.current().nextDouble(0, HEIGHT - 1),
+		for (Coordinate2D coordinate : levelData.getLifeAddersPositions()) {
+			lifeAdders.add(new LifeAdder(coordinate.getX(), coordinate.getY(),
 					"M 247,65 L 72,26 11,149 29,248 243,469 444,279 499,147 410,22 Z",
 					30, "lifeAdderImage"));
 		}
 	}
 
 	private void createFuelBarrels() {
-		for (int i = 0; i < levelData.getNumOfFuels(); i++) {
-			fuelBarrels.add(new FuelBarrel(ThreadLocalRandom.current().nextDouble(0, WIDTH - 1), ThreadLocalRandom.current().nextDouble(0, HEIGHT - 1),
+		for (Coordinate2D coordinate : levelData.getFuelBarrelsPositions()) {
+			fuelBarrels.add(new FuelBarrel(coordinate.getX(), coordinate.getY(),
 					"M 160,74 L 110,122 106,341 73,443 368,388 373,157 302,101 Z",
 					30, "fuelBarrelImage"));
 		}
 	}
 
 	private void createLevelEnhancers() {
-		for (int i = 0; i < levelData.getNumOfLevelEnhancers(); i++) {
-			levelEnhancers.add(new LevelEnhancer(ThreadLocalRandom.current().nextDouble(0, WIDTH - 1), ThreadLocalRandom.current().nextDouble(0, HEIGHT - 1),
+		for (Coordinate2D coordinate : levelData.getLevelEnhancersPositions()) {
+			levelEnhancers.add(new LevelEnhancer(coordinate.getX(), coordinate.getY(),
 					"M 250,21 L 171,177 14,196 120,321 100,479 248,413 398,477 376,325 486,197 326,177 Z",
 					1, "levelEnhancerImage"));
 
@@ -268,7 +267,8 @@ public class ViewEngine {
 			mainScreenBackground.setImage(background);
 			mainScreenBackground.toBack();
 			horizontalButtonBox.setVisible(false);
-			restartGame();
+			//restartGame();
+			playButton.setDisable(true);
 		});
 
 		helpButton = new ToggleButton("HELP");

@@ -60,4 +60,16 @@ public class YamlIO {
 			LOGGER.log(Level.SEVERE, "Saving of player data failed ", e.getMessage());
 		}
 	}
+
+	/**
+	 * This method receives LevelData class and saves it to LEVEL_PATH yaml file.
+	 */
+	public static void saveLevelDataYaml(LevelData levelData) {
+		try {
+			ObjectMapper objectMapper = new ObjectMapper(new YAMLFactory());
+			objectMapper.writeValue(new File(LEVEL_PATH), levelData);
+		} catch (IOException e) {
+			LOGGER.log(Level.SEVERE, "Saving of level data failed ", e.getMessage());
+		}
+	}
 }

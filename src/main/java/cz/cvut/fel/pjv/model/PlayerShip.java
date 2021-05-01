@@ -57,7 +57,7 @@ public class PlayerShip extends Ship {
 			projectile.prepareForShoot(true, positionX, positionY);
 		}
 		if (projectileShot) {
-			if (counterProjectile < projectile.lifeSpan && projectile.positionX < WIDTH + 10) {
+			if (counterProjectile < projectile.lifeSpan && projectile.positionX < WIDTH + 10 && projectile.positionX != POS_OFF_SCREEN) {
 				projectile.changeXPosition(2);
 				counterProjectile++;
 			} else {

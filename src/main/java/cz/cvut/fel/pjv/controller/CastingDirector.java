@@ -11,13 +11,11 @@ public class CastingDirector {
 	private final List<Actor> collisionPlayerActors;
 	private final Set<Actor> removedActorsPlayer;
 	private final List<Actor> collisionEnemyActors;
-	private final Set<Actor> removedActorsEnemy;
 
 	public CastingDirector() {
 		collisionPlayerActors = new ArrayList<>();
 		removedActorsPlayer = new HashSet<>();
 		collisionEnemyActors = new ArrayList<>();
-		removedActorsEnemy = new HashSet<>();
 	}
 
 	/**
@@ -59,20 +57,7 @@ public class CastingDirector {
 		collisionEnemyActors.addAll(Arrays.asList(actors));
 	}
 
-	public void addToEnemyRemovedActors(Actor... actors) {
-		removedActorsEnemy.addAll(Arrays.asList(actors));
-	}
-
-	public void resetEnemyRemovedActors() {
-		collisionEnemyActors.removeAll(removedActorsEnemy);
-		removedActorsEnemy.clear();
-	}
-
 	public List<Actor> getCollisionEnemyActors() {
 		return collisionEnemyActors;
-	}
-
-	public Set<Actor> getRemovedActorsEnemy() {
-		return removedActorsEnemy;
 	}
 }

@@ -15,14 +15,14 @@ public class LevelData {
 	private String backgroundImagePath;
 	private String shipImagePath;
 	private String shipImageEnginesOnPath;
-	private int numOfFuels;
-	private int numOfLevelEnhancers;
-	private int numOfLifeAdders;
 	private double enemyStrength;
 	private double enemyProjectileDamage;
 	private double enemyLife;
 	private List<Coordinate2D> obstaclesPositions;
 	private List<Coordinate2D> enemiesPositions;
+	private List<Coordinate2D> fuelBarrelsPositions;
+	private List<Coordinate2D> levelEnhancersPositions;
+	private List<Coordinate2D> lifeAddersPositions;
 
 	public double getGravity() {
 		return gravity;
@@ -62,54 +62,6 @@ public class LevelData {
 
 	public void setShipImageEnginesOnPath(String shipImageEnginesOnPath) {
 		this.shipImageEnginesOnPath = shipImageEnginesOnPath;
-	}
-
-	public int getNumOfFuels() {
-		return numOfFuels;
-	}
-
-	public void setNumOfFuels(int numOfFuels) {
-		if (numOfFuels > 10) {
-			this.numOfFuels = 10;
-			LOGGER.log(Level.WARNING, "Loaded value of number of fuels was higher than allowed. Value was set to max value.");
-		} else if (numOfFuels < 0) {
-			this.numOfFuels = 0;
-			LOGGER.log(Level.WARNING, "Loaded value of number of fuels was lower than allowed. Value was set to min value.");
-		} else {
-			this.numOfFuels = numOfFuels;
-		}
-	}
-
-	public int getNumOfLevelEnhancers() {
-		return numOfLevelEnhancers;
-	}
-
-	public void setNumOfLevelEnhancers(int numOfLevelEnhancers) {
-		if (numOfLevelEnhancers > 10) {
-			this.numOfLevelEnhancers = 10;
-			LOGGER.log(Level.WARNING, "Loaded value of number of level enhancers was higher than allowed. Value was set to max value.");
-		} else if (numOfLevelEnhancers < 0) {
-			this.numOfLevelEnhancers = 0;
-			LOGGER.log(Level.WARNING, "Loaded value of number of level enhancers was lower than allowed. Value was set to min value.");
-		} else {
-			this.numOfLevelEnhancers = numOfLevelEnhancers;
-		}
-	}
-
-	public int getNumOfLifeAdders() {
-		return numOfLifeAdders;
-	}
-
-	public void setNumOfLifeAdders(int numOfLifeAdders) {
-		if (numOfLifeAdders > 10) {
-			this.numOfLifeAdders = 10;
-			LOGGER.log(Level.WARNING, "Loaded value of number of life adders was higher than allowed. Value was set to max value.");
-		} else if (numOfLifeAdders < 0) {
-			this.numOfLifeAdders = 0;
-			LOGGER.log(Level.WARNING, "Loaded value of number of life adders was lower than allowed. Value was set to min value.");
-		} else {
-			this.numOfLifeAdders = numOfLifeAdders;
-		}
 	}
 
 	public double getEnemyStrength() {
@@ -175,5 +127,29 @@ public class LevelData {
 
 	public void setEnemiesPositions(List<Coordinate2D> enemiesPositions) {
 		this.enemiesPositions = enemiesPositions;
+	}
+
+	public List<Coordinate2D> getFuelBarrelsPositions() {
+		return fuelBarrelsPositions;
+	}
+
+	public void setFuelBarrelsPositions(List<Coordinate2D> fuelBarrelsPositions) {
+		this.fuelBarrelsPositions = fuelBarrelsPositions;
+	}
+
+	public List<Coordinate2D> getLevelEnhancersPositions() {
+		return levelEnhancersPositions;
+	}
+
+	public void setLevelEnhancersPositions(List<Coordinate2D> levelEnhancersPositions) {
+		this.levelEnhancersPositions = levelEnhancersPositions;
+	}
+
+	public List<Coordinate2D> getLifeAddersPositions() {
+		return lifeAddersPositions;
+	}
+
+	public void setLifeAddersPositions(List<Coordinate2D> lifeAddersPositions) {
+		this.lifeAddersPositions = lifeAddersPositions;
 	}
 }
