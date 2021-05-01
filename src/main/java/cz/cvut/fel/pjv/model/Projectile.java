@@ -48,7 +48,7 @@ public class Projectile extends Actor {
 		} else {
 			spriteFrame.setScaleX(1);
 		}
-		positionX = posX + 40;
+		positionX = posX + 30;
 		positionY = posY + 20;
 		spriteFrame.setTranslateX(positionX);
 		spriteFrame.setTranslateY(positionY);

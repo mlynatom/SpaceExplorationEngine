@@ -100,10 +100,10 @@ public class ViewEngine {
 			shipImage1 = new Image(levelData.getShipImageEnginesOnPath(), SHIP_DIMENSIONS, SHIP_DIMENSIONS, true, false, true);
 			projectileImage = new Image("/projectile.png", 20, 20, true, false, true);
 			obstacleImage = new Image("/obstacle.png", 100, 50, true, false, true);
-			enemyImage = new Image("/enemy.png", SHIP_DIMENSIONS, SHIP_DIMENSIONS, true, false, true);
-			fuelBarrelImage = new Image("/fuel_barrel.png", 100, 100, true, false, true);
-			levelEnhancerImage = new Image("/level_enhancer.png", 100, 100, true, false, true);
-			lifeAdderImage = new Image("/life_adder.png", 100, 100, true, false, true);
+			enemyImage = new Image("/enemy.png", ENEMY_DIMENSION, ENEMY_DIMENSION, true, false, true);
+			fuelBarrelImage = new Image("/fuel_barrel.png", INTERACT_THING_DIMENSION, INTERACT_THING_DIMENSION, true, false, true);
+			levelEnhancerImage = new Image("/level_enhancer.png", INTERACT_THING_DIMENSION, INTERACT_THING_DIMENSION, true, false, true);
+			lifeAdderImage = new Image("/life_adder.png", INTERACT_THING_DIMENSION, INTERACT_THING_DIMENSION, true, false, true);
 		} catch (IllegalArgumentException e) {
 			LOGGER.log(Level.SEVERE, "Loading of one of images failed. Error: " + e);
 			System.err.println("Please check entered image names. Exiting application...");
