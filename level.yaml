@@ -1,17 +1,23 @@
 ---
-gravity: 0.3
+gravity: 0.6
 backgroundImagePath: "background.png"
 shipImagePath: "player_ship_0.png"
 shipImageEnginesOnPath: "player_ship_1.png"
-numOfFuels: 1
-numOfLevelEnhancers: 1
-numOfLifeAdders: 1
+numOfFuels: 2
+numOfLevelEnhancers: 2
+numOfLifeAdders: 2
 enemyStrength: 0.1
 enemyProjectileDamage: 50
 enemyLife: 10.0
 obstaclesPositions:
-  - x: 10.0
-    y: 20.0
+  - x: 150.0
+    y: 200.0
+  - x: 175.0
+    y: 200.0
+  - x: 150.0
+    y: 225.0
 enemiesPositions:
-  - x: 20.0
-    y: 30.0
+  - x: 700.0
+    y: 200.0
+  - x: 300.0
+    y: 100.0

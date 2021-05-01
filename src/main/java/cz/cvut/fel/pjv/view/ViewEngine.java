@@ -2,6 +2,7 @@ package cz.cvut.fel.pjv.view;
 
 import cz.cvut.fel.pjv.controller.CastingDirector;
 import cz.cvut.fel.pjv.controller.SpaceExplorationEngine;
+import cz.cvut.fel.pjv.fileIO.Coordinate2D;
 import cz.cvut.fel.pjv.fileIO.LevelData;
 import cz.cvut.fel.pjv.fileIO.PlayerData;
 import cz.cvut.fel.pjv.model.*;
@@ -20,6 +21,9 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -36,7 +40,7 @@ public class ViewEngine {
 	private ToggleButton helpButton;
 	private ImageView mainScreenBackground;
 	private PlayerShip playerShip;
-	private Projectile playerProjectile, enemyProjectile;
+	private Projectile playerProjectile;
 	private final Stage primaryStage;
 	private Group rootGroup;
 	private Scene scene;
@@ -48,11 +52,12 @@ public class ViewEngine {
 	private Font upperBarFont;
 	private final ImageDirector imageDirector;
 	private final CastingDirector castingDirector;
-	private Obstacle obstacle;
-	private EnemyShip enemyShip;
-	private FuelBarrel fuelBarrel;
-	private LifeAdder lifeAdder;
-	private LevelEnhancer levelEnhancer;
+	private List<Obstacle> obstacles;
+	private List<EnemyShip> enemyShips;
+	private List<Projectile> enemyProjectiles;
+	private List<FuelBarrel> fuelBarrels;
+	private List<LifeAdder> lifeAdders;
+	private List<LevelEnhancer> levelEnhancers;
 
 
 	public ViewEngine(Stage primaryStage, SpaceExplorationEngine spaceExplorationEngine, LevelData levelData, PlayerData playerData, ImageDirector imageDirector, CastingDirector castingDirector) {
@@ -76,11 +81,11 @@ public class ViewEngine {
 		primaryStage.setResizable(false);
 		primaryStage.show();
 
+
 		loadImages();
 		initializeImageDirector();
 		createGameActors();
-		initializeCastingDirector();
-		addGameActorsNodes();
+		addAndInitGameActorsNodes();
 		initializeImages();
 		createMainScreenNodes();
 		addNodesToMainScreen();
@@ -120,51 +125,134 @@ public class ViewEngine {
 	}
 
 	private void createGameActors() {
-		//Pay attention to projectile!!
 		playerProjectile = new Projectile(POS_OFF_SCREEN, POS_OFF_SCREEN,
 				"M 6,246 L 76,213 287,214 462,148 489,216 491,283 460,348 289,283 74,286 Z", 200, 10, "projectileImage");
-		enemyProjectile = new Projectile(POS_OFF_SCREEN, POS_OFF_SCREEN, "M 6,246 L 76,213 287,214 462,148 489,216 491,283 460,348 289,283 74,286 Z",
-				200, levelData.getEnemyProjectileDamage(), "projectileImage");
 		playerShip = new PlayerShip(spaceExplorationEngine, DEFAULT_SHIP_X_POSITION, WIDTH - SHIP_DIMENSIONS,
 				"M 192,4 L 153,67 140,106 141,249 110,290 132,299 133,352 253,352 254,300 275,289 250,250 250,101 231,67 Z",
 				playerProjectile, playerData, levelData.getGravity(), "shipImage0", "shipImage1");
-		obstacle = new Obstacle(150, 300, "M 5,5 L 493,5 493,348 5,348 Z", 0.1, "obstacleImage");
-		enemyShip = new EnemyShip(spaceExplorationEngine, 700, 200, 1, 1,
-				"M 6,231 L 80,298 184,341 147,433 351,426 318,344 414,302 495,231 492,195 239,51 7,197 Z",
-				100, levelData.getEnemyStrength(), enemyProjectile, "enemyImage");
-		lifeAdder = new LifeAdder(300, 300, "M 247,65 L 72,26 11,149 29,248 243,469 444,279 499,147 410,22 Z", 30, "lifeAdderImage");
-		fuelBarrel = new FuelBarrel(400, 400, "M 160,74 L 110,122 106,341 73,443 368,388 373,157 302,101 Z", 30, "fuelBarrelImage");
-		levelEnhancer = new LevelEnhancer(800, 30, "M 250,21 L 171,177 14,196 120,321 100,479 248,413 398,477 376,325 486,197 326,177 Z",
-				1, "levelEnhancerImage");
 
+		obstacles = new ArrayList<>();
+		enemyShips = new ArrayList<>();
+		enemyProjectiles = new ArrayList<>();
+		fuelBarrels = new ArrayList<>();
+		levelEnhancers = new ArrayList<>();
+		lifeAdders = new ArrayList<>();
 
+		createEnemyShips();
+		createObstacles();
+		createLifeAdders();
+		createFuelBarrels();
+		createLevelEnhancers();
 	}
 
-	private void initializeCastingDirector() {
-		castingDirector.addActorsToCollisionPlayerActors(obstacle, enemyShip, lifeAdder, fuelBarrel, levelEnhancer, enemyProjectile);
-		castingDirector.addActorsToCollisionEnemyActors(playerShip, playerProjectile);
+	private void createEnemyShips() {
+		for (Coordinate2D coordinate : levelData.getEnemiesPositions()) {
+			Projectile projectile = new Projectile(POS_OFF_SCREEN, POS_OFF_SCREEN,
+					"M 6,246 L 76,213 287,214 462,148 489,216 491,283 460,348 289,283 74,286 Z",
+					200, levelData.getEnemyProjectileDamage(), "projectileImage");
+
+			enemyShips.add(new EnemyShip(spaceExplorationEngine, coordinate.getX(), coordinate.getY(), 1, 1,
+					"M 6,231 L 80,298 184,341 147,433 351,426 318,344 414,302 495,231 492,195 239,51 7,197 Z",
+					100, levelData.getEnemyStrength(), projectile, "enemyImage"));
+
+			enemyProjectiles.add(projectile);
+		}
 	}
 
-	private void addGameActorsNodes() {
+	private void createObstacles() {
+		for (Coordinate2D coordinate : levelData.getObstaclesPositions()) {
+			obstacles.add(new Obstacle(coordinate.getX(), coordinate.getY(), "M 5,5 L 493,5 493,348 5,348 Z", 0.1, "obstacleImage"));
+		}
+	}
+
+	private void createLifeAdders() {
+		for (int i = 0; i < levelData.getNumOfLifeAdders(); i++) {
+			lifeAdders.add(new LifeAdder(ThreadLocalRandom.current().nextDouble(0, WIDTH + 1), ThreadLocalRandom.current().nextDouble(0, HEIGHT + 1),
+					"M 247,65 L 72,26 11,149 29,248 243,469 444,279 499,147 410,22 Z",
+					30, "lifeAdderImage"));
+		}
+	}
+
+	private void createFuelBarrels() {
+		for (int i = 0; i < levelData.getNumOfFuels(); i++) {
+			fuelBarrels.add(new FuelBarrel(ThreadLocalRandom.current().nextDouble(0, WIDTH + 1), ThreadLocalRandom.current().nextDouble(0, HEIGHT + 1),
+					"M 160,74 L 110,122 106,341 73,443 368,388 373,157 302,101 Z",
+					30, "fuelBarrelImage"));
+		}
+	}
+
+	private void createLevelEnhancers() {
+		for (int i = 0; i < levelData.getNumOfLevelEnhancers(); i++) {
+			levelEnhancers.add(new LevelEnhancer(ThreadLocalRandom.current().nextDouble(0, WIDTH + 1), ThreadLocalRandom.current().nextDouble(0, HEIGHT + 1),
+					"M 250,21 L 171,177 14,196 120,321 100,479 248,413 398,477 376,325 486,197 326,177 Z",
+					1, "levelEnhancerImage"));
+
+		}
+	}
+
+	private void addAndInitGameActorsNodes() {
 		rootGroup.getChildren().add(playerShip.getSpriteFrame());
-		rootGroup.getChildren().add(obstacle.getSpriteFrame());
 		rootGroup.getChildren().add(playerProjectile.getSpriteFrame());
-		rootGroup.getChildren().add(enemyShip.getSpriteFrame());
-		rootGroup.getChildren().add(fuelBarrel.getSpriteFrame());
-		rootGroup.getChildren().add(levelEnhancer.getSpriteFrame());
-		rootGroup.getChildren().add(lifeAdder.getSpriteFrame());
-		rootGroup.getChildren().add(enemyProjectile.getSpriteFrame());
+		castingDirector.addActorsToCollisionEnemyActors(playerShip, playerProjectile);
+		addAndInitObstacles();
+		addAndInitEnemyShips();
+		addAndInitFuelBarrels();
+		addAndInitLevelEnhancers();
+		addAndInitLifeAdders();
+		addAndInitEnemyProjectiles();
+	}
+
+	private void addAndInitObstacles() {
+		for (Obstacle obstacle : obstacles) {
+			rootGroup.getChildren().add(obstacle.getSpriteFrame());
+			obstacle.getSpriteFrame().setImage(obstacleImage);
+			castingDirector.addActorsToCollisionPlayerActors(obstacle);
+		}
+	}
+
+	private void addAndInitEnemyShips() {
+		for (EnemyShip enemyShip : enemyShips) {
+			rootGroup.getChildren().add(enemyShip.getSpriteFrame());
+			enemyShip.getSpriteFrame().setImage(enemyImage);
+			castingDirector.addActorsToCollisionPlayerActors(enemyShip);
+		}
+	}
+
+	private void addAndInitEnemyProjectiles() {
+		for (Projectile enemyProjectile : enemyProjectiles) {
+			rootGroup.getChildren().add(enemyProjectile.getSpriteFrame());
+			enemyProjectile.getSpriteFrame().setImage(projectileImage);
+			castingDirector.addActorsToCollisionPlayerActors(enemyProjectile);
+		}
+	}
+
+	private void addAndInitLifeAdders() {
+		for (LifeAdder lifeAdder : lifeAdders) {
+			rootGroup.getChildren().add(lifeAdder.getSpriteFrame());
+			lifeAdder.getSpriteFrame().setImage(lifeAdderImage);
+			castingDirector.addActorsToCollisionPlayerActors(lifeAdder);
+		}
+	}
+
+	private void addAndInitFuelBarrels() {
+		for (FuelBarrel fuelBarrel : fuelBarrels) {
+			rootGroup.getChildren().add(fuelBarrel.getSpriteFrame());
+			fuelBarrel.getSpriteFrame().setImage(fuelBarrelImage);
+			castingDirector.addActorsToCollisionPlayerActors(fuelBarrel);
+		}
+	}
+
+	private void addAndInitLevelEnhancers(){
+		for(LevelEnhancer levelEnhancer: levelEnhancers){
+			rootGroup.getChildren().add(levelEnhancer.getSpriteFrame());
+			levelEnhancer.getSpriteFrame().setImage(levelEnhancerImage);
+			castingDirector.addActorsToCollisionPlayerActors(levelEnhancer);
+		}
 	}
 
 	private void initializeImages() {
 		playerShip.getSpriteFrame().setImage(shipImage0);
-		obstacle.getSpriteFrame().setImage(obstacleImage);
 		playerProjectile.getSpriteFrame().setImage(projectileImage);
-		enemyShip.getSpriteFrame().setImage(enemyImage);
-		fuelBarrel.getSpriteFrame().setImage(fuelBarrelImage);
-		levelEnhancer.getSpriteFrame().setImage(levelEnhancerImage);
-		lifeAdder.getSpriteFrame().setImage(lifeAdderImage);
-		enemyProjectile.getSpriteFrame().setImage(projectileImage);
 	}
 
 	private void createMainScreenNodes() {
@@ -320,8 +408,8 @@ public class ViewEngine {
 		return playerShip;
 	}
 
-	public EnemyShip getEnemyShip() {
-		return enemyShip;
+	public List<EnemyShip> getEnemyShips() {
+		return enemyShips;
 	}
 
 	public Group getRootGroup() {

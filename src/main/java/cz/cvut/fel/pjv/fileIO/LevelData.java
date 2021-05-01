@@ -21,8 +21,8 @@ public class LevelData {
 	private double enemyStrength;
 	private double enemyProjectileDamage;
 	private double enemyLife;
-	private List<coordinate2D> obstaclesPositions;
-	private List<coordinate2D> enemiesPositions;
+	private List<Coordinate2D> obstaclesPositions;
+	private List<Coordinate2D> enemiesPositions;
 
 	public double getGravity() {
 		return gravity;
@@ -161,19 +161,19 @@ public class LevelData {
 		}
 	}
 
-	public List<coordinate2D> getObstaclesPositions() {
+	public List<Coordinate2D> getObstaclesPositions() {
 		return obstaclesPositions;
 	}
 
-	public void setObstaclesPositions(List<coordinate2D> obstaclesPositions) {
+	public void setObstaclesPositions(List<Coordinate2D> obstaclesPositions) {
 		this.obstaclesPositions = obstaclesPositions;
 	}
 
-	public List<coordinate2D> getEnemiesPositions() {
+	public List<Coordinate2D> getEnemiesPositions() {
 		return enemiesPositions;
 	}
 
-	public void setEnemiesPositions(List<coordinate2D> enemiesPositions) {
+	public void setEnemiesPositions(List<Coordinate2D> enemiesPositions) {
 		this.enemiesPositions = enemiesPositions;
 	}
 }
