@@ -40,6 +40,7 @@ public class PlayerShip extends Ship {
 			spaceExplorationEngine.updateFuelOnScreen();
 			applyGravity();
 			checkBorders();
+			checkForFinish();
 			setRightImage();
 			checkCollision();
 			moveSpriteFrame();
@@ -71,10 +72,10 @@ public class PlayerShip extends Ship {
 		lastXPosition = positionX;
 		lastYPosition = positionY;
 
-		if (spaceExplorationEngine.isLeft()) {
+		if (spaceExplorationEngine.isLeft() && positionY != DEFAULT_SHIP_Y_POSITION) {
 			positionX -= velocityX;
 		}
-		if (spaceExplorationEngine.isRight()) {
+		if (spaceExplorationEngine.isRight() && positionY != DEFAULT_SHIP_Y_POSITION) {
 			positionX += velocityX;
 		}
 		if (spaceExplorationEngine.isUp() && fuel > 0) {
@@ -90,20 +91,26 @@ public class PlayerShip extends Ship {
 		positionY += gravity;
 	}
 
+	protected void checkForFinish() {
+		if (positionY == DEFAULT_SHIP_Y_POSITION && positionX == FINISH_LOCATION_X) {
+			spaceExplorationEngine.callEndGame();
+		}
+	}
+
 	protected void setRightImage() {
 		if (spaceExplorationEngine.isUp() && fuel > 0) {
-			if (spaceExplorationEngine.isRight()) {
+			if (spaceExplorationEngine.isRight() && positionY != DEFAULT_SHIP_Y_POSITION) {
 				spriteFrame.setRotate(30);
-			} else if (spaceExplorationEngine.isLeft()) {
+			} else if (spaceExplorationEngine.isLeft() && positionY != DEFAULT_SHIP_Y_POSITION) {
 				spriteFrame.setRotate(-30);
 			} else {
 				spriteFrame.setRotate(0);
 			}
 			spriteFrame.setImage(spaceExplorationEngine.getImageDirector().getImage(imageNameList.get(1)));
 		} else {
-			if (spaceExplorationEngine.isRight()) {
+			if (spaceExplorationEngine.isRight() && positionY != DEFAULT_SHIP_Y_POSITION) {
 				spriteFrame.setRotate(30);
-			} else if (spaceExplorationEngine.isLeft()) {
+			} else if (spaceExplorationEngine.isLeft() && positionY != DEFAULT_SHIP_Y_POSITION) {
 				spriteFrame.setRotate(-30);
 			} else {
 				spriteFrame.setRotate(0);

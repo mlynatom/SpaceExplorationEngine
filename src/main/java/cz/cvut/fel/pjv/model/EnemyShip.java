@@ -2,6 +2,7 @@ package cz.cvut.fel.pjv.model;
 
 import cz.cvut.fel.pjv.controller.SpaceExplorationEngine;
 
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -16,10 +17,13 @@ public class EnemyShip extends Ship {
 	protected boolean projectileShot = false;
 	protected boolean isAlive = true;
 	protected boolean moveUp = true;
+	private final double initPosX, initPosY;
 
 	public EnemyShip(SpaceExplorationEngine spaceExplorationEngine, double positionX, double positionY, double velocityX,
 					 double velocityY, String spriteBound, double life, double damage, Projectile projectile, String... imageName) {
 		super(spaceExplorationEngine, positionX, positionY, velocityX, velocityY, spriteBound, life, damage, projectile, imageName);
+		initPosY = positionY;
+		initPosX = positionX;
 	}
 
 	@Override
@@ -98,8 +102,12 @@ public class EnemyShip extends Ship {
 	 */
 	protected void move() {
 		if (moveUp) {
-			positionY -= velocityY;
+			if (positionY - velocityY > initPosY - 50){
+				positionY -= velocityY;
+			}
+
 		} else {
+			if (positionY + velocityY < initPosY + 50)
 			positionY += velocityY;
 		}
 		checkChangeDirection();
@@ -109,7 +117,7 @@ public class EnemyShip extends Ship {
 		moveCounter--;
 		if (moveCounter == 0) {
 			moveUp = !moveUp;
-			moveCounter = 100;
+			moveCounter = ThreadLocalRandom.current().nextInt(10, 100);
 		}
 	}
 }
