@@ -53,6 +53,7 @@ public class PlayerShip extends Ship {
 	@Override
 	protected void shootProjectile() {
 		if (spaceExplorationEngine.isSpace() && !projectileShot) {
+			LOGGER.log(Level.FINE, "Player shot projectile.");
 			projectileShot = true;
 			projectile.prepareForShoot(true, positionX, positionY);
 		}

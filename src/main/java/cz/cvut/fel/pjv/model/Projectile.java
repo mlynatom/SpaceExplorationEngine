@@ -43,6 +43,7 @@ public class Projectile extends Actor {
 	 * @param posY  position to change
 	 */
 	protected void prepareForShoot(boolean right, double posX, double posY) {
+		LOGGER.log(Level.FINE, "Projectile prepared for shoot.");
 		if (right) {
 			spriteFrame.setScaleX(-1);
 		} else {

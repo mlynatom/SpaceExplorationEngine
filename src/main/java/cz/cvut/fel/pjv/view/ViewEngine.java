@@ -375,6 +375,7 @@ public class ViewEngine {
 	}
 
 	public void endGame() {
+		LOGGER.log(Level.INFO, "End game called.");
 		mainScreenBackground.setImage(mainBack);
 		mainScreenBackground.toFront();
 		horizontalButtonBox.setVisible(true);
