@@ -34,7 +34,7 @@ class CastingDirectorTest {
 		CastingDirector castingDirector = new CastingDirector();
 		castingDirector.addActorsToCollisionPlayerActors(mockActor1);
 		Actor[] rightArray = {mockActor1};
-		assertArrayEquals(rightArray, castingDirector.getCollisionPlayerActors().toArray());
+		assertArrayEquals(rightArray, castingDirector.getCollisionActorsPlayer().toArray());
 	}
 
 	@Test
@@ -42,7 +42,7 @@ class CastingDirectorTest {
 		CastingDirector castingDirector = new CastingDirector();
 		castingDirector.addActorsToCollisionPlayerActors(mockActor1, mockActor2);
 		Actor[] rightArray = {mockActor1, mockActor2};
-		assertArrayEquals(rightArray, castingDirector.getCollisionPlayerActors().toArray());
+		assertArrayEquals(rightArray, castingDirector.getCollisionActorsPlayer().toArray());
 	}
 
 	@Test
@@ -68,7 +68,7 @@ class CastingDirectorTest {
 		castingDirector.addToPlayerRemovedActors(mockActor1);
 		castingDirector.resetPlayerRemovedActors();
 		Actor[] rightCurrentArray = {mockActor2};
-		assertArrayEquals(rightCurrentArray, castingDirector.getCollisionPlayerActors().toArray());
+		assertArrayEquals(rightCurrentArray, castingDirector.getCollisionActorsPlayer().toArray());
 		assertEquals(0, castingDirector.getRemovedActorsPlayer().size());
 	}
 }

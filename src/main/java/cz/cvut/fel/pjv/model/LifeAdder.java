@@ -1,9 +1,9 @@
 package cz.cvut.fel.pjv.model;
 
 /**
- * class for interactive thing which can add life to PlayerShip class
+ * This class creates life adder actor which adds life to player ship.
  */
-public class LifeAdder extends InteractThing {
+public class LifeAdder extends Actor {
 	protected double lifeToAdd;
 
 	public LifeAdder(double positionX, double positionY, String spriteBound, double lifeToAdd, String... imageName) {

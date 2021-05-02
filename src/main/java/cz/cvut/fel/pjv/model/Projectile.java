@@ -6,10 +6,12 @@ import java.util.logging.Logger;
 import static cz.cvut.fel.pjv.controller.Constants.POS_OFF_SCREEN;
 
 /**
- * Projectile class for objects which can be shot from ship with entered damage and lifespan. It is based on Actor class.
+ * This class creates projectile actor which can be assigned to player and enemy. It flies during lifeSpan and
+ * cause entered damage.
  */
 public class Projectile extends Actor {
 	private static final Logger LOGGER = Logger.getLogger(Projectile.class.getName());
+
 	protected double lifeSpan;
 	protected double damage;
 
@@ -21,7 +23,6 @@ public class Projectile extends Actor {
 
 	@Override
 	public void update() {
-
 	}
 
 	/**
@@ -31,8 +32,7 @@ public class Projectile extends Actor {
 		LOGGER.log(Level.FINE, "Projectile put off the screen");
 		positionX = POS_OFF_SCREEN;
 		positionY = POS_OFF_SCREEN;
-		spriteFrame.setTranslateY(positionX);
-		spriteFrame.setTranslateX(positionY);
+		updateSpriteFramePositions();
 	}
 
 	/**
@@ -48,18 +48,23 @@ public class Projectile extends Actor {
 		} else {
 			spriteFrame.setScaleX(1);
 		}
-		positionX = posX + 30;
-		positionY = posY + 20;
-		spriteFrame.setTranslateX(positionX);
-		spriteFrame.setTranslateY(positionY);
+		positionX = posX + 30; // changed slightly to be on the center of ship
+		positionY = posY + 20; // changed slightly to be on the center of ship
+		updateSpriteFramePositions();
 	}
 
 	/**
 	 * This method changes X position according to "speed"
+	 *
 	 * @param speed if > 0 goes to the right, if < 0 goes to the left
 	 */
 	protected void changeXPosition(double speed) {
 		positionX += speed;
 		spriteFrame.setTranslateX(positionX);
+	}
+
+	private void updateSpriteFramePositions() {
+		spriteFrame.setTranslateX(positionX);
+		spriteFrame.setTranslateY(positionY);
 	}
 }

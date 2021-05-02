@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * "Super class" for all other object on scene.
+ * "Super class" for all other actors on scene.
  */
 public abstract class Actor {
 	protected double positionX; //initial x position
@@ -28,7 +28,7 @@ public abstract class Actor {
 	}
 
 	/**
-	 * This abstract method specifies what will each ancestor of Actor class do in each pulse of GamePlayLoop
+	 * This abstract method specifies what will each ancestor of Actor class do in each pulse of GamePlayLoop.
 	 */
 	public abstract void update();
 
@@ -59,6 +59,5 @@ public abstract class Actor {
 	public void setSpriteBound(SVGPath spriteBound) {
 		this.spriteBound = spriteBound;
 	}
-
 
 }

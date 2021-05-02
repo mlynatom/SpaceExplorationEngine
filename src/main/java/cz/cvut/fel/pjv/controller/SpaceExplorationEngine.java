@@ -10,7 +10,7 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 
 /**
- * Main game class.
+ * Main game javaFX class which creates graphic, starts loop and almost all other things.
  */
 public class SpaceExplorationEngine extends Application {
 	private boolean up = false, left = false, right = false, space = false, escape = false;
@@ -20,7 +20,6 @@ public class SpaceExplorationEngine extends Application {
 	private PlayerData playerData;
 	private ImageDirector imageDirector;
 	private CastingDirector castingDirector;
-
 
 	@Override
 	public void start(Stage primaryStage) {
@@ -89,15 +88,26 @@ public class SpaceExplorationEngine extends Application {
 		});
 	}
 
+	/**
+	 * This method creates new game loop (animation timer) and start it.
+	 */
 	public void startGamePlayLoop() {
 		gamePlayLoop = new GamePlayLoop(viewEngine);
 		gamePlayLoop.start();
 	}
 
+	/**
+	 * This method calls stop on game loop (animation timer).
+	 */
 	public void stopGamePlayLoop() {
 		gamePlayLoop.stop();
 	}
 
+	/**
+	 * This method saves given playerData to Yaml file.
+	 *
+	 * @param playerData data to be saved.
+	 */
 	public void savePlayerData(PlayerData playerData) {
 		this.playerData = playerData;
 		YamlIO.savePlayerDataYaml(playerData);

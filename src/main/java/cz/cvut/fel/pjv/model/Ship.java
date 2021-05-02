@@ -8,7 +8,7 @@ import static cz.cvut.fel.pjv.controller.Constants.*;
 import static cz.cvut.fel.pjv.controller.Constants.SHIP_DIMENSIONS;
 
 /**
- * Abstract class for implementing player and enemy ships
+ * Abstract class for implementing player and enemy ships.
  */
 public abstract class Ship extends Actor {
 	protected double damage;

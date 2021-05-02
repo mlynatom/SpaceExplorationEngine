@@ -1,9 +1,9 @@
 package cz.cvut.fel.pjv.model;
 
 /**
- * Builds a object of fuel barrel which can add fuel to PlayerShip
+ * This class creates fuel barrel which adds fuel to player ship
  */
-public class FuelBarrel extends InteractThing {
+public class FuelBarrel extends Actor {
 	protected double amountOfFuelToAdd;
 
 	public FuelBarrel(double positionX, double positionY, String spriteBound, double amountOfFuelToAdd, String... imageName) {

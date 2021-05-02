@@ -68,6 +68,9 @@ public class PlayerShip extends Ship {
 		}
 	}
 
+	/**
+	 * This method updates position with given velocity if certain key is pressed.
+	 */
 	protected void getNewCoordinates() {
 		lastXPosition = positionX;
 		lastYPosition = positionY;
@@ -87,16 +90,25 @@ public class PlayerShip extends Ship {
 		}
 	}
 
+	/**
+	 * This method decreases (adds) position by gravity value.
+	 */
 	protected void applyGravity() {
 		positionY += gravity;
 	}
 
+	/**
+	 * This method checks if the ship travelled to finish.
+	 */
 	protected void checkForFinish() {
 		if (positionY == DEFAULT_SHIP_Y_POSITION && positionX == FINISH_LOCATION_X) {
 			spaceExplorationEngine.callEndGame();
 		}
 	}
 
+	/**
+	 * This method sets right image according to pressed keys.
+	 */
 	protected void setRightImage() {
 		if (spaceExplorationEngine.isUp() && fuel > 0) {
 			if (spaceExplorationEngine.isRight() && positionY != DEFAULT_SHIP_Y_POSITION) {
@@ -122,8 +134,8 @@ public class PlayerShip extends Ship {
 
 	@Override
 	protected void checkCollision() {
-		for (int i = 0; i < spaceExplorationEngine.getCastingDirector().getCollisionPlayerActors().size(); i++) {
-			Actor object = spaceExplorationEngine.getCastingDirector().getCollisionPlayerActors().get(i);
+		for (int i = 0; i < spaceExplorationEngine.getCastingDirector().getCollisionActorsPlayer().size(); i++) {
+			Actor object = spaceExplorationEngine.getCastingDirector().getCollisionActorsPlayer().get(i);
 			if (collide(object)) {
 				LOGGER.log(Level.FINE, PlayerShip.class.getName() + "collided with " + object.getClass().getName());
 				handleCollision(object);
@@ -161,6 +173,11 @@ public class PlayerShip extends Ship {
 		}
 	}
 
+	/**
+	 * This method adds entered amount of fuel to fuel.
+	 *
+	 * @param fuelToAdd amount to add.
+	 */
 	protected void addFuel(double fuelToAdd) {
 		if (fuel + fuelToAdd > 100) {
 			fuel = 100;
@@ -169,6 +186,11 @@ public class PlayerShip extends Ship {
 		}
 	}
 
+	/**
+	 * This method adds entered level to level of ship.
+	 *
+	 * @param levelToAdd amount to add.
+	 */
 	protected void addLevel(int levelToAdd) {
 		if (level + levelToAdd > 10) {
 			level = 10;
@@ -179,6 +201,11 @@ public class PlayerShip extends Ship {
 		}
 	}
 
+	/**
+	 * This method adds entered amount of life to the life of ship.
+	 *
+	 * @param lifeToAdd amount of life to add.
+	 */
 	protected void addLife(double lifeToAdd) {
 		if (life + lifeToAdd > 100) {
 			life = 100;
@@ -187,6 +214,11 @@ public class PlayerShip extends Ship {
 		}
 	}
 
+	/**
+	 * This method subtracts entered amount of life from the ship life.
+	 *
+	 * @param lifeToSubtract amount of life to subtract.
+	 */
 	protected void decreaseLife(double lifeToSubtract) {
 		if (life - lifeToSubtract <= 0) {
 			isAlive = false;
@@ -196,6 +228,11 @@ public class PlayerShip extends Ship {
 		}
 	}
 
+	/**
+	 * This method recovers position after collision and adds minimal amount to positions to allow the ship to fly away.
+	 *
+	 * @param object object with which was collided.
+	 */
 	protected void recoverPosition(Actor object) {
 		if (positionY > object.positionY) {
 			positionY = lastYPosition + 0.1;

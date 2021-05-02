@@ -1,7 +1,7 @@
 package cz.cvut.fel.pjv.model;
 
 /**
- * This class defines obstacle (i.g. rock) which cause damage to player ship in collisions
+ * This class defines obstacle (i.g. rock) which cause damage to player ship in collisions and not allow ship fly through it.
  */
 public class Obstacle extends Actor {
 	protected double damage;

@@ -5,7 +5,7 @@ import cz.cvut.fel.pjv.view.ViewEngine;
 import javafx.animation.AnimationTimer;
 
 /**
- * This class control whole game in pulses.
+ * This class creates animation timer which periodically call update methods of classes.
  */
 public class GamePlayLoop extends AnimationTimer {
 	private final ViewEngine viewEngine;

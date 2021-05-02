@@ -8,14 +8,14 @@ import java.util.*;
  * This class contains information about which actors are currently on screen and it is need to check them for collision.
  */
 public class CastingDirector {
-	private final List<Actor> collisionPlayerActors;
-	private final Set<Actor> removedActorsPlayer;
-	private final List<Actor> collisionEnemyActors;
+	private final List<Actor> collisionActorsPlayer; //actors which can collide with player
+	private final Set<Actor> removedActorsPlayer; //actors which should be removed from list of actors which can collide with player
+	private final List<Actor> collisionActorsEnemy; //actors which can collide with enemy
 
 	public CastingDirector() {
-		collisionPlayerActors = new ArrayList<>();
+		collisionActorsPlayer = new ArrayList<>();
 		removedActorsPlayer = new HashSet<>();
-		collisionEnemyActors = new ArrayList<>();
+		collisionActorsEnemy = new ArrayList<>();
 	}
 
 	/**
@@ -24,7 +24,7 @@ public class CastingDirector {
 	 * @param actors one or more actors to be added.
 	 */
 	public void addActorsToCollisionPlayerActors(Actor... actors) {
-		collisionPlayerActors.addAll(Arrays.asList(actors));
+		collisionActorsPlayer.addAll(Arrays.asList(actors));
 	}
 
 	/**
@@ -41,23 +41,28 @@ public class CastingDirector {
 	 * prepare this list for next collision.
 	 */
 	public void resetPlayerRemovedActors() {
-		collisionPlayerActors.removeAll(removedActorsPlayer);
+		collisionActorsPlayer.removeAll(removedActorsPlayer);
 		removedActorsPlayer.clear();
 	}
 
-	public List<Actor> getCollisionPlayerActors() {
-		return collisionPlayerActors;
+	/**
+	 * This method adds all given actors to the list actors which collides with enemy.
+	 *
+	 * @param actors one or more actors to be added.
+	 */
+	public void addActorsToCollisionEnemyActors(Actor... actors) {
+		collisionActorsEnemy.addAll(Arrays.asList(actors));
+	}
+
+	public List<Actor> getCollisionActorsPlayer() {
+		return collisionActorsPlayer;
 	}
 
 	public Set<Actor> getRemovedActorsPlayer() {
 		return removedActorsPlayer;
 	}
 
-	public void addActorsToCollisionEnemyActors(Actor... actors) {
-		collisionEnemyActors.addAll(Arrays.asList(actors));
-	}
-
-	public List<Actor> getCollisionEnemyActors() {
-		return collisionEnemyActors;
+	public List<Actor> getCollisionActorsEnemy() {
+		return collisionActorsEnemy;
 	}
 }

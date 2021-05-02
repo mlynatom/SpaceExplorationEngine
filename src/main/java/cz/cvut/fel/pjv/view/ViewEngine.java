@@ -29,14 +29,17 @@ import java.util.logging.Logger;
 
 import static cz.cvut.fel.pjv.controller.Constants.*;
 
+/**
+ * This class creates all graphic nodes and initiate model.
+ */
 public class ViewEngine {
 	private static final Logger LOGGER = Logger.getLogger(ViewEngine.class.getName());
 
 	private Image background, help, mainBack;
 	private Image shipImage0, shipImage1, projectileImage, obstacleImage, enemyImage, fuelBarrelImage, levelEnhancerImage, lifeAdderImage;
-	private HBox horizontalButtonBox, horizontalUpperBox, fuelBox, lifeBox, levelBox;
-	private Insets buttonBoxPadding;
-	private Button playButton, exitButton, exitSaveButton;
+	private HBox horizontalButtonBox;
+	private HBox horizontalUpperBox;
+	private Button playButton;
 	private ToggleButton helpButton;
 	private ImageView mainScreenBackground;
 	private PlayerShip playerShip;
@@ -48,8 +51,7 @@ public class ViewEngine {
 	private final PlayerData playerData;
 	private final SpaceExplorationEngine spaceExplorationEngine;
 	private ProgressBar fuelProgressBar, lifeProgressBar;
-	private Text fuelLabel, lifeLabel, levelLabel, levelText;
-	private Font upperBarFont;
+	private Text levelText;
 	private final ImageDirector imageDirector;
 	private final CastingDirector castingDirector;
 	private List<Obstacle> obstacles;
@@ -73,6 +75,9 @@ public class ViewEngine {
 		handleEscape();
 	}
 
+	/**
+	 * This method initiate primaryStage and  calls other methods.
+	 */
 	public void startViewEngine() {
 		primaryStage.setTitle("Space exploration engine");
 		rootGroup = new Group();
@@ -85,7 +90,7 @@ public class ViewEngine {
 		initializeImageDirector();
 		createGameActors();
 		addAndInitGameActorsNodes();
-		initializeImages();
+		initializePlayerImages();
 		createMainScreenNodes();
 		addNodesToMainScreen();
 	}
@@ -249,7 +254,7 @@ public class ViewEngine {
 		}
 	}
 
-	private void initializeImages() {
+	private void initializePlayerImages() {
 		playerShip.getSpriteFrame().setImage(shipImage0);
 		playerProjectile.getSpriteFrame().setImage(projectileImage);
 	}
@@ -257,7 +262,7 @@ public class ViewEngine {
 	private void createMainScreenNodes() {
 		horizontalButtonBox = new HBox(30);
 		horizontalButtonBox.setLayoutY(HEIGHT - 100);
-		buttonBoxPadding = new Insets(0, 0, 10, 290);
+		Insets buttonBoxPadding = new Insets(0, 0, 10, 290);
 		horizontalButtonBox.setPadding(buttonBoxPadding);
 
 		playButton = new Button("PLAY");
@@ -283,14 +288,14 @@ public class ViewEngine {
 			}
 		});
 
-		exitButton = new Button("EXIT");
+		Button exitButton = new Button("EXIT");
 		exitButton.setStyle("-fx-font: 22 impact; -fx-base: #ffffff;");
 		exitButton.setOnAction(event -> {
 			LOGGER.log(Level.INFO, "Exit button used.");
 			Platform.exit();
 		});
 
-		exitSaveButton = new Button("EXIT AND SAVE");
+		Button exitSaveButton = new Button("EXIT AND SAVE");
 		exitSaveButton.setStyle("-fx-font: 22 impact; -fx-base: #ffffff;");
 		exitSaveButton.setOnAction(event -> {
 			LOGGER.log(Level.INFO, "Exit and Save button used.");
@@ -309,10 +314,10 @@ public class ViewEngine {
 	}
 
 	private void createUpperBox() {
-		upperBarFont = new Font("impact", 17);
+		Font upperBarFont = new Font("impact", 17);
 
-		lifeBox = new HBox(5);
-		lifeLabel = new Text();
+		HBox lifeBox = new HBox(5);
+		Text lifeLabel = new Text();
 		lifeLabel.setText("LIFE:");
 		lifeLabel.setFill(Color.WHITE);
 		lifeLabel.setFont(upperBarFont);
@@ -322,7 +327,7 @@ public class ViewEngine {
 
 		lifeBox.getChildren().addAll(lifeLabel, lifeProgressBar);
 
-		fuelLabel = new Text();
+		Text fuelLabel = new Text();
 		fuelLabel.setText("FUEL:");
 		fuelLabel.setFill(Color.WHITE);
 		fuelLabel.setFont(upperBarFont);
@@ -330,10 +335,10 @@ public class ViewEngine {
 		fuelProgressBar = new ProgressBar(playerShip.getFuel() / 100);
 		fuelProgressBar.setStyle("-fx-accent: #e0a80d");
 
-		fuelBox = new HBox(5);
+		HBox fuelBox = new HBox(5);
 		fuelBox.getChildren().addAll(fuelLabel, fuelProgressBar);
 
-		levelLabel = new Text();
+		Text levelLabel = new Text();
 		levelLabel.setText("LEVEL:");
 		levelLabel.setFill(Color.WHITE);
 		levelLabel.setFont(upperBarFont);
@@ -343,7 +348,7 @@ public class ViewEngine {
 		levelText.setFill(Color.WHITE);
 		levelText.setFont(upperBarFont);
 
-		levelBox = new HBox(5);
+		HBox levelBox = new HBox(5);
 		levelBox.getChildren().addAll(levelLabel, levelText);
 
 		horizontalUpperBox = new HBox(20);
@@ -370,8 +375,6 @@ public class ViewEngine {
 	}
 
 	public void endGame() {
-		playerShip.setPositionX(DEFAULT_SHIP_X_POSITION);
-		playerShip.setPositionY(WIDTH - SHIP_DIMENSIONS);
 		mainScreenBackground.setImage(mainBack);
 		mainScreenBackground.toFront();
 		horizontalButtonBox.setVisible(true);
@@ -388,14 +391,23 @@ public class ViewEngine {
 		updateLevelText();
 	}
 
+	/**
+	 * This method updates fuel progress bar value.
+	 */
 	public void updateFuelBar() {
 		fuelProgressBar.setProgress(playerShip.getFuel() / 100);
 	}
 
+	/**
+	 * This method updates life progress bar value.
+	 */
 	public void updateLifeBar() {
 		lifeProgressBar.setProgress(playerShip.getLife() / 100);
 	}
 
+	/**
+	 * This method updates level text.
+	 */
 	public void updateLevelText() {
 		levelText.setText(String.valueOf(playerShip.getLevel()));
 	}

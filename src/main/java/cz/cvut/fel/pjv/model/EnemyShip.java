@@ -7,7 +7,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Enemy Ship object, which can shoot projectile
+ * Enemy ship actor which moves automatically up and down and shoots projectiles.
  */
 public class EnemyShip extends Ship {
 	private static final Logger LOGGER = Logger.getLogger(EnemyShip.class.getName());
@@ -17,13 +17,12 @@ public class EnemyShip extends Ship {
 	protected boolean projectileShot = false;
 	protected boolean isAlive = true;
 	protected boolean moveUp = true;
-	private final double initPosX, initPosY;
+	private final double initPosY;
 
 	public EnemyShip(SpaceExplorationEngine spaceExplorationEngine, double positionX, double positionY, double velocityX,
 					 double velocityY, String spriteBound, double life, double damage, Projectile projectile, String... imageName) {
 		super(spaceExplorationEngine, positionX, positionY, velocityX, velocityY, spriteBound, life, damage, projectile, imageName);
 		initPosY = positionY;
-		initPosX = positionX;
 	}
 
 	@Override
@@ -39,16 +38,18 @@ public class EnemyShip extends Ship {
 
 	@Override
 	protected void shootProjectile() {
-		if (timeCounter > 100 && projectileCounter == 0) {
+		//if time counter from previous shot greater than 100 and previous shot is not visible
+		if (timeCounter > 100 && !projectileShot) {
 			projectileShot = true;
 			projectile.prepareForShoot(false, positionX, positionY);
 			timeCounter = 0;
 		}
+		//if projectile was shot, make it fly
 		if (projectileShot) {
+			//projectile fly for certain then reset
 			if (projectileCounter < projectile.lifeSpan && projectile.positionX > -10) {
 				projectile.changeXPosition(-2);
 				projectileCounter++;
-
 			} else {
 				projectile.putOffScreen();
 				projectileCounter = 0;
@@ -60,8 +61,8 @@ public class EnemyShip extends Ship {
 
 	@Override
 	protected void checkCollision() {
-		for (int i = 0; i < spaceExplorationEngine.getCastingDirector().getCollisionEnemyActors().size(); i++) {
-			Actor object = spaceExplorationEngine.getCastingDirector().getCollisionEnemyActors().get(i);
+		for (int i = 0; i < spaceExplorationEngine.getCastingDirector().getCollisionActorsEnemy().size(); i++) {
+			Actor object = spaceExplorationEngine.getCastingDirector().getCollisionActorsEnemy().get(i);
 			LOGGER.log(Level.FINE, EnemyShip.class.getName() + "collided with " + object.getClass().getName());
 			if (collide(object)) {
 				handleCollision(object);

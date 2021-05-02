@@ -1,9 +1,9 @@
 package cz.cvut.fel.pjv.model;
 
 /**
- * class for interactive thing which can increase level of PlayerShip class
+ * This class creates level enhancer actor which increase level of playerShip.
  */
-public class LevelEnhancer extends InteractThing {
+public class LevelEnhancer extends Actor {
 	protected int amountOfLevelToAdd;
 
 	public LevelEnhancer(double positionX, double positionY, String spriteBound, int amountOfLevelToAdd, String... imageName) {

@@ -1,7 +1,7 @@
 package cz.cvut.fel.pjv.controller;
 
 /**
- * Simple public class that contains useful constants which are widely used among other classes.
+ * Simple class that contains useful constants which are widely used among other classes.
  */
 public class Constants {
 	public static final double WIDTH = 1024, HEIGHT = 600; // dimensions of window
