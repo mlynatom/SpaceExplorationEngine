@@ -387,9 +387,18 @@ public class ViewEngine {
 		playerShip.setFuel(playerData.getShipFuel());
 		playerShip.setLevel(playerData.getShipLevel());
 		playerShip.setLife(playerData.getShipLife());
+		playerShip.setPositionX(DEFAULT_SHIP_X_POSITION);
+		playerShip.setPositionY(DEFAULT_SHIP_Y_POSITION);
 		updateFuelBar();
 		updateLifeBar();
 		updateLevelText();
+		castingDirector.getCollisionActorsEnemy().clear();
+		castingDirector.getCollisionActorsPlayer().clear();
+		rootGroup.getChildren().clear();
+		addNodesToMainScreen();
+		addAndInitGameActorsNodes();
+		//spaceExplorationEngine.startGamePlayLoop();
+
 	}
 
 	/**
