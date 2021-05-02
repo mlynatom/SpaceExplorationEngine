@@ -5,82 +5,69 @@ import cz.cvut.fel.pjv.fileIO.LevelData;
 import cz.cvut.fel.pjv.fileIO.YamlIO;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import static cz.cvut.fel.pjv.controller.Constants.*;
 
+
+/**
+ * This class is a separate application which creates positions of things in levelData for use in main Application.
+ */
 public class Editor extends Application {
 	private static final Logger LOGGER = Logger.getLogger(Editor.class.getName());
 
 	private Canvas canvas;
-	private Button obstacleButton, enemyButton, fuelBarrelButton, lifeAdderButton, levelEnhancerButton;
-	private HBox horizontalButtonBox;
+	private VBox vBox;
 	private LevelData levelData;
-	private List<Coordinate2D> obstaclesPositions, enemiesPositions, fuelBarrelsPositions, lifeAddersPositions, levelEnhancerPositions;
-	private Image obstacleImage, enemyImage, fuelBarrelImage, lifeAdderImage, levelEnhancerImage, backgroundImg;
+	private Image obstacleImage, enemyImage, fuelBarrelImage, lifeAdderImage, levelEnhancerImage, backgroundImg, buttonBackImage;
 	private boolean isObstacle, isEnemy, isFuelBarrel, isLifeAdder, isLevelEnhancer;
-	private Stage secondaryStage;
+	private Pane pane;
 
 	@Override
 	public void start(Stage primaryStage) {
 		canvas = new Canvas(WIDTH, HEIGHT);
 
-		levelData = new LevelData();
-		initLevelData();
-		loadImages();
-		obstaclesPositions = new ArrayList<>();
-		enemiesPositions = new ArrayList<>();
-		fuelBarrelsPositions = new ArrayList<>();
-		lifeAddersPositions = new ArrayList<>();
-		levelEnhancerPositions = new ArrayList<>();
+		//Initialize level data
+		levelData = YamlIO.loadLevelDataYaml();
+		assert levelData != null;
+		levelData.getLifeAddersPositions().clear();
+		levelData.getFuelBarrelsPositions().clear();
+		levelData.getObstaclesPositions().clear();
+		levelData.getLevelEnhancersPositions().clear();
+		levelData.getEnemiesPositions().clear();
 
+		//load all images
+		loadImages();
+
+		//set up background
 		BackgroundImage backgroundImage = new BackgroundImage(backgroundImg, BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
 				BackgroundSize.DEFAULT);
 		Background background = new Background(backgroundImage);
 
-		Pane pane = new Pane(canvas);
+		pane = new Pane(canvas);
 		pane.setBackground(background);
 
-		pane.setOnMousePressed(event -> {
-			LOGGER.log(Level.INFO, "Mouse pressed");
-			if (isObstacle) {
-				addObstacle(event.getX(), event.getY());
-				obstaclesPositions.add(new Coordinate2D(event.getX(), event.getY()));
-			} else if (isEnemy) {
-				addEnemy(event.getX(), event.getY());
-				enemiesPositions.add(new Coordinate2D(event.getX(), event.getY()));
-			} else if (isFuelBarrel) {
-				addFuelBarrel(event.getX(), event.getY());
-				fuelBarrelsPositions.add(new Coordinate2D(event.getX(), event.getY()));
-			} else if (isLevelEnhancer) {
-				addLevelEnhancer(event.getX(), event.getY());
-				levelEnhancerPositions.add(new Coordinate2D(event.getX(), event.getY()));
-			} else if (isLifeAdder) {
-				addLifeAdder(event.getX(), event.getY());
-				lifeAddersPositions.add(new Coordinate2D(event.getX(), event.getY()));
-			}
-
-		});
+		handleMousePress();
 
 		Scene scene = new Scene(pane);
+
 		primaryStage.setTitle("Space exploration engine - level editor");
 		primaryStage.setScene(scene);
 		primaryStage.setResizable(false);
 		primaryStage.show();
-
 		primaryStage.setOnCloseRequest(event -> Platform.exit());
 
 		createSecondaryStage();
@@ -90,13 +77,43 @@ public class Editor extends Application {
 		launch(args);
 	}
 
-	public void stop() {
-		levelData.setObstaclesPositions(obstaclesPositions);
-		levelData.setEnemiesPositions(enemiesPositions);
-		levelData.setLevelEnhancersPositions(levelEnhancerPositions);
-		levelData.setFuelBarrelsPositions(fuelBarrelsPositions);
-		levelData.setLifeAddersPositions(lifeAddersPositions);
-		YamlIO.saveLevelDataYaml(levelData);
+
+	private void loadImages() {
+		try {
+			buttonBackImage = new Image("/button_back.png", 440, 130, true, false, true);
+			backgroundImg = new Image("/background.png", WIDTH, HEIGHT, true, false, true);
+			obstacleImage = new Image("/obstacle.png", 100, 50, true, false, true);
+			enemyImage = new Image("/enemy.png", ENEMY_DIMENSION, ENEMY_DIMENSION, true, false, true);
+			fuelBarrelImage = new Image("/fuel_barrel.png", INTERACT_THING_DIMENSION, INTERACT_THING_DIMENSION, true, false, true);
+			levelEnhancerImage = new Image("/level_enhancer.png", INTERACT_THING_DIMENSION, INTERACT_THING_DIMENSION, true, false, true);
+			lifeAdderImage = new Image("/life_adder.png", INTERACT_THING_DIMENSION, INTERACT_THING_DIMENSION, true, false, true);
+		} catch (IllegalArgumentException e) {
+			LOGGER.log(Level.SEVERE, "Loading of one of images failed. Error: " + e);
+			System.err.println("Please check entered image names. Exiting application...");
+			System.exit(100);
+		}
+	}
+
+	private void handleMousePress() {
+		pane.setOnMousePressed(event -> {
+			LOGGER.log(Level.INFO, "Mouse pressed");
+			if (isObstacle) {
+				addObstacle(event.getX(), event.getY());
+				levelData.getObstaclesPositions().add(new Coordinate2D(event.getX(), event.getY()));
+			} else if (isEnemy) {
+				addEnemy(event.getX(), event.getY());
+				levelData.getEnemiesPositions().add(new Coordinate2D(event.getX(), event.getY()));
+			} else if (isFuelBarrel) {
+				addFuelBarrel(event.getX(), event.getY());
+				levelData.getFuelBarrelsPositions().add(new Coordinate2D(event.getX(), event.getY()));
+			} else if (isLevelEnhancer) {
+				addLevelEnhancer(event.getX(), event.getY());
+				levelData.getLevelEnhancersPositions().add(new Coordinate2D(event.getX(), event.getY()));
+			} else if (isLifeAdder) {
+				addLifeAdder(event.getX(), event.getY());
+				levelData.getLifeAddersPositions().add(new Coordinate2D(event.getX(), event.getY()));
+			}
+		});
 	}
 
 	private void addObstacle(double positionX, double positionY) {
@@ -119,41 +136,36 @@ public class Editor extends Application {
 		canvas.getGraphicsContext2D().drawImage(levelEnhancerImage, positionX, positionY);
 	}
 
-	private void loadImages() {
-		try {
-			backgroundImg = new Image("/background.png", WIDTH, HEIGHT, true, false, true);
-			obstacleImage = new Image("/obstacle.png", 100, 50, true, false, true);
-			enemyImage = new Image("/enemy.png", ENEMY_DIMENSION, ENEMY_DIMENSION, true, false, true);
-			fuelBarrelImage = new Image("/fuel_barrel.png", INTERACT_THING_DIMENSION, INTERACT_THING_DIMENSION, true, false, true);
-			levelEnhancerImage = new Image("/level_enhancer.png", INTERACT_THING_DIMENSION, INTERACT_THING_DIMENSION, true, false, true);
-			lifeAdderImage = new Image("/life_adder.png", INTERACT_THING_DIMENSION, INTERACT_THING_DIMENSION, true, false, true);
-		} catch (IllegalArgumentException e) {
-			LOGGER.log(Level.SEVERE, "Loading of one of images failed. Error: " + e);
-			System.err.println("Please check entered image names. Exiting application...");
-			System.exit(100);
-		}
-	}
-
 	private void createSecondaryStage() {
-		secondaryStage = new Stage();
+		Stage secondaryStage = new Stage();
 		Group group = new Group();
-		Scene scene = new Scene(group, 750, 50, Color.GRAY);
+		Scene scene = new Scene(group, 380, 130, Color.GRAY);
 		createSecondaryScreenNodes();
-		group.getChildren().add(horizontalButtonBox);
-		secondaryStage.setTitle("Choose which to add");
+		ImageView backImageView = new ImageView();
+		backImageView.setImage(buttonBackImage);
+		group.getChildren().add(backImageView);
+
+		group.getChildren().add(vBox);
+		secondaryStage.setTitle("Choose which you want to add");
 		secondaryStage.setScene(scene);
 		secondaryStage.setResizable(false);
 		secondaryStage.show();
 	}
 
 	private void createSecondaryScreenNodes() {
-		horizontalButtonBox = new HBox(30);
-		horizontalButtonBox.setAlignment(Pos.BOTTOM_CENTER);
+		Insets insets = new Insets(10);
+		vBox = new VBox();
+		HBox hBox1 = new HBox(30);
+		hBox1.setPadding(insets);
+		hBox1.setAlignment(Pos.TOP_LEFT);
+		HBox hBox2 = new HBox(30);
+		hBox2.setPadding(insets);
+		hBox2.setAlignment(Pos.TOP_LEFT);
 
-		obstacleButton = new Button("obstacle");
+		Button obstacleButton = new Button("OBSTACLE");
 		obstacleButton.setStyle("-fx-font: 22 impact; -fx-base: #ffffff;");
 		obstacleButton.setOnAction(event -> {
-			LOGGER.log(Level.INFO, "obstacle button was used");
+			LOGGER.log(Level.INFO, "Obstacle button was used");
 			isObstacle = true;
 			isEnemy = false;
 			isFuelBarrel = false;
@@ -162,10 +174,10 @@ public class Editor extends Application {
 
 		});
 
-		enemyButton = new Button("enemy");
+		Button enemyButton = new Button("ENEMY");
 		enemyButton.setStyle("-fx-font: 22 impact; -fx-base: #ffffff;");
 		enemyButton.setOnAction(event -> {
-			LOGGER.log(Level.INFO, "enemy button used.");
+			LOGGER.log(Level.INFO, "Enemy button used.");
 			isObstacle = false;
 			isEnemy = true;
 			isFuelBarrel = false;
@@ -173,10 +185,10 @@ public class Editor extends Application {
 			isLevelEnhancer = false;
 		});
 
-		fuelBarrelButton = new Button("fuel barrel");
+		Button fuelBarrelButton = new Button("FUEL");
 		fuelBarrelButton.setStyle("-fx-font: 22 impact; -fx-base: #ffffff;");
 		fuelBarrelButton.setOnAction(event -> {
-			LOGGER.log(Level.INFO, "fuel barrel button used.");
+			LOGGER.log(Level.INFO, "Fuel barrel button used.");
 			isObstacle = false;
 			isEnemy = false;
 			isFuelBarrel = true;
@@ -184,10 +196,10 @@ public class Editor extends Application {
 			isLevelEnhancer = false;
 		});
 
-		lifeAdderButton = new Button("life adder");
+		Button lifeAdderButton = new Button("LIFE");
 		lifeAdderButton.setStyle("-fx-font: 22 impact; -fx-base: #ffffff;");
 		lifeAdderButton.setOnAction(event -> {
-			LOGGER.log(Level.INFO, "life adder button used.");
+			LOGGER.log(Level.INFO, "Life adder button used.");
 			isObstacle = false;
 			isEnemy = false;
 			isFuelBarrel = false;
@@ -195,10 +207,10 @@ public class Editor extends Application {
 			isLevelEnhancer = false;
 		});
 
-		levelEnhancerButton = new Button("level enhancer");
+		Button levelEnhancerButton = new Button("LEVEL");
 		levelEnhancerButton.setStyle("-fx-font: 22 impact; -fx-base: #ffffff;");
 		levelEnhancerButton.setOnAction(event -> {
-			LOGGER.log(Level.INFO, "level enhancer button used.");
+			LOGGER.log(Level.INFO, "Level enhancer button used.");
 			isObstacle = false;
 			isEnemy = false;
 			isFuelBarrel = false;
@@ -207,17 +219,16 @@ public class Editor extends Application {
 
 		});
 
-		horizontalButtonBox.getChildren().addAll(obstacleButton, enemyButton, fuelBarrelButton, lifeAdderButton, levelEnhancerButton);
+		Button saveButton = new Button("SAVE");
+		saveButton.setStyle("-fx-font: 22 impact; -fx-base: #a2a9fa;");
+		saveButton.setOnAction(event -> {
+			LOGGER.log(Level.INFO, "Save button used.");
+			YamlIO.saveLevelDataYaml(levelData);
+			Platform.exit();
+		});
 
-	}
-
-	private void initLevelData() {
-		levelData.setGravity(0.6);
-		levelData.setBackgroundImagePath("background.png");
-		levelData.setShipImagePath("player_ship_0.png");
-		levelData.setShipImageEnginesOnPath("player_ship_1.png");
-		levelData.setEnemyStrength(0.1);
-		levelData.setEnemyProjectileDamage(10);
-		levelData.setEnemyLife(10);
+		hBox1.getChildren().addAll(obstacleButton, enemyButton, fuelBarrelButton);
+		hBox2.getChildren().addAll(lifeAdderButton, levelEnhancerButton, saveButton);
+		vBox.getChildren().addAll(hBox1, hBox2);
 	}
 }

@@ -1,5 +1,6 @@
 package cz.cvut.fel.pjv.fileIO;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,6 +24,24 @@ public class LevelData {
 	private List<Coordinate2D> fuelBarrelsPositions;
 	private List<Coordinate2D> levelEnhancersPositions;
 	private List<Coordinate2D> lifeAddersPositions;
+
+	public LevelData(double gravity, String backgroundImagePath, String shipImagePath, String shipImageEnginesOnPath, double enemyStrength, double enemyProjectileDamage, double enemyLife) {
+		this.gravity = gravity;
+		this.backgroundImagePath = backgroundImagePath;
+		this.shipImagePath = shipImagePath;
+		this.shipImageEnginesOnPath = shipImageEnginesOnPath;
+		this.enemyStrength = enemyStrength;
+		this.enemyProjectileDamage = enemyProjectileDamage;
+		this.enemyLife = enemyLife;
+		this.obstaclesPositions = new ArrayList<>();
+		this.enemiesPositions = new ArrayList<>();
+		this.fuelBarrelsPositions = new ArrayList<>();
+		this.levelEnhancersPositions = new ArrayList<>();
+		this.lifeAddersPositions = new ArrayList<>();
+	}
+
+	public LevelData() {
+	}
 
 	public double getGravity() {
 		return gravity;

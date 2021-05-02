@@ -5,51 +5,55 @@ shipImagePath: "player_ship_0.png"
 shipImageEnginesOnPath: "player_ship_1.png"
 enemyStrength: 0.1
 enemyProjectileDamage: 10.0
-enemyLife: 10.0
+enemyLife: 100.0
 obstaclesPositions:
-- x: 420.0
-  y: 168.0
-- x: 439.0
-  y: 221.0
-- x: 449.0
-  y: 265.0
-- x: 414.0
-  y: 260.0
-- x: 408.0
-  y: 210.0
-- x: 403.0
-  y: 174.0
-- x: 410.0
-  y: 142.0
-enemiesPositions:
-- x: 217.0
+- x: 355.0
   y: 196.0
-- x: 263.0
-  y: 386.0
-fuelBarrelsPositions: []
-levelEnhancersPositions:
-- x: 623.0
-  y: 105.0
-- x: 229.0
-  y: 75.0
-- x: 97.0
-  y: 237.0
-- x: 669.0
-  y: 366.0
-- x: 544.0
-  y: 488.0
-- x: 512.0
-  y: 446.0
-- x: 356.0
-  y: 343.0
-- x: 431.0
-  y: 56.0
-- x: 580.0
-  y: 88.0
-lifeAddersPositions:
-- x: 826.0
-  y: 138.0
-- x: 818.0
+- x: 163.0
+  y: 111.0
+- x: 505.0
+  y: 360.0
+- x: 475.0
+  y: 208.0
+- x: 389.0
+  y: 80.0
+enemiesPositions:
+- x: 848.0
+  y: 433.0
+- x: 704.0
+  y: 132.0
+- x: 702.0
+  y: 334.0
+- x: 598.0
   y: 300.0
-- x: 698.0
-  y: 174.0
+- x: 476.0
+  y: 333.0
+- x: 383.0
+  y: 173.0
+- x: 286.0
+  y: 104.0
+fuelBarrelsPositions:
+- x: 728.0
+  y: 180.0
+- x: 534.0
+  y: 94.0
+- x: 565.0
+  y: 89.0
+- x: 675.0
+  y: 259.0
+levelEnhancersPositions:
+- x: 288.0
+  y: 302.0
+- x: 106.0
+  y: 167.0
+- x: 103.0
+  y: 96.0
+lifeAddersPositions:
+- x: 324.0
+  y: 151.0
+- x: 742.0
+  y: 83.0
+- x: 914.0
+  y: 250.0
+- x: 884.0
+  y: 318.0

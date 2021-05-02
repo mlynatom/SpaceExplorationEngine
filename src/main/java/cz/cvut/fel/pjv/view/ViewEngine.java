@@ -6,6 +6,7 @@ import cz.cvut.fel.pjv.fileIO.Coordinate2D;
 import cz.cvut.fel.pjv.fileIO.LevelData;
 import cz.cvut.fel.pjv.fileIO.PlayerData;
 import cz.cvut.fel.pjv.model.*;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
@@ -286,7 +287,7 @@ public class ViewEngine {
 		exitButton.setStyle("-fx-font: 22 impact; -fx-base: #ffffff;");
 		exitButton.setOnAction(event -> {
 			LOGGER.log(Level.INFO, "Exit button used.");
-			System.exit(1);
+			Platform.exit();
 		});
 
 		exitSaveButton = new Button("EXIT AND SAVE");
@@ -295,7 +296,7 @@ public class ViewEngine {
 			LOGGER.log(Level.INFO, "Exit and Save button used.");
 			saveDataToPlayerData();
 			spaceExplorationEngine.savePlayerData(playerData);
-			System.exit(1);
+			Platform.exit();
 		});
 
 		horizontalButtonBox.getChildren().addAll(playButton, helpButton, exitButton, exitSaveButton);
