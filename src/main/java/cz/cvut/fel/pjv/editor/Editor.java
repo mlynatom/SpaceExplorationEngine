@@ -24,7 +24,8 @@ import static cz.cvut.fel.pjv.controller.Constants.*;
 
 
 /**
- * This class is a separate application which creates positions of things in levelData for use in main Application.
+ * This class is a separate application which makes possible creating positions of obstacles, enemies, fuel barrels,
+ * life adders and level enhancers in levelData for use in main Application.
  */
 public class Editor extends Application {
 	private static final Logger LOGGER = Logger.getLogger(Editor.class.getName());
@@ -70,6 +71,7 @@ public class Editor extends Application {
 		primaryStage.show();
 		primaryStage.setOnCloseRequest(event -> Platform.exit());
 
+		//create second windows for buttons
 		createSecondaryStage();
 	}
 
