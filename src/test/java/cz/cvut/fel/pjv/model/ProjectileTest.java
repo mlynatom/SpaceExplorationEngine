@@ -19,7 +19,7 @@ class ProjectileTest {
 		mockProjectile.positionX = mockPositionX;
 		mockProjectile.positionY = mockPositionY;
 		mockProjectile.putOffScreen();
-		assertEquals(POS_OFF_SCREEN,mockProjectile.positionX);
+		assertEquals(POS_OFF_SCREEN, mockProjectile.positionX);
 		assertEquals(POS_OFF_SCREEN, mockProjectile.positionY);
 		assertEquals(POS_OFF_SCREEN, mockProjectile.spriteFrame.getTranslateX());
 		assertEquals(POS_OFF_SCREEN, mockProjectile.spriteFrame.getTranslateY());
@@ -31,7 +31,7 @@ class ProjectileTest {
 		mockProjectile.positionX = mockPositionX;
 		mockProjectile.positionY = mockPositionY;
 		mockProjectile.prepareForShoot(true, mockPositionX, mockPositionY);
-		assertEquals(mockPositionX + 40,mockProjectile.positionX);
+		assertEquals(mockPositionX + 40, mockProjectile.positionX);
 		assertEquals(mockPositionY + 20, mockProjectile.positionY);
 		assertEquals(mockPositionX + 40, mockProjectile.spriteFrame.getTranslateX());
 		assertEquals(mockPositionY + 20, mockProjectile.spriteFrame.getTranslateY());
@@ -44,7 +44,7 @@ class ProjectileTest {
 		mockProjectile.positionX = mockPositionX;
 		mockProjectile.positionY = mockPositionY;
 		mockProjectile.prepareForShoot(false, mockPositionX, mockPositionY);
-		assertEquals(mockPositionX + 40,mockProjectile.positionX);
+		assertEquals(mockPositionX + 40, mockProjectile.positionX);
 		assertEquals(mockPositionY + 20, mockProjectile.positionY);
 		assertEquals(mockPositionX + 40, mockProjectile.spriteFrame.getTranslateX());
 		assertEquals(mockPositionY + 20, mockProjectile.spriteFrame.getTranslateY());
@@ -56,7 +56,7 @@ class ProjectileTest {
 		Projectile mockProjectile = new Projectile(mockPositionX, mockPositionY, mockSpriteBound, mockLifeSpan, mockDamage, mockImageName);
 		mockProjectile.positionX = mockPositionX;
 		mockProjectile.changeXPosition(2);
-		assertEquals(mockPositionX + 2,mockProjectile.positionX);
+		assertEquals(mockPositionX + 2, mockProjectile.positionX);
 		assertEquals(mockPositionX + 2, mockProjectile.spriteFrame.getTranslateX());
 	}
 }

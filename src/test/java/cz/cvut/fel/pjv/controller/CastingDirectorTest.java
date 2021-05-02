@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 class CastingDirectorTest {
-	class mockActor extends Actor {
+	static class mockActor extends Actor {
 		public mockActor(double positionX, double positionY, String spriteBound, String... imageName) {
 			super(positionX, positionY, spriteBound, imageName);
 		}
@@ -19,18 +19,18 @@ class CastingDirectorTest {
 	}
 
 	private final Actor mockActor1, mockActor2;
-	private final int mockPositionX = 10;
-	private final int mockPositionY = 10;
-	private final String mockSpriteBound = "M0 6 L0 52 70 52 70 0 68 16 Z";
-	private final String mockImageName = "mockImageName";
 
 	public CastingDirectorTest() {
+		int mockPositionX = 10;
+		int mockPositionY = 10;
+		String mockSpriteBound = "M0 6 L0 52 70 52 70 0 68 16 Z";
+		String mockImageName = "mockImageName";
 		mockActor1 = new mockActor(mockPositionX, mockPositionY, mockSpriteBound, mockImageName);
 		mockActor2 = new mockActor(mockPositionX, mockPositionY, mockSpriteBound, mockImageName);
 	}
 
 	@Test
-	public void testAddActorToCurrentActors() {
+	public void testAddActorToCollisionPlayerActors() {
 		CastingDirector castingDirector = new CastingDirector();
 		castingDirector.addActorsToCollisionPlayerActors(mockActor1);
 		Actor[] rightArray = {mockActor1};
@@ -38,7 +38,7 @@ class CastingDirectorTest {
 	}
 
 	@Test
-	public void testAddActorsToCurrentActors() {
+	public void testAddActorsToCollisionPlayerActors() {
 		CastingDirector castingDirector = new CastingDirector();
 		castingDirector.addActorsToCollisionPlayerActors(mockActor1, mockActor2);
 		Actor[] rightArray = {mockActor1, mockActor2};
@@ -46,7 +46,7 @@ class CastingDirectorTest {
 	}
 
 	@Test
-	public void testAddActorToRemovedActors() {
+	public void testAddToPlayerRemovedActors() {
 		CastingDirector castingDirector = new CastingDirector();
 		castingDirector.addToPlayerRemovedActors(mockActor1);
 		Actor[] rightArray = {mockActor1};
@@ -54,10 +54,9 @@ class CastingDirectorTest {
 	}
 
 	@Test
-	public void testAddActorsToRemovedActors() {
+	public void testAddsToPlayerRemovedActors() {
 		CastingDirector castingDirector = new CastingDirector();
 		castingDirector.addToPlayerRemovedActors(mockActor1, mockActor2);
-		Actor[] rightArray = {mockActor1, mockActor2};
 		assertEquals(2, castingDirector.getRemovedActorsPlayer().size());
 	}
 
@@ -70,5 +69,21 @@ class CastingDirectorTest {
 		Actor[] rightCurrentArray = {mockActor2};
 		assertArrayEquals(rightCurrentArray, castingDirector.getCollisionActorsPlayer().toArray());
 		assertEquals(0, castingDirector.getRemovedActorsPlayer().size());
+	}
+
+	@Test
+	public void testAddActorToCollisionEnemyActors(){
+		CastingDirector castingDirector = new CastingDirector();
+		castingDirector.addActorsToCollisionEnemyActors(mockActor1);
+		Actor[] rightArray = {mockActor1};
+		assertArrayEquals(rightArray, castingDirector.getCollisionActorsEnemy().toArray());
+	}
+
+	@Test
+	public void testAddActorsToCollisionEnemyActors(){
+		CastingDirector castingDirector = new CastingDirector();
+		castingDirector.addActorsToCollisionEnemyActors(mockActor1, mockActor2);
+		Actor[] rightArray = {mockActor1, mockActor2};
+		assertArrayEquals(rightArray, castingDirector.getCollisionActorsEnemy().toArray());
 	}
 }

@@ -16,7 +16,6 @@ public class ShipTest {
 	private final String mockSpriteBound = "M0 6 L0 52 70 52 70 70 70 93 115 45 115 0 84 0 68 16 Z";
 	private final double mockGravity = 0.1;
 	private final String mockImageName = "/projectile.png";
-	private final int mockFuel = 100;
 
 	public ShipTest() {
 		mockSpaceExplorationEngine = new SpaceExplorationEngine();
@@ -24,6 +23,7 @@ public class ShipTest {
 		double mockDamage = 50;
 		mockProjectile = new Projectile(mockPositionX, mockPositionY, "M0 6 L0 52 70 52 70 70 70 93 115 45 115 0 84 0 68 16 Z", mockLifeSpan, mockDamage, mockImageName);
 		mockPlayerData = new PlayerData();
+		int mockFuel = 100;
 		mockPlayerData.setShipFuel(mockFuel);
 		mockPlayerData.setShipLevel(1);
 		mockPlayerData.setShipLife(100);

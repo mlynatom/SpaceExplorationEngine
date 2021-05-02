@@ -74,12 +74,16 @@ class LevelDataTest {
 		LevelData mockLevelData = new LevelData();
 		mockLevelData.setEnemyLife(101);
 		assertEquals(100, mockLevelData.getEnemyLife());
-	}@Test
+	}
+
+	@Test
 	void testSetEnemyLifeLess() {
 		LevelData mockLevelData = new LevelData();
 		mockLevelData.setEnemyLife(0.2);
 		assertEquals(1, mockLevelData.getEnemyLife());
-	}@Test
+	}
+
+	@Test
 	void testSetEnemyLife() {
 		LevelData mockLevelData = new LevelData();
 		mockLevelData.setEnemyLife(5.6);
