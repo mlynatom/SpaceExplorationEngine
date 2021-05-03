@@ -100,5 +100,7 @@ public abstract class Ship extends Actor {
 		this.life = life;
 	}
 
-
+	public void setDamage(double damage) {
+		this.damage = damage;
+	}
 }

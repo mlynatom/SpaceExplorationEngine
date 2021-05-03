@@ -91,8 +91,11 @@ public class SpaceExplorationEngine extends Application {
 	/**
 	 * This method creates new game loop (animation timer) and start it.
 	 */
-	public void startGamePlayLoop() {
+	public void createGamePlayLoop() {
 		gamePlayLoop = new GamePlayLoop(viewEngine);
+	}
+
+	public void startGameplayLoop() {
 		gamePlayLoop.start();
 	}
 

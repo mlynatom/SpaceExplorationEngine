@@ -36,6 +36,7 @@ public class PlayerShip extends Ship {
 	@Override
 	public void update() {
 		if (isAlive) {
+			setAppropriateDamageAccordingToLevel();
 			getNewCoordinates();
 			spaceExplorationEngine.updateFuelOnScreen();
 			applyGravity();
@@ -47,6 +48,15 @@ public class PlayerShip extends Ship {
 			shootProjectile();
 			spaceExplorationEngine.updateLifeOnScreen();
 			spaceExplorationEngine.updateLevelOnScreen();
+		}
+	}
+
+	protected void setAppropriateDamageAccordingToLevel() {
+		damage = (double) level / 10;
+		if (level == 1) {
+			projectile.damage = INIT_PLAYER_PROJECTILE_DAMAGE;
+		} else {
+			projectile.damage = INIT_PLAYER_PROJECTILE_DAMAGE + 10 * level;
 		}
 	}
 
@@ -197,8 +207,6 @@ public class PlayerShip extends Ship {
 			level = 10;
 		} else {
 			level += levelToAdd;
-			damage += 0.1;
-			projectile.damage += 10;
 		}
 	}
 
@@ -262,5 +270,9 @@ public class PlayerShip extends Ship {
 
 	public void setFuel(double fuel) {
 		this.fuel = fuel;
+	}
+
+	public void setAlive(boolean alive) {
+		isAlive = alive;
 	}
 }

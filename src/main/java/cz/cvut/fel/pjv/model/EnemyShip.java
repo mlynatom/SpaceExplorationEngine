@@ -121,4 +121,8 @@ public class EnemyShip extends Ship {
 			moveCounter = ThreadLocalRandom.current().nextInt(10, 100);
 		}
 	}
+
+	public void setAlive(boolean alive) {
+		isAlive = alive;
+	}
 }

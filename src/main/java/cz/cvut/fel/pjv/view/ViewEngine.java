@@ -39,7 +39,6 @@ public class ViewEngine {
 	private Image shipImage0, shipImage1, projectileImage, obstacleImage, enemyImage, fuelBarrelImage, levelEnhancerImage, lifeAdderImage;
 	private HBox horizontalButtonBox;
 	private HBox horizontalUpperBox;
-	private Button playButton;
 	private ToggleButton helpButton;
 	private ImageView mainScreenBackground;
 	private PlayerShip playerShip;
@@ -89,7 +88,6 @@ public class ViewEngine {
 		loadImages();
 		initializeImageDirector();
 		createGameActors();
-		addAndInitGameActorsNodes();
 		initializePlayerImages();
 		createMainScreenNodes();
 		addNodesToMainScreen();
@@ -198,6 +196,7 @@ public class ViewEngine {
 		rootGroup.getChildren().add(playerShip.getSpriteFrame());
 		rootGroup.getChildren().add(playerProjectile.getSpriteFrame());
 		castingDirector.addActorsToCollisionEnemyActors(playerShip, playerProjectile);
+		playerShip.setAlive(true);
 		addAndInitObstacles();
 		addAndInitEnemyShips();
 		addAndInitFuelBarrels();
@@ -219,6 +218,7 @@ public class ViewEngine {
 			rootGroup.getChildren().add(enemyShip.getSpriteFrame());
 			enemyShip.getSpriteFrame().setImage(enemyImage);
 			castingDirector.addActorsToCollisionPlayerActors(enemyShip);
+			enemyShip.setAlive(true);
 		}
 	}
 
@@ -265,16 +265,15 @@ public class ViewEngine {
 		Insets buttonBoxPadding = new Insets(0, 0, 10, 290);
 		horizontalButtonBox.setPadding(buttonBoxPadding);
 
-		playButton = new Button("PLAY");
+		Button playButton = new Button("PLAY");
 		playButton.setStyle("-fx-font: 22 impact; -fx-base: #ffffff;");
 		playButton.setOnAction(event -> {
 			LOGGER.log(Level.INFO, "Play button was used");
-			spaceExplorationEngine.startGamePlayLoop();
+			spaceExplorationEngine.createGamePlayLoop();
 			mainScreenBackground.setImage(background);
 			mainScreenBackground.toBack();
 			horizontalButtonBox.setVisible(false);
-			//restartGame();
-			playButton.setDisable(true);
+			restartGame();
 		});
 
 		helpButton = new ToggleButton("HELP");
@@ -384,21 +383,47 @@ public class ViewEngine {
 	}
 
 	private void restartGame() {
+		//reset data of player and enemy to be initial
 		playerShip.setFuel(playerData.getShipFuel());
 		playerShip.setLevel(playerData.getShipLevel());
 		playerShip.setLife(playerData.getShipLife());
 		playerShip.setPositionX(DEFAULT_SHIP_X_POSITION);
 		playerShip.setPositionY(DEFAULT_SHIP_Y_POSITION);
+		setEnemiesLife();
+
+		//update progress bars
 		updateFuelBar();
 		updateLifeBar();
 		updateLevelText();
+
+		//remove actors to be ready to add them again
+		removeActorsFromRootGroup();
 		castingDirector.getCollisionActorsEnemy().clear();
 		castingDirector.getCollisionActorsPlayer().clear();
-		rootGroup.getChildren().clear();
-		addNodesToMainScreen();
-		addAndInitGameActorsNodes();
-		//spaceExplorationEngine.startGamePlayLoop();
 
+		//add actors again
+		addAndInitGameActorsNodes();
+
+		//put box with progress bars to front because it was put to background by adding actor nodes in previous step
+		horizontalUpperBox.toFront();
+
+		//start game loop
+		spaceExplorationEngine.startGameplayLoop();
+	}
+
+	private void removeActorsFromRootGroup() {
+		for (Actor actor : castingDirector.getCollisionActorsPlayer()) {
+			rootGroup.getChildren().remove(actor.getSpriteFrame());
+		}
+		for (Actor actor : castingDirector.getCollisionActorsEnemy()) {
+			rootGroup.getChildren().remove(actor.getSpriteFrame());
+		}
+	}
+
+	private void setEnemiesLife() {
+		for (EnemyShip enemyShip : enemyShips) {
+			enemyShip.setLife(levelData.getEnemyLife());
+		}
 	}
 
 	/**

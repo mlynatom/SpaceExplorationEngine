@@ -16,4 +16,5 @@ public class Constants {
 	public static final double POS_OFF_SCREEN = -500;
 	public static final double INTERACT_THING_DIMENSION = 50;
 	public static final double ENEMY_DIMENSION = HEIGHT / 12;
+	public static final double INIT_PLAYER_PROJECTILE_DAMAGE = 50;
 }

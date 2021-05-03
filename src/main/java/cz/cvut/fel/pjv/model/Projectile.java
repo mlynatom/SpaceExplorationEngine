@@ -68,4 +68,8 @@ public class Projectile extends Actor {
 		spriteFrame.setTranslateX(positionX);
 		spriteFrame.setTranslateY(positionY);
 	}
+
+	public void setDamage(double damage) {
+		this.damage = damage;
+	}
 }
