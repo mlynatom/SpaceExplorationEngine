@@ -1,6 +1,7 @@
 package cz.cvut.fel.pjv.controller;
 
 import cz.cvut.fel.pjv.model.EnemyShip;
+import cz.cvut.fel.pjv.model.Projectile;
 import cz.cvut.fel.pjv.view.ViewEngine;
 import javafx.animation.AnimationTimer;
 
@@ -20,6 +21,10 @@ public class GamePlayLoop extends AnimationTimer {
 		viewEngine.getPlayerShip().update();
 		for (EnemyShip enemyShip : viewEngine.getEnemyShips()) {
 			enemyShip.update();
+		}
+		viewEngine.getPlayerProjectile().update();
+		for (Projectile enemyProjectile : viewEngine.getEnemyProjectiles()) {
+			enemyProjectile.update();
 		}
 	}
 }

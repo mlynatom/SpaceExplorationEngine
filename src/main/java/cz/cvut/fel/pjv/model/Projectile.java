@@ -1,5 +1,9 @@
 package cz.cvut.fel.pjv.model;
 
+import cz.cvut.fel.pjv.controller.SpaceExplorationEngine;
+import javafx.scene.shape.SVGPath;
+import javafx.scene.shape.Shape;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -14,15 +18,18 @@ public class Projectile extends Actor {
 
 	protected double lifeSpan;
 	protected double damage;
+	protected SpaceExplorationEngine spaceExplorationEngine;
 
-	public Projectile(double positionX, double positionY, String spriteBound, double lifeSpan, double damage, String... imageName) {
+	public Projectile(SpaceExplorationEngine spaceExplorationEngine, double positionX, double positionY, String spriteBound, double lifeSpan, double damage, String... imageName) {
 		super(positionX, positionY, spriteBound, imageName);
 		this.lifeSpan = lifeSpan;
 		this.damage = damage;
+		this.spaceExplorationEngine = spaceExplorationEngine;
 	}
 
 	@Override
 	public void update() {
+		checkForCollision();
 	}
 
 	/**
@@ -69,7 +76,37 @@ public class Projectile extends Actor {
 		spriteFrame.setTranslateY(positionY);
 	}
 
+	/**
+	 * This method calls collide method on actor from list of possible colliders.
+	 */
+	protected void checkForCollision() {
+		for (int i = 0; i < spaceExplorationEngine.getCastingDirector().getCollisionActorsProjectile().size(); i++) {
+			Actor actor = spaceExplorationEngine.getCastingDirector().getCollisionActorsProjectile().get(i);
+			if (collide(actor)) {
+				if (actor instanceof Obstacle) {
+					putOffScreen();
+				}
+			}
+		}
+	}
+
+	/**
+	 * This method checks for collisions.
+	 *
+	 * @param object object to check collision.
+	 * @return true if collision happened.
+	 */
+	protected boolean collide(Actor object) {
+		if (spriteFrame.getBoundsInParent().intersects(object.getSpriteFrame().getBoundsInParent())) {
+			Shape intersection = SVGPath.intersect(spriteBound, object.spriteBound);
+			return intersection.getBoundsInLocal().getWidth() != -1;
+		}
+		return false;
+	}
+
 	public void setDamage(double damage) {
 		this.damage = damage;
 	}
+
+
 }

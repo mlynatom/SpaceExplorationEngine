@@ -11,11 +11,13 @@ public class CastingDirector {
 	private final List<Actor> collisionActorsPlayer; //actors which can collide with player
 	private final Set<Actor> removedActorsPlayer; //actors which should be removed from list of actors which can collide with player
 	private final List<Actor> collisionActorsEnemy; //actors which can collide with enemy
+	private final List<Actor> collisionActorsProjectile; //actors which can collide with projectile
 
 	public CastingDirector() {
 		collisionActorsPlayer = new ArrayList<>();
 		removedActorsPlayer = new HashSet<>();
 		collisionActorsEnemy = new ArrayList<>();
+		collisionActorsProjectile = new ArrayList<>();
 	}
 
 	/**
@@ -54,6 +56,15 @@ public class CastingDirector {
 		collisionActorsEnemy.addAll(Arrays.asList(actors));
 	}
 
+	/**
+	 * This method adds all given actors to the list actors which collides with projectile.
+	 *
+	 * @param actors one or more actors to be added.
+	 */
+	public void addActorsToCollisionProjectileActors(Actor... actors) {
+		collisionActorsProjectile.addAll(Arrays.asList(actors));
+	}
+
 	public List<Actor> getCollisionActorsPlayer() {
 		return collisionActorsPlayer;
 	}
@@ -64,5 +75,9 @@ public class CastingDirector {
 
 	public List<Actor> getCollisionActorsEnemy() {
 		return collisionActorsEnemy;
+	}
+
+	public List<Actor> getCollisionActorsProjectile() {
+		return collisionActorsProjectile;
 	}
 }

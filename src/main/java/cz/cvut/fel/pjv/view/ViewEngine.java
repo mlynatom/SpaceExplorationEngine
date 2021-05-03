@@ -127,7 +127,7 @@ public class ViewEngine {
 	}
 
 	private void createGameActors() {
-		playerProjectile = new Projectile(POS_OFF_SCREEN, POS_OFF_SCREEN,
+		playerProjectile = new Projectile(spaceExplorationEngine,POS_OFF_SCREEN, POS_OFF_SCREEN,
 				"M 6,246 L 76,213 287,214 462,148 489,216 491,283 460,348 289,283 74,286 Z", 200, 50, "projectileImage");
 		playerShip = new PlayerShip(spaceExplorationEngine, DEFAULT_SHIP_X_POSITION, DEFAULT_SHIP_Y_POSITION,
 				"M 192,4 L 153,67 140,106 141,249 110,290 132,299 133,352 253,352 254,300 275,289 250,250 250,101 231,67 Z",
@@ -149,7 +149,7 @@ public class ViewEngine {
 
 	private void createEnemyShips() {
 		for (Coordinate2D coordinate : levelData.getEnemiesPositions()) {
-			Projectile projectile = new Projectile(POS_OFF_SCREEN, POS_OFF_SCREEN,
+			Projectile projectile = new Projectile(spaceExplorationEngine,POS_OFF_SCREEN, POS_OFF_SCREEN,
 					"M 6,246 L 76,213 287,214 462,148 489,216 491,283 460,348 289,283 74,286 Z",
 					200, levelData.getEnemyProjectileDamage(), "projectileImage");
 
@@ -210,6 +210,7 @@ public class ViewEngine {
 			rootGroup.getChildren().add(obstacle.getSpriteFrame());
 			obstacle.getSpriteFrame().setImage(obstacleImage);
 			castingDirector.addActorsToCollisionPlayerActors(obstacle);
+			castingDirector.addActorsToCollisionProjectileActors(obstacle);
 		}
 	}
 
@@ -457,6 +458,14 @@ public class ViewEngine {
 
 	public List<EnemyShip> getEnemyShips() {
 		return enemyShips;
+	}
+
+	public Projectile getPlayerProjectile() {
+		return playerProjectile;
+	}
+
+	public List<Projectile> getEnemyProjectiles() {
+		return enemyProjectiles;
 	}
 
 	public Group getRootGroup() {

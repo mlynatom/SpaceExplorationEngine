@@ -51,6 +51,9 @@ public class PlayerShip extends Ship {
 		}
 	}
 
+	/**
+	 * This method updates damage of ship and projectile according to the level.
+	 */
 	protected void setAppropriateDamageAccordingToLevel() {
 		damage = (double) level / 10;
 		if (level == 1) {

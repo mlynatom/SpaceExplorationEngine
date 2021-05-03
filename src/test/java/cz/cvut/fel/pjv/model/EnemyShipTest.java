@@ -12,7 +12,7 @@ class EnemyShipTest {
 	private final String mockSpriteBound = "M0 6 L0 52 70 52 70 70 70 93 115 45 115 0 84 0 68 16 Z";
 	private final double mockLife = 100, mockDamage = 1, mockLifeSpan = 100;
 	private final String mockImageName = "mockName";
-	private final Projectile mockProjectile = new Projectile(mockPositionX, mockPositionY, "M0 6 L0 52 70 52 70 70 70 93 115 45 115 0 84 0 68 16 Z", mockLifeSpan, mockDamage, mockImageName);
+	private final Projectile mockProjectile = new Projectile(mockSpaceExplorationEngine,mockPositionX, mockPositionY, "M0 6 L0 52 70 52 70 70 70 93 115 45 115 0 84 0 68 16 Z", mockLifeSpan, mockDamage, mockImageName);
 
 	@Test
 	void testShootProjectileDo() {

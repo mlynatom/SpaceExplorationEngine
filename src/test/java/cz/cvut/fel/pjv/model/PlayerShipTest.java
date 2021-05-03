@@ -4,6 +4,7 @@ import cz.cvut.fel.pjv.controller.SpaceExplorationEngine;
 import cz.cvut.fel.pjv.fileIO.PlayerData;
 import org.junit.jupiter.api.Test;
 
+import static cz.cvut.fel.pjv.controller.Constants.INIT_PLAYER_PROJECTILE_DAMAGE;
 import static org.junit.jupiter.api.Assertions.*;
 
 
@@ -23,12 +24,30 @@ public class PlayerShipTest {
 		mockSpaceExplorationEngine = new SpaceExplorationEngine();
 		double mockLifeSpan = 10;
 		double mockDamage = 50;
-		mockProjectile = new Projectile(mockPositionX, mockPositionY, "M0 6 L0 52 70 52 70 70 70 93 115 45 115 0 84 0 68 16 Z", mockLifeSpan, mockDamage, mockImageName);
+		mockProjectile = new Projectile(mockSpaceExplorationEngine,mockPositionX, mockPositionY, "M0 6 L0 52 70 52 70 70 70 93 115 45 115 0 84 0 68 16 Z", mockLifeSpan, mockDamage, mockImageName);
 		mockPlayerData = new PlayerData();
 		mockPlayerData.setShipFuel(mockFuel);
 		mockPlayerData.setShipLevel(1);
 		mockPlayerData.setShipLife(100);
 		mockPlayerData.setFuelConsumption(0.1);
+	}
+
+	@Test
+	public void testSetAppropriateDamageAccordingToLevelOne(){
+		PlayerShip playerShip = new PlayerShip(mockSpaceExplorationEngine, mockPositionX, mockPositionY, mockSpriteBound, mockProjectile, mockPlayerData, mockGravity, mockImageName);
+		playerShip.setLevel(1);
+		playerShip.setAppropriateDamageAccordingToLevel();
+		assertEquals(0.1, playerShip.damage);
+		assertEquals(INIT_PLAYER_PROJECTILE_DAMAGE, playerShip.projectile.damage);
+	}
+
+	@Test
+	public void testSetAppropriateDamageAccordingToLevelHigher(){
+		PlayerShip playerShip = new PlayerShip(mockSpaceExplorationEngine, mockPositionX, mockPositionY, mockSpriteBound, mockProjectile, mockPlayerData, mockGravity, mockImageName);
+		playerShip.setLevel(9);
+		playerShip.setAppropriateDamageAccordingToLevel();
+		assertEquals(0.9, playerShip.damage);
+		assertEquals(INIT_PLAYER_PROJECTILE_DAMAGE + 90, playerShip.projectile.damage);
 	}
 
 	@Test

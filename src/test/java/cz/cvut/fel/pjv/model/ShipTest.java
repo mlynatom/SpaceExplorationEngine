@@ -21,7 +21,7 @@ public class ShipTest {
 		mockSpaceExplorationEngine = new SpaceExplorationEngine();
 		double mockLifeSpan = 10;
 		double mockDamage = 50;
-		mockProjectile = new Projectile(mockPositionX, mockPositionY, "M0 6 L0 52 70 52 70 70 70 93 115 45 115 0 84 0 68 16 Z", mockLifeSpan, mockDamage, mockImageName);
+		mockProjectile = new Projectile(mockSpaceExplorationEngine,mockPositionX, mockPositionY, "M0 6 L0 52 70 52 70 70 70 93 115 45 115 0 84 0 68 16 Z", mockLifeSpan, mockDamage, mockImageName);
 		mockPlayerData = new PlayerData();
 		int mockFuel = 100;
 		mockPlayerData.setShipFuel(mockFuel);
